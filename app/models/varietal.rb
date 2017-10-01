@@ -1,0 +1,2 @@
+class Varietal < ApplicationRecord
+end

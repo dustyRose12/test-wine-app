@@ -1,0 +1,2 @@
+class CategoryWine < ApplicationRecord
+end

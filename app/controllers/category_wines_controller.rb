@@ -1,0 +1,2 @@
+class CategoryWinesController < ApplicationController
+end

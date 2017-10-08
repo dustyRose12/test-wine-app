@@ -11,23 +11,10 @@ class ReviewsController < ApplicationController
     @wine = Wine.find(params[:wine_id])
     @review = Review.new(user_id: current_user.id, rating:  params[:rating], wine_id: params[:wine_id])
     if @review.save
-        redirect_to "/"
+        redirect_to "/wines/#{@wine.id}"
     else 
-      render "/wines/#{@wine.id}"
+      render "/"
     end
-    # @review = Pin.new(
-    #                               user_id: current_user.id,
-    #                               wine_id: params[:wine_id]                                 
-    #                               )
-    # if @pin.save
-    #   flash[:success] = "Wine Successfully Pinned"
-    #   redirect_to '/cellar'
-    # else
-    #   @wines = Wine.all
-    #   @users = User.all
-
-    #   @errors = @pin.errors.full_messages
-    # end
-
   end
+
 end

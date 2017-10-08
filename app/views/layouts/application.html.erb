@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TestWineApp</title>
+    <title>Wine-to-Table</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
@@ -9,6 +9,201 @@
   </head>
 
   <body>
+<!--Site Brand Name / Logo -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><img alt="Wine-to-Table" src="..."></a>
+    </div>
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      </ul>
+        <%= form_tag "/wines", method: :get, class: "navbar-form navbar-left" do %>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="search_term"> <!-- adding the name search_term allows the input to go into the string param into the search bar now no matter what you type-->
+                <button type="submit" class="btn btn-default">Submit</button> 
+              </div>
+          <% end %>
+     
+
+      <!--Buttons -->
+       <button type="button" class="btn btn-default navbar-btn pull-left">Find my Wine Barcode Scanner</button>
+
+      <ul class="nav navbar-nav navbar-right">
+        <% if current_user %>
+                <li><a href="/cellar">My Cellar</a></li>
+                <li><a href="/users/<%= current_user.id %>/edit">My Profile</a></li>
+                <li><a href="/logout">Log Out</a></li>
+        <% else %>
+                <li><a href="/signup">Sign Up</a></li>
+                <li><a href="/login">Log In</a></li>
+        <% end %>       
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<!-- Second Row for Filtering Sorts-->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wine Type<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/?user_wine_type=Red">Red</a></li> 
+            <li><a href="/?user_wine_type=White">White</a></li>
+            <li><a href="/?user_wine_type=Sparkling">Sparkling</a></li>
+            <li><a href="/?user_wine_type=Rosé">Rosé</a></li>
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Varietal<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <% Varietal.all.each do |varietal| %>
+                <li><a href="/?user_varietal=<%= varietal.name %>"><%=varietal.name%></a></li>
+              <% end%>
+          </ul>
+        </li>
+      </ul>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Country<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% Country.all.each do |country| %>
+                <li><a href="/?user_country=<%= country.id %>"><%=country.name%></a></li>
+            <% end%>
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Region<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% Region.all.each do |region| %>
+              <li><a href="/?user_region=<%= region.name %>"><%=region.name%></a></li>
+            <% end%>
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vintage<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/?sort=vintage">Oldest - Newest</a></li>
+            <li><a href="/?sort=vintage&sort_order=desc">Newest - Oldest</a></li>
+            <li><a href="/?sort=vintage&sort_min=2014&sort_max=2016&sort_order=desc">2014 - 2016</a></li>
+            <li><a href="/?sort=vintage&sort_min=2011&sort_max=2013&sort_order=desc">2011 - 2013</a></li>
+            <li><a href="/?sort=vintage&sort_min=2006&sort_max=2010&sort_order=desc">2006 - 2010</a></li>
+            <li><a href="/?sort=vintage&sort_min=2000&sort_max=2005&sort_order=desc">2000 - 2005</a></li>
+            <li><a href="/?sort=vintage&sort_min=0&sort_max=1999&sort_order=desc">< 2000</a></li>    
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+
+     <!-- Food pairing not necessary for now -->
+     <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Food Pairing<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/">Meat</a></li>
+            <li><a href="/">Poultry</a></li>
+            <li><a href="/">Fish</a></li>
+            <li><a href="/">Sweet</a></li>
+            <li><a href="/">Spicy</a></li>
+          </ul>
+        </li> 
+      </ul> -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Price<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/?sort=price">Low - High</a></li>
+            <li><a href="/?sort=price&sort_order=desc">High - Low</a></li>
+            <li><a href="/?sort=price&sort_min=1&sort_max=15&sort_order=asc">$1 - $15</a></li>
+            <li><a href="/?sort=price&sort_min=16&sort_max=30&sort_order=asc">$16 - $30</a></li>
+            <li><a href="/?sort=price&sort_min=31&sort_max=50&sort_order=asc">$31 - $50</a></li>
+            <li><a href="/?sort=price&sort_min=51&sort_max=99&sort_order=asc">$51 - $99</a></li>
+            <li><a href="/?sort=price&sort_min=100&sort_max=20000&sort_order=asc"> > $100</a></li>
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Expert Rating<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/?sort=expert_rating&sort_order=desc">High - Low</a></li>
+            <li><a href="/?sort=expert_rating">Low - High</a></li>
+            <li><a href="/?sort=expert_rating&sort_min=95&sort_max=100&sort_order=desc">95 - 100</a></li>
+            <li><a href="/?sort=expert_rating&sort_min=90&sort_max=95&sort_order=desc">90 - 95</a></li>
+            <li><a href="/?sort=expert_rating&sort_min=80&sort_max=90&sort_order=desc">80 - 90</a></li>
+            <li><a href="/?sort=expert_rating&sort_min=70&sort_max=80&sort_order=desc">70 - 80</a></li>
+           
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Rating<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/">High - Low</a></li>
+            <li><a href="/">Low - High</a></li>
+            <li><a href="/">Most Reviewed</a></li>
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Overall Rating<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/">High - Low</a></li>
+            <li><a href="/">Low - High</a></li>
+            <li><a href="/">95 - 100</a></li>
+              <li><a href="/">90 - 95</a></li>
+            <li><a href="/">80 - 90</a></li>
+            <li><a href="/">70 - 80</a></li>
+          </ul>
+        </li> <!--dropdown class li -->
+      </ul> <!-- nav navbar nav class ul -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
     <%= yield %>
   </body>
 </html>

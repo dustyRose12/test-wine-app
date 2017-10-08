@@ -89,15 +89,16 @@ Image.create!([
                         {wine_id: 10, url: "https://www.mwcwine.com/images/sites/mwcwine/labels/w2314902of_1.jpg"}
                         ])
 
-
-User.create!([
-                    {name: "Rocio Cifrian", email: "rocio87@gmail.com", password_digest: "password", username: "rocio87", profile_pic: "http://www.theworldwidewine.com/Wine_reviews/Weekly_cheap_wine_reviews/Section2/mosel_castle_in_tasting_cheap_wine.jpg"}
-                    ])
+# Deleted this, did it through the signup page instead
+# User.create!([
+#                     {name: "Rocio Cifrian", email: "rocio87@gmail.com", password_digest: "password", username: "rocio87", profile_pic: "http://www.theworldwidewine.com/Wine_reviews/Weekly_cheap_wine_reviews/Section2/mosel_castle_in_tasting_cheap_wine.jpg"}
+#                     ])
 
 Review.create!([
                       {user_id: 1, wine_id: 1, rating: 5.0, description: "Amazing!"}
                       ])
 
-Pin.create!([
-                    {user_id: 1, wine_id: 1}
-                    ])
+#Manually deleted this so I can re-do via the Pin view
+# Pin.create!([
+#                     {user_id: 1, wine_id: 1}
+#                     ])

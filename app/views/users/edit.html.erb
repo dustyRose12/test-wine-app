@@ -1,0 +1,30 @@
+<% if @errors %>
+ <div id="error-explanation"
+  <% @errors.each do |error| %>
+    <h2><%= error %></h2>
+  <% end %>
+  </div>
+<% end %>
+
+<h2>Edit Your Profile</h2>
+  <%= form_tag "/users/#{@user.id}", method: :patch do %>
+  <div>
+    Name: <input type="text" name="name" placeholder="<%= @user.name %>">
+  </div>
+  <div>
+    Email: <input type="email" name="email" placeholder="<%= @user.email %>">
+  </div>
+  <div>
+    Username: <input type="text" name="username" placeholder="<%= @user.username %>">
+  </div>
+  <div>
+    Password: <input type="password" name="password">
+  </div>
+  <div>
+    Confirm Password: <input type="password" name="password_confirmation">
+  </div>
+  <div>
+    Profile Picture: <input type="text" name="profile_pic" placeholder="<%= @user.profile_pic %>">
+  </div>
+  <input class="btn btn-success" type="submit" value="Update Profile">
+<% end %>

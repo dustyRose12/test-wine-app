@@ -1,0 +1,26 @@
+<h1>Wines from My Cellar</h1>
+<div class="container-fluid">
+<div class="row">
+ <% @pins.each do |pin| %>
+   <div class="col-md-4 col-sm-6 product-index-single">
+      <div class="well">
+        <h2><a href ="/wines/<%= pin.wine.id %>"><%= pin.wine.producer.name %> <%= pin.wine.vintage %> <%= pin.wine.name %> <%= pin.wine.varietal.name %> (<%= pin.wine.region.name %>)</a></h2>
+        <h3>Expert Rating: <%= pin.wine.expert_rating %></h3>
+        <h3>Wine type: <%= pin.wine.varietal.wine_type %></h3>
+        <h3>Country: <%= pin.wine.region.country.name %></h3>
+        <img class= "wine_image center" src=<%= pin.wine.default_image %>>
+        <h4>Price: <%= number_to_currency(pin.wine.price) %></h4>
+        <h4><%= pin.wine.description %></h4>
+      </div>
+    </div>
+     <% if current_user %>
+      <%= link_to "Edit Personal Category", "/pins/#{pin.id}/edit", class: "btn btn-warning" %>
+      <%= link_to "Delete from Cellar", "/pins/#{pin.id }", method: :delete, class: "btn btn-danger" %>     
+  <% else %>
+    <p>Please <a href="/login">Login</a> to Edit Cellar</p>
+  <% end %>
+  <% end %>
+</div>
+</div>
+
+<!--FINISH make it pretty, display wines like in the wine index, add EDIT/DELETE -->

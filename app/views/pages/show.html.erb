@@ -1,0 +1,17 @@
+<div class="container-fluid">
+<div class="row">
+  <% @wines.each do |wine| %>
+   <div class="col-md-4 col-sm-6 product-index-single">
+      <div class="well">
+        <h2><a href ="/wines/<%= wine.id %>"><%= wine.producer.name %> <%= wine.vintage %> <%= wine.name %> <%= wine.varietal.name %> (<%= wine.region.name %>)</a></h2>
+        <h3>Expert Rating: <%= wine.expert_rating %></h3>
+        <h3>Wine type: <%= wine.varietal.wine_type %></h3>
+        <h3>Country: <%= wine.region.country.name %></h3>
+        <img class= "wine_image center" src=<%= wine.default_image %>>
+        <h4>Price: <%= number_to_currency(wine.price) %></h4>
+        <h4><%= wine.description %></h4>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>

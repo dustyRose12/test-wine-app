@@ -5,7 +5,7 @@
     <img class= "wine_image_show_pg" src=<%= @wine.default_image %>>
         <br>
         <h4>Expert Rating: <%= @wine.expert_rating %></h4>
-        <h4>User Rating: <%= @wine.user_rating %><div class="rating"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        <h4>User Rating: <%= @wine.user_rating(@wine.id) %><div class="rating"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
         </div>
         <br>
         <h4>Overall Rating: <%= @wine.overall_rating %></h4>
@@ -44,11 +44,33 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid">
 <div class="row">
-  <div class="col-md-4 col-sm-6">
+  <div class="col-md-4 col-sm-4">
       <div class="well">
-        <h4>Rate this Wine: <div class="rating">
+        <h4>Rate this Wine: <div class="rating"></h4>
+        <%= form_tag "/reviews", method: :post do %>
+          <input type="hidden" name="wine_id" value="<%= @wine.id %>">
+          <select name="rating">
+            <%=  [1,2,3,4,5].each do |rating_val| %>
+                <option value= "<%= rating_val %>"><span in>☆</span></option>
+            <% end %>
+           </select> 
+           <input type="submit" value="Submit">
+        <% end %>
+         <!--  <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=1" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=2" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=3" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=4" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=5" data-method="post">☆</a></span> -->
+<!--           <span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
+ -->  </div>
+        </div>
+
+      <div class="col-md-6 col-sm-6">
+      <div class="well">
+        <h4>Review this Wine: <div class="rating"></h4>
         <%= form_tag "/reviews", method: :post do %>
           <input type="hidden" name="wine_id" value="<%= @wine.id %>">
           <select name="rating">
@@ -57,16 +79,14 @@
             <% end %>
            </select> 
            <input type="submit" value="submit">
-        <% end %>
-         <!--  <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=1" data-method="post">☆</a></span>
-          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=2" data-method="post">☆</a></span>
-          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=3" data-method="post">☆</a></span>
-          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=4" data-method="post">☆</a></span>
-          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=5" data-method="post">☆</a></span> -->
-<!--           <span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
- -->       
+        <% end %>     
+        </div>
       </div>
     </div>
+
+        </div> 
+
+
 
 
 
@@ -76,7 +96,8 @@
       <div class="col-sm-3">
         <div class="rating-block">
           <h4>Average user rating</h4>
-          <h2 class="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
+          <h2 class="bold padding-bottom-7"><%= @wine.user_rating(@wine.id) %><small>/ 5</small></h2>
+          
           <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
           </button>

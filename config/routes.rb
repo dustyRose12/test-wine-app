@@ -25,12 +25,14 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
+  #to create, edit, delete reviews
   get '/reviews' => 'reviews#new'
   post '/reviews' => 'reviews#create'
   get '/reviews/:id/edit' => 'reviews#edit'
   patch '/reviews/:id' => 'reviews#update'
   delete '/reviews/:id' => 'reviews#destroy'
 
+  #to create, edit, delete pins
   get '/cellar' => 'pins#index'
   get '/pins/new' => 'pins#new'
   post '/pins' => 'pins#create'
@@ -38,13 +40,23 @@ Rails.application.routes.draw do
   patch '/pins/:id' => 'pins#update'
   delete '/pins/:id' => 'pins#destroy'
 
+  get '/pages/:id' => 'pages#show'
 
+  #to create, edit and delete personal_categories
+  get 'personal_categories' => 'personal_categories#index'
+  get '/personal_categories/new' => 'personal_categories#new'
+  post '/personal_categories' => 'personal_categories#create'
+  get '/personal_categories/:id/edit' => 'personal_categories#edit'
+  patch '/personal_categories/:id' => 'personal_categories#update'
+  delete '/personal_categories/:id' => 'personal_categories#destroy'
 
-  # post '/orders' => 'orders#create'
-  # get '/orders/:id' => 'orders#show' #must be below post in this case 
+   #to create, edit and delete personal_category_pins
+  get 'personal_category_pins' => 'personal_category_pins#index'
+  get '/personal_category_pins/new' => 'personal_category_pins#new'
+  post '/personal_category_pins' => 'personal_category_pins#create'
+  get '/personal_category_pins/:id/edit' => 'personal_category_pins#edit'
+  patch '/personal_category_pins/:id' => 'personal_category_pins#update'
+  delete '/personal_category_pins/:id' => 'personal_category_pins#destroy'
 
-  # get '/cart' => 'carted_purses#index' #the index goes above the create action in this case
-  # post '/carted_purses' => 'carted_purses#create' #leave this url as carted_purses, but the index route can have just cart instead
-  # delete '/carted_purses/:id' => 'carted_purses#destroy'
 
 end

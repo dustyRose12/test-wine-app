@@ -19,6 +19,7 @@ class PinsController < ApplicationController
 
   def create  
 
+    
     @pin = Pin.new(
                                   user_id: current_user.id,
                                   wine_id: params[:wine_id]                                 

@@ -15,6 +15,7 @@ class WinesController < ApplicationController
     varietal_sort = params[:user_varietal]
     region_sort = params[:user_region]
     country_sort = params[:user_country]
+    user_sort = params[:user_sort]
     #TODO: finish user_rating sort and overall_rating sort
 
 
@@ -45,21 +46,19 @@ class WinesController < ApplicationController
         @wines = Wine.joins(:region).where(regions: { name: region_sort } )
     end
 
-    #TODO: Need to search for names from other tables. don't know the syntax
+    #Search box
     if search_term
       p "SEARCH"
       @wines = Wine.search(search_term)
-      p @wines
-      # @wines = Wine.where("name iLIKE ?", "%#{search_term}%") || Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-      #                 # Wine.joins(:varietal).where("varietals.name iLIKE ?", "%#{search_term}%" )
-      #                 # Wine.joins(:varietals).where(varietals: { name: search_term } ) 
-      #                 # Wine.joins(:region).where(regions: { name: search_term } )
-
-
-        # search_term should be: name, producer name, wine_type, varietal name, region name, country name
-        # OR varietal.name iLIKE? OR producer.name iLIKE? OR region.name iLIKE? OR region.country.name iLIKE?
+      p @wines    
     end
 
+    #TODO User Rating Sort
+    #   if user_sort && sort_order
+    #   @wines = Wine.where(bla bla)
+    # elsif user_sort 
+    #   @wines = Wine.where(bla bla)
+    # end
 
   end
 

@@ -6,4 +6,7 @@ class User < ApplicationRecord
   has_many :pins
   has_many :wines, through: :pins
 
+  has_many :personal_categories
+  
+
 end

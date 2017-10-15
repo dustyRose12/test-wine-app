@@ -11,16 +11,37 @@
         <img class= "wine_image center" src=<%= pin.wine.default_image %>>
         <h4>Price: <%= number_to_currency(pin.wine.price) %></h4>
         <h4><%= pin.wine.description %></h4>
+         <% if current_user %>
+<!-- this creates a new personal_category from scratch to add the pin to:
+        TODO: it only creates a new category name, it doesn't add the pinned wine to the category
+ -->            <%= form_tag "/personal_categories", method: :post do %>
+              <h5>Add New Category: <input type="text" name="name"></h5>
+                 <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                 <input type="submit" value="Add to New Category">
+            <% end %>
+<!-- this lets you select an existing personal_category to add the pin to (by creating a new personal_category_pin):
+        TODO: it doesn't create a new association (create a new personal_category_pin) to add the pinned wine to the selected category
+ -->        <h5>Add To Existing Personal Category: </h5>
+              <%= form_tag "/personal_category_pins", method: :post do %>
+                <input type="hidden" name="pin_id" value="<%= pin.id %>">
+                <select name="personal_category" value="personal_category_id">
+                <%=  current_user.personal_categories.each do |personal_category| %>
+                      <option value= "<%= personal_category.id %>"><span in><%= personal_category.name %></span></option>
+                  <% end %>
+                 </select> 
+                 <input type="submit" value="Add to Category">
+                <% end %>
+
+            <br>      
+            <%= link_to "Edit Personal Category", "/pins/#{pin.id}/edit", class: "btn btn-warning" %>
+            <br>
+            <%= link_to "Delete from Cellar", "/pins/#{pin.id }", method: :delete, class: "btn btn-danger" %>  
+         <% else %>
+              <p>Please <a href="/login">Login</a> to Edit Cellar</p>
+         <% end %>
       </div>
     </div>
-     <% if current_user %>
-      <%= link_to "Edit Personal Category", "/pins/#{pin.id}/edit", class: "btn btn-warning" %>
-      <%= link_to "Delete from Cellar", "/pins/#{pin.id }", method: :delete, class: "btn btn-danger" %>     
-  <% else %>
-    <p>Please <a href="/login">Login</a> to Edit Cellar</p>
-  <% end %>
   <% end %>
 </div>
 </div>
 
-<!--FINISH make it pretty, display wines like in the wine index, add EDIT/DELETE -->

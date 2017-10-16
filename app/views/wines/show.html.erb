@@ -5,7 +5,7 @@
     <img class= "wine_image_show_pg" src=<%= @wine.default_image %>>
         <br>
         <h4>Expert Rating: <%= @wine.expert_rating %></h4>
-        <h4>User Rating: <%= @wine.user_rating(@wine.id) %><div class="rating"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        <h4>User Rating: <%= @wine.user_rating %><div class="rating"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
         </div>
         <br>
         <h4>Overall Rating: <%= @wine.overall_rating %></h4>
@@ -96,7 +96,7 @@
       <div class="col-sm-3">
         <div class="rating-block">
           <h4>Average user rating</h4>
-          <h2 class="bold padding-bottom-7"><%= @wine.user_rating(@wine.id) %><small>/ 5</small></h2>
+          <h2 class="bold padding-bottom-7"><%= @wine.user_rating %><small>/ 5</small></h2>
           
           <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>

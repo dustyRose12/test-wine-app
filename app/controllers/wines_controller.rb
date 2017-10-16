@@ -16,6 +16,7 @@ class WinesController < ApplicationController
     region_sort = params[:user_region]
     country_sort = params[:user_country]
     user_sort = params[:user_sort]
+    sort_order = params[:sort_order]
     #TODO: finish user_rating sort and overall_rating sort
 
 
@@ -53,12 +54,15 @@ class WinesController < ApplicationController
       p @wines    
     end
 
-    #TODO User Rating Sort
-    #   if user_sort && sort_order
-    #   @wines = Wine.where(bla bla)
-    # elsif user_sort 
-    #   @wines = Wine.where(bla bla)
-    # end
+    # User_Rating Sort #think it works, double check later when you have more ratings in
+    if user_sort && sort_order == "desc"
+        @wines = @wines.sort_by { |wine| wine.user_rating }.reverse
+    elsif user_sort && sort_oder == "asc"
+        @wines = @wines.sort_by { |wine| wine.user_rating }
+    #TODO finish this part of the sort later, to sort by most reviewed
+    # elsif user_sort
+    end
+
 
   end
 

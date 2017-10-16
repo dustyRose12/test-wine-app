@@ -26,20 +26,15 @@ class Wine < ApplicationRecord
     end
   end
 
-  def user_rating(wine_id)
-    this_wine = Wine.find(wine_id)
-    wine_ratings = []
+  def user_rating
+    wine_ratings = reviews.map { |review| review.rating }
 
-    this_wine.reviews.each do |review|
-      wine_ratings << review.rating
-    end
-
-    @user_rating_avg = wine_ratings.sum.to_f / wine_ratings.size
+    @user_rating_avg = (wine_ratings.sum.to_f/ wine_ratings.size).round(1)
 
     if @user_rating_avg > 0
       return @user_rating_avg
     else
-      return "N/A"
+      return 0
     end
 
   end

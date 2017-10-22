@@ -17,6 +17,8 @@ class PersonalCategoryPinsController < ApplicationController
                                                                       pin_id: params[:pin_id],
                                                                       personal_category_id: params[:personal_category_id]
                                                                       )
+    p "ERRORS"
+    p @personal_category_pin.errors.full_messages
     redirect_to "/cellar"
 
 

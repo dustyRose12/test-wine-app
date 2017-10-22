@@ -1,0 +1,87 @@
+a.dropdown-toggle {
+  // color: red !important; //the important overrides the theme styling
+}
+
+.panel-primary {
+     background-color: #3f7577 !important;
+     color: white !important;
+      // border-color: #3f7577 !important;
+}
+
+.panel-default {
+    border-color: #3f7577 !important;
+    color: white !important;
+
+
+}
+
+.my-logo {
+  max-height: 50px;
+}
+
+.panel-footer{
+
+}
+// .filters-nav{
+//   color: #3F7577; this is the seagreen color
+// } didn't work
+.wine_image {
+  max-width:50%;
+  max-height:50%;
+}
+img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wine_image_show_pg{
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+
+body {
+  font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
+  background-image: url('white_wall.png');
+  color: navy;
+  
+}
+
+.product-index-single{
+    height: 900px;
+}
+
+
+.well img{
+  width: 100%;
+}
+
+.item-view{
+  color: navy;  
+  width: 500px;
+}
+
+.description{
+  width: 75%;
+}
+
+.pull-right {
+    float: right !important; // Use of important emulates bootstrap
+}
+
+.pull-left {
+    float: left !important; // Use of important emulates bootstrap
+}

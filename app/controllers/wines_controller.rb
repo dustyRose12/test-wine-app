@@ -17,6 +17,10 @@ class WinesController < ApplicationController
     country_sort = params[:user_country]
     user_sort = params[:user_sort]
     sort_order = params[:sort_order]
+
+    page_trending = params[:page_trending]
+    page_wine_of_day = params[:page_wine_of_day]
+    page_best_of = params[:page_best_of]
     #TODO: finish user_rating sort and overall_rating sort
 
 
@@ -57,11 +61,30 @@ class WinesController < ApplicationController
     # User_Rating Sort #think it works, double check later when you have more ratings in
     if user_sort && sort_order == "desc"
         @wines = @wines.sort_by { |wine| wine.user_rating }.reverse
-    elsif user_sort && sort_oder == "asc"
+    elsif user_sort && sort_order == "asc"
         @wines = @wines.sort_by { |wine| wine.user_rating }
     #TODO finish this part of the sort later, to sort by most reviewed
     # elsif user_sort
     end
+
+    # if sort_wine_type ||
+    #   render 'resullts.html.erb'
+    # else 
+    #   render 'index.html.erb'
+    # end
+
+    # page_trending = params[:page_trending]
+    if page_trending
+      @wines = Wine.order(:existing_avg_user_rating_count).last(9)
+      #TODO: tack on this part to order the most reviewed 9 ones by order of best reviews: @wines.order(:existing_avg_user_rating). this syntax doesn't work.
+    end
+    if page_wine_of_day
+      @wines = Wine.order("RANDOM()").take(1)
+    end 
+     if page_best_of
+      @wines = Wine.where(vintage: 2016).order(:expert_rating).last(9)
+    end 
+
 
 
   end

@@ -15,7 +15,7 @@
 <!-- this creates a new personal_category from scratch to add the pin to:
         TODO: it only creates a new category name, it doesn't add the pinned wine to the category
  -->            <%= form_tag "/personal_categories", method: :post do %>
-              <h5>Add New Category: <input type="text" name="name"></h5>
+              <h5>Create New Category: <input type="text" name="name"></h5>
                  <input type="hidden" name="user_id" value="<%= current_user.id %>">
                  <input type="submit" value="Add to New Category">
             <% end %>
@@ -24,9 +24,9 @@
  -->        <h5>Add To Existing Personal Category: </h5>
               <%= form_tag "/personal_category_pins", method: :post do %>
                 <input type="hidden" name="pin_id" value="<%= pin.id %>">
-                <select name="personal_category" value="personal_category_id">
+                <select name="personal_category_id" value="personal_category_id">
                 <%=  current_user.personal_categories.each do |personal_category| %>
-                      <option value= "<%= personal_category.id %>"><span in><%= personal_category.name %></span></option>
+                      <option value= "<%= personal_category.id %>"><span><%= personal_category.name %></span></option>
                   <% end %>
                  </select> 
                  <input type="submit" value="Add to Category">

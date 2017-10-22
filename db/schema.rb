@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171014152726) do
+ActiveRecord::Schema.define(version: 20171016235424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,12 +109,13 @@ ActiveRecord::Schema.define(version: 20171014152726) do
     t.integer "vintage"
     t.integer "region_id"
     t.decimal "price", precision: 7, scale: 2
-    t.integer "expert_rating"
-    t.string "alcohol"
-    t.integer "ml"
+    t.decimal "expert_rating", precision: 3, scale: 1
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "expert_review"
+    t.decimal "existing_avg_user_rating", precision: 2, scale: 1
+    t.integer "existing_avg_user_rating_count"
   end
 
 end

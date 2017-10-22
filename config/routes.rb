@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
 
-  get '/' => 'wines#index'
+  get '/' => 'pages#home'
+  get '/pages' => 'pages#home'
+  get '/pages/:id' => 'pages#show'
+
+  # get '/' => 'wines#index'
   get '/wines' => 'wines#index'
 
   get '/wines/new' => 'wines#new'
@@ -39,6 +43,7 @@ Rails.application.routes.draw do
   get '/pins/:id/edit' => 'pins#edit'
   patch '/pins/:id' => 'pins#update'
   delete '/pins/:id' => 'pins#destroy'
+
 
   get '/pages/:id' => 'pages#show'
 

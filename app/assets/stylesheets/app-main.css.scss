@@ -2,6 +2,55 @@ a.dropdown-toggle {
   // color: red !important; //the important overrides the theme styling
 }
 
+
+.button-color-seagreen{
+  background-color: #3f7577 !important;
+}
+
+
+.wine-show-pg-container-space{
+  width:100%;max-width:none;padding:0 !important;
+
+}
+.element1 {
+  display:inline-block;margin-right: 50px; 
+  float: left !important;
+  } 
+
+.element2 {
+  display:inline-block; 
+  float: right !important;
+} 
+
+.navbar-brand-position{
+  padding-bottom: 0px !important;
+  padding-top: 5px !important;
+  padding-left: 0px !important;
+  vertical-align: middle !important;
+}
+.middle-navbar{
+  height: 80px;
+  padding-left: 20px !important;
+  margin-left: 0px !important;
+  // vertical-align: middle !important;
+}
+.bottom-navbar-dropdowns{
+    vertical-align: middle !important;
+
+}
+
+.bottom-navbar{
+  background-color: #93b2b4 !important;
+  border-radius: 4px;
+  height: 56px;
+
+
+  // background-color: #618D8F !important;
+}
+
+.bottom-navbar-text{
+  color: white !important;
+}
 .panel-primary {
      background-color: #3f7577 !important;
      color: white !important;
@@ -11,12 +60,10 @@ a.dropdown-toggle {
 .panel-default {
     border-color: #3f7577 !important;
     color: white !important;
-
-
 }
 
 .my-logo {
-  max-height: 50px;
+  max-height: 70px;
 }
 
 .panel-footer{
@@ -53,15 +100,15 @@ img.center {
    position: absolute;
 }
 
-body {
-  font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
-  background-image: url('white_wall.png');
-  color: navy;
+// body {
+//   font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
+//   background-image: url('white_wall.png');
+//   color: navy;
   
-}
+// }
 
 .product-index-single{
-    height: 900px;
+    height: 1000px;
 }
 
 
@@ -85,3 +132,49 @@ body {
 .pull-left {
     float: left !important; // Use of important emulates bootstrap
 }
+
+
+.button-as-link {
+       background:none!important;
+       color:#337AB7;
+       border:none; 
+       padding:0!important;
+       font: inherit;
+       /*border is optional*/
+       cursor: pointer;
+}
+
+.button-as-link:hover {
+  color: #23527C;
+  text-decoration: underline;
+}
+
+.my-well {
+  background-color: #ffffff;
+}
+
+.my-well-index-pg {
+  background-color: #f1f4f4;
+  min-height: 20px;
+  height: 550px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  overflow: hidden;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.my-well-index-pg img{
+  max-height: 150px;
+  width: auto;
+}
+.review-box{
+  background-color: #f1f4f4;
+}
+
+.top-of-results{
+  display: inline !important;
+}
+

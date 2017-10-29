@@ -1,0 +1,37 @@
+<br>
+<br>
+<div class="container-fluid">
+<div class="row">
+  <% @wines.each do |wine| %>
+   <div class="col-md-4 col-sm-6 product-index-single">
+      <div class="well">
+        <h4><a href ="/wines/<%= wine.id %>"><%= wine.name %></a></h4><br>
+        <img class= "wine_image center" src="<%= wine.default_image %>"><br>
+        <p>Region: <b><%= wine.region.name %>, <%= wine.region.country.name %></b></p>
+        <p>Wine type: <b><%= wine.varietal.wine_type %></b></p>
+        <p>Varietal: <b><%= wine.varietal.name %></b></p>
+        <p>Price: <b><%= number_to_currency(wine.price) %></b></p>
+        <p>Expert Rating: <b><%= wine.expert_rating %></b></p>
+        <p>User Rating: <b><%= wine.user_rating %></b>  ( based on <b><%= wine.user_rating_count %></b> reviews )</p>
+        <p>Overall Rating: <b><%= wine.overall_rating %></b></p><br>
+
+        <p><i><%= wine.description %></i></p>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+
+    <section class="no-padding-bottom">
+      <div class="container">
+        <h2 class="section-heading">DUMMY CONTENT</h2>
+        <p>Compellingly repurpose superior leadership skills vis-a-vis high-quality quality vectors. Objectively repurpose value-added experiences vis-a-vis resource sucking results. Credibly productize professional infomediaries without accurate platforms. Energistically architect timely "outside the box" thinking without adaptive niches. Enthusiastically innovate focused products with.</p>
+        <p>Objectively matrix customer directed communities and one-to-one paradigms. Intrinsicly create prospective core competencies whereas mission-critical schemas. Distinctively transform optimal ROI rather than optimal "outside the box" thinking. Competently disseminate granular methodologies rather than next-generation users. Interactively innovate client-centric supply chains with virtual sources. Phosfluorescently network principle-centered niche markets through client-focused schemas. Energistically facilitate leading-edge models whereas alternative niches. Compellingly engage revolutionary communities without state of the art niches. Distinctively empower backward-compatible networks through 24/7.</p>
+      </div> 
+ <div class="cta cta-solid-brand-bg cta-2-columns margin-top-50">
+        <div class="container">
+          <h2 class="heading">An elegant Bootstrap theme with tons of features</h2>
+         
+        </div>
+      </div>
+    </section> 

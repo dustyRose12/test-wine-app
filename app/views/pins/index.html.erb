@@ -1,27 +1,26 @@
-<h1>Wines from My Cellar</h1>
+<h2 class="section-heading">My Wine Cellar</h2>
 <div class="container-fluid">
 <div class="row">
  <% @pins.each do |pin| %>
    <div class="col-md-4 col-sm-6 product-index-single">
       <div class="well">
-        <h2><a href ="/wines/<%= pin.wine.id %>"><%= pin.wine.producer.name %> <%= pin.wine.vintage %> <%= pin.wine.name %> <%= pin.wine.varietal.name %> (<%= pin.wine.region.name %>)</a></h2>
-        <h3>Expert Rating: <%= pin.wine.expert_rating %></h3>
-        <h3>Wine type: <%= pin.wine.varietal.wine_type %></h3>
-        <h3>Country: <%= pin.wine.region.country.name %></h3>
-        <img class= "wine_image center" src=<%= pin.wine.default_image %>>
-        <h4>Price: <%= number_to_currency(pin.wine.price) %></h4>
-        <h4><%= pin.wine.description %></h4>
+        <h4><a href ="/wines/<%= pin.wine.id %>"><%= pin.wine.name %></a></h4><br>
+        <img class= "wine_image center" src=<%= pin.wine.default_image %>><br>
+        <p>Region: <b><%= pin.wine.region.name %>, <%= pin.wine.region.country.name %></b></p>
+        <p>Wine type: <b><%= pin.wine.varietal.wine_type %></b></p>
+        <p>Varietal: <b><%= pin.wine.varietal.name %></b></p>
+        <p>Price: <b><%= number_to_currency(pin.wine.price) %></b></p>
+        <p>Expert Rating: <b><%= pin.wine.expert_rating %></b></p><br>
+        <p><%= pin.wine.description %></p>
          <% if current_user %>
-<!-- this creates a new personal_category from scratch to add the pin to:
-        TODO: it only creates a new category name, it doesn't add the pinned wine to the category
- -->            <%= form_tag "/personal_categories", method: :post do %>
-              <h5>Create New Category: <input type="text" name="name"></h5>
+<!-- this creates a new personal_category from scratch to add the pin to: -->
+           <%= form_tag "/personal_categories", method: :post do %>
+              <h5>New Category: <input type="text" name="name"></h5>
                  <input type="hidden" name="user_id" value="<%= current_user.id %>">
-                 <input type="submit" value="Add to New Category">
+                 <input type="submit" value="Create New Category">
             <% end %>
-<!-- this lets you select an existing personal_category to add the pin to (by creating a new personal_category_pin):
-        TODO: it doesn't create a new association (create a new personal_category_pin) to add the pinned wine to the selected category
- -->        <h5>Add To Existing Personal Category: </h5>
+<!-- this lets you select an existing personal_category to add the pin to (by creating a new personal_category_pin): -->
+       <h5>Add To Existing Personal Category: </h5>
               <%= form_tag "/personal_category_pins", method: :post do %>
                 <input type="hidden" name="pin_id" value="<%= pin.id %>">
                 <select name="personal_category_id" value="personal_category_id">
@@ -32,7 +31,15 @@
                  <input type="submit" value="Add to Category">
                 <% end %>
 
-            <br>      
+            <br>  <!-- Display current Personal Categories that this Pin belongs to: -->
+            <p>Personal Categories this Wine belongs to: </p>
+                  <% pin.personal_categories.each do |personal_category| %>
+                      <ul>
+                        <li><%=  personal_category.name %></li>
+                      </ul>
+                  <% end %>
+        
+
             <%= link_to "Edit Personal Category", "/pins/#{pin.id}/edit", class: "btn btn-warning" %>
             <br>
             <%= link_to "Delete from Cellar", "/pins/#{pin.id }", method: :delete, class: "btn btn-danger" %>  
@@ -44,4 +51,5 @@
   <% end %>
 </div>
 </div>
+
 

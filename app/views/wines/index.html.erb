@@ -1,31 +1,239 @@
-<!--This is the 3 panels for random stuff/popular wines/etc -->
-<!-- <br>
-<br>
-<div class="container">    
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading panel-primary">Trending Now</div>
-        <div class="panel-body"><a href ="/pages/trending"><img src="https://blogs-images.forbes.com/adammorganstern/files/2015/12/Germany-23-2000px-1200x800.jpg?width=960" class="img-responsive" style="width:100%" alt="Image"></a></div>
-        <div class="panel-footer"><a href ="/pages/trending">Seasonal treats</a></div>
+
+<!-- PAGE HEADER DEFAULT -->
+    <div class="page-header">
+      <div class="container">
+        <h1 class="page-title pull-left"></h1>
+        <ol class="breadcrumb link-accent">
+          <li><a href="#">Breadcrumb1</a></li>
+          <li><a href="#">Breadcrumb2</a></li>
+          <li class="active">Red wines or whatever current one</li>
+        </ol>
       </div>
     </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading panel-primary">Wine of the Day</div>
-        <div class="panel-body"><a href ="/pages/wineofday"><img src="https://assets.ajmadison.com/image/upload/c_limit,f_auto,fl_lossy.progressive,h_1000,q_auto,w_1000/v1/ajmadison/images/large_no_watermark/E24WC48EPSSmoothGlideSide.jpg" class="img-responsive" style="width:100%" alt="Image"></a></div>
-        <div class="panel-footer"><a href ="/pages/wineofday">I'm feeling lucky...</a></div>
+    <!-- END PAGE HEADER DEFAULT -->
+
+     <!-- PAGE CONTENT -->
+    <div class="page-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <!-- FILTER CATEGORY -->
+            <div class="widget widget-filter">
+              <h4 class="widget-title">FILTER BY VARIETAL</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <li>
+                  <a href="">Women</a> <span>(44)</span>
+                  <ul class="list-unstyled product-subcategory-list">
+                    <li>- <a href="#">Dress</a> <span>(30)</span></li>
+                    <li>- <a href="#">Shoes</a> <span>(14)</span></li>
+                  </ul>
+                </li>
+                <li><a href="#">Men</a> <span>(35)</span></li>
+                <li><a href="#">Kids</a> <span>(26)</span></li>
+                <li><a href="#">Accessories</a> <span>(67)</span></li>
+                <li class="active"><a href="#">Best Deal</a> <span>(78)</span></li>
+              </ul>
+            </div>
+            <!-- END FILTER CATEGORY -->
+            <!-- FILTER BRAND -->
+            <div class="widget widget-filter">
+              <h4 class="widget-title">FILTER BY COUNTRY</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <li class="active"><a href="#">JFashion</a> <span>(23)</span></li>
+                <li><a href="#">ABC</a> <span>(45)</span></li>
+                <li><a href="#">KidsOnly</a> <span>(18)</span></li>
+                <li><a href="#">AllBeauty</a> <span>(75)</span></li>
+              </ul>
+            </div>
+            <!-- END FILTER BRAND -->
+            <!-- FILTER PRICE -->
+            <div class="widget widget-filter filter-price">
+              <h4 class="widget-title">FILTER BY PRICE</h4>
+              <input type="text" class="input-range" name="price-range" value="">
+              <input type="number" class="form-control input-price" id="price-from" placeholder="From"> -
+              <input type="number" class="form-control input-price" id="price-to" placeholder="To">
+            </div>
+            <!-- END FILTER PRICE -->
+            <!-- FILTER SIZE -->
+       <!--      <div class="widget widget-filter">
+              <h4 class="widget-title">FILTER BY SIZE</h4>
+              <ul class="list-inline product-size-list">
+                <li><a href="#">XS</a></li>
+                <li class="active"><a href="#">S</a></li>
+                <li><a href="#">M</a></li>
+                <li><a href="#">L</a></li>
+                <li><a href="#">XL</a></li>
+              </ul>
+            </div> -->
+            <!-- END FILTER SIZE -->
+            <!-- FILTER COLOR -->
+           <!--  <div class="widget widget-filter">
+              <h4 class="widget-title">FILTER BY COLOR</h4>
+              <ul class="list-inline product-color-list">
+                <li>
+                  <a href="#" style="background-color: #F5A623;"></a>
+                </li>
+                <li class="active">
+                  <a href="#" style="background-color: #D0021B;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #D0021B;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #BD10E0;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #417505;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #50E3C2;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #8B572A;"></a>
+                </li>
+                <li class="active">
+                  <a href="#" style="background-color: #71787B;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #4F95AF;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #94B79C;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #1A1A1A;"></a>
+                </li>
+                <li class="active">
+                  <a href="#" style="background-color: #CBCBCB;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #C73B3B;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #B5C73B;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #FFF200;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #1BD023;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #323A93;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #933232;"></a>
+                </li>
+                <li>
+                  <a href="#" style="background-color: #329364;"></a>
+                </li>
+              </ul>
+            </div> -->
+            <!-- END FILTER COLOR -->
+          </div> <!-- this one is for col-md-2 -->
+          <div class="col-md-10">
+            <!-- BANNER CAROUSEL -->
+          <!--   <div id="carousel-banner" class="owl-carousel carousel-pagination-inside">
+              <div>
+                <a href="#"><img src="/assets/img/shop/banner1.jpg" class="img-responsive" alt="Banner 1"></a>
+              </div>
+              <div>
+                <a href="#"><img src="/assets/img/shop/banner2.jpg" class="img-responsive" alt="Banner 2"></a>
+              </div>
+            </div> -->
+            <!-- END BANNER CAROUSEL -->
+
+            <!-- PRODUCT DISPLAY -->
+            <div class="product-display">
+              <!-- DISPLAY CONTROLS -->
+              <span class="top-of-results">
+              <div class="display-controls clearfix">
+                <div class="controls-left">
+                  <form class="form-inline">
+                    <div class="form-group">
+                      <label>Sort by:</label>
+                      <select class="form-control">
+                        <option value="user_rating">User Rating (High - Low)</option>
+                        <option value="expert_rating">Expert Rating (High - Low)</option>
+                        <option value="overall_rating">Overall Rating (High - Low)</option>
+                        <option value="price_lowest">Price Lowest</option>
+                        <option value="price_highest">Price Highest</option>
+                        <option value="most_reviewed">Popularity</option>
+                      </select>
+                    </div>
+                 <!--    <div class="form-group">
+                      <label>Show:</label>
+                      <select class="form-control">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                      </select>
+                    </div> -->
+                 <!--    <div class="form-group">
+                      <label>View:</label>
+                      <label class="radio-icon" title="Grid View">
+                        <input type="radio" name="view-mode" checked="checked" title="Grid View"><span><i class="fa fa-th"></i></span>
+                      </label>
+                      <label class="radio-icon" title="List View">
+                        <input type="radio" name="view-mode" title="List View"><span><i class="fa fa-list"></i></span>
+                      </label>
+                    </div> -->
+                  </form>
+                </div>
+
+                <div class="controls-right">
+                  <ul class="pagination borderless">
+                    <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i><span class="sr-only">Previous</span></a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i><span class="sr-only">Next</span></a></li>
+                  </ul>
+                </div>
+                </span> <!-- top of results class -->
+              </div> <!-- this one is for display-controls clearfix -->
+
+              <!-- END DISPLAY CONTROLS -->
+                <!-- PRODUCT GRID -->
+              <ul class="list-inline row product-grid product-index-single">
+               <% @wines.each do |wine| %>
+                <li class="col-md-4 col-sm-6">
+                <div class="my-well-index-pg">
+                  <div class="product-item">
+                      <h4 class="title"><a href="/wines/<%= wine.id %>"><%= wine.name %></a></h4>
+                    <a href="/wines/<%= wine.id %>">
+                      <img class= "wine_image center" src="<%= wine.default_image %>" class="img-responsive" alt="Product Image">
+                    </a><br><br>
+                    <div class="product-info">
+                            <p><i>Region:</i> <b><%= wine.region.name %>, <%= wine.region.country.name %></b></p>
+                            <p><i>Wine type:</i> <b><%= wine.varietal.wine_type %></b></p>
+                            <p><i>Varietal:</i> <b><%= wine.varietal.name %></b></p>
+                            <p><i>Price:</i> <b><%= number_to_currency(wine.price) %></b></p>
+                            <br>
+                            <p><i>Expert Rating:</i> <b><%= wine.expert_rating_for_show %></b></p>
+                            <p><i>User Rating:</i> <b><%= wine.user_rating_for_show %></b>  ( based on <b><%= wine.user_rating_count %></b> reviews )</p>
+                            <p><i>Overall Rating:</i> <b><%= wine.overall_rating %></b></p><br>
+                
+                  <!--     <div class="bottom">
+                      <p class="short-description"><i><%= wine.description %></i></p>
+                      </div> -->
+                    </div>
+                  </div>
+                  </div>
+                </li>
+                <% end %>
+              </ul>
+              <!-- END PRODUCT GRID -->
+            </div>
+            <!-- PRODUCT DISPLAY -->
+          </div> <!-- this one is for col-md-10 -->
+        </div>
       </div>
     </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading panel-primary">Best Wines of 2016</div>
-        <div class="panel-body"><a href ="/pages/bestof2016"><img src="https://grapecollective.com/media/wysiwyg/castelgiocondo-003.jpg" class="img-responsive" style="width:100%" alt="Image"></a></div>
-        <div class="panel-footer"><a href ="/pages/bestof2016">Last harvest's stars</a></div>
-      </div>
-    </div>
-  </div>
-</div><br><br> -->
+
 
 <br>
 <br>
@@ -34,20 +242,41 @@
   <% @wines.each do |wine| %>
    <div class="col-md-4 col-sm-6 product-index-single">
       <div class="well">
-        <h2><a href ="/wines/<%= wine.id %>"><%= wine.producer.name %> <%= wine.vintage %> <%= wine.name %> <%= wine.varietal.name %> (<%= wine.region.name %>)</a></h2>
-        <h3>Expert Rating: <%= wine.expert_rating %></h3>
-        <h3>Wine type: <%= wine.varietal.wine_type %></h3>
-        <h3>Country: <%= wine.region.country.name %></h3>
-        <img class= "wine_image center" src=<%= wine.default_image %>>
-        <h4>Price: <%= number_to_currency(wine.price) %></h4>
-        <h4><%= wine.description %></h4>
+        <h4><a href ="/wines/<%= wine.id %>"><%= wine.name %></a></h4><br>
+        <img class= "wine_image center" src="<%= wine.default_image %>"><br>
+        <p>Region: <b><%= wine.region.name %>, <%= wine.region.country.name %></b></p>
+        <p>Wine type: <b><%= wine.varietal.wine_type %></b></p>
+        <p>Varietal: <b><%= wine.varietal.name %></b></p>
+        <p>Price: <b><%= number_to_currency(wine.price) %></b></p>
+        <p>Expert Rating: <b><%= wine.expert_rating %></b></p>
+        <p>User Rating: <b><%= wine.user_rating %></b>  ( based on <b><%= wine.user_rating_count %></b> reviews )</p>
+        <p>Overall Rating: <b><%= wine.overall_rating %></b></p><br>
+
+        <p><i><%= wine.description %></i></p>
       </div>
     </div>
   <% end %>
 </div>
 </div>
 
-    <section class="no-padding-bottom">
+
+    <!-- END FOOTER -->
+    <div class="back-to-top">
+      <a href="#top"><i class="fa fa-chevron-up"></i></a>
+    </div>
+
+  <!-- JAVASCRIPT -->
+  <script src="/assets/js/jquery-2.1.1.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/easing/jquery.easing.min.js"></script>
+  <script src="/assets/js/plugins/owl-carousel/owl.carousel.min.js"></script>
+  <script src="/assets/js/plugins/range-slider/ion.rangeSlider.min.js"></script>
+  <script src="/assets/js/bravana.js"></script>
+  <script src="/assets/js/bravana-shop.js"></script>
+
+
+
+<!--     <section class="no-padding-bottom">
       <div class="container">
         <h2 class="section-heading">DUMMY CONTENT</h2>
         <p>Compellingly repurpose superior leadership skills vis-a-vis high-quality quality vectors. Objectively repurpose value-added experiences vis-a-vis resource sucking results. Credibly productize professional infomediaries without accurate platforms. Energistically architect timely "outside the box" thinking without adaptive niches. Enthusiastically innovate focused products with.</p>
@@ -60,3 +289,4 @@
         </div>
       </div>
     </section> 
+ -->

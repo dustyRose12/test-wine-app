@@ -1,0 +1,285 @@
+<br>
+<br>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-4 col-sm-6">
+      <div class="well">
+    <img class= "wine_image_show_pg" src=<%= @wine.default_image %>>
+        <br>
+        <h4>Expert Rating: <%= @wine.expert_rating %></h4>
+        <h4>User Rating: <%= @wine.user_rating %><div class="rating"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        </div>
+        <br>
+        <h4>Overall Rating: <%= @wine.overall_rating %></h4>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="well">
+        <h3><a href ="/wines/<%= @wine.id %>"><%= @wine.producer.name %> <%= @wine.vintage %> <%= @wine.name %> <%= @wine.varietal.name %> (<%= @wine.region.name %>)</a></h3>
+        <br>
+        <h4>Wine type: <%= @wine.varietal.wine_type %></h4>
+        <h4>Varietal: <%= @wine.varietal.name %></h4>
+        <h4>Producer: <%= @wine.producer.name %></h4>
+        <h4>Vintage: <%= @wine.vintage %></h4>
+        <h4>Designation: <%= @wine.name %></h4>
+        <h4>Region: <%= @wine.region.name %>, <%= @wine.region.country.name %></h4>
+        <h5>Price: <%= number_to_currency(@wine.price) %></h5>
+       
+      </div>
+    </div>
+
+      <div class="col-md-4 col-sm-6">
+          <div class="well">
+          <h4>Tasting Notes:</h4>
+            <h5><%= @wine.description %></h5>
+          <span class="glyphicon glyphicon-heart" aria-hidden="true"></span><h4><a href="/pins/new"></a></h4> 
+          <!-- Hidden Form that creates new Pin to Cellar via pins/new -->
+          <%=form_tag "/pins", method: :post do %>
+                <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                <input type="hidden" name="wine_id" value="<%= @wine.id %>">  
+                <input type="submit" value="Add to My Cellar">
+           <% end %>
+
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+<div class="row">
+  <div class="col-md-4 col-sm-4">
+      <div class="well">
+        <h4>Rate this Wine: <div class="rating"></h4>
+        <%= form_tag "/reviews", method: :post do %>
+          <input type="hidden" name="wine_id" value="<%= @wine.id %>">
+          <select name="rating">
+            <%=  [1,2,3,4,5].each do |rating_val| %>
+                <option value= "<%= rating_val %>"><span in>☆</span></option>
+            <% end %>
+           </select> 
+           <input type="submit" value="Submit">
+        <% end %>
+         <!--  <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=1" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=2" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=3" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=4" data-method="post">☆</a></span>
+          <span><a href="/reviews?wine_id=<%= @wine.id %>&rating=5" data-method="post">☆</a></span> -->
+<!--           <span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
+ -->  </div>
+        </div>
+
+      <div class="col-md-6 col-sm-6">
+      <div class="well">
+        <h4>Review this Wine: <div class="rating"></h4>
+        <%= form_tag "/reviews", method: :post do %>
+          <input type="hidden" name="wine_id" value="<%= @wine.id %>">
+          <select name="rating">
+            <%=  [1,2,3,4,5].each do |rating_val| %>
+                <option value= "<%= rating_val %>"><span in>☆</span></option>
+            <% end %>
+           </select> 
+           <input type="submit" value="submit">
+        <% end %>     
+        </div>
+      </div>
+    </div>
+
+        </div> 
+
+
+
+
+
+    <div class="container">
+          
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="rating-block">
+          <h4>Average user rating</h4>
+          <h2 class="bold padding-bottom-7"><%= @wine.user_rating %><small>/ 5</small></h2>
+          
+          <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <h4>Rating breakdown</h4>
+        <div class="pull-left">
+          <div class="pull-left" style="width:35px; line-height:1;">
+            <div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
+          </div>
+          <div class="pull-left" style="width:180px;">
+            <div class="progress" style="height:9px; margin:8px 0;">
+              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
+              <span class="sr-only">80% Complete (danger)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pull-right" style="margin-left:10px;">1</div>
+        </div>
+        <div class="pull-left">
+          <div class="pull-left" style="width:35px; line-height:1;">
+            <div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
+          </div>
+          <div class="pull-left" style="width:180px;">
+            <div class="progress" style="height:9px; margin:8px 0;">
+              <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
+              <span class="sr-only">80% Complete (danger)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pull-right" style="margin-left:10px;">1</div>
+        </div>
+        <div class="pull-left">
+          <div class="pull-left" style="width:35px; line-height:1;">
+            <div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
+          </div>
+          <div class="pull-left" style="width:180px;">
+            <div class="progress" style="height:9px; margin:8px 0;">
+              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
+              <span class="sr-only">80% Complete (danger)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pull-right" style="margin-left:10px;">0</div>
+        </div>
+        <div class="pull-left">
+          <div class="pull-left" style="width:35px; line-height:1;">
+            <div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
+          </div>
+          <div class="pull-left" style="width:180px;">
+            <div class="progress" style="height:9px; margin:8px 0;">
+              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
+              <span class="sr-only">80% Complete (danger)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pull-right" style="margin-left:10px;">0</div>
+        </div>
+        <div class="pull-left">
+          <div class="pull-left" style="width:35px; line-height:1;">
+            <div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
+          </div>
+          <div class="pull-left" style="width:180px;">
+            <div class="progress" style="height:9px; margin:8px 0;">
+              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
+              <span class="sr-only">80% Complete (danger)</span>
+              </div>
+            </div>
+          </div>
+          <div class="pull-right" style="margin-left:10px;">0</div>
+        </div>
+      </div>      
+    </div>      
+    
+    <div class="row">
+      <div class="col-sm-7">
+        <hr/>
+        <div class="review-block">
+          <div class="row">
+            <div class="col-sm-3">
+              <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+              <div class="review-block-name"><a href="#">nktailor</a></div>
+              <div class="review-block-date">January 29, 2016<br/>1 day ago</div>
+            </div>
+            <div class="col-sm-9">
+              <div class="review-block-rate">
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="review-block-title">this was nice in buy</div>
+              <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-3">
+              <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+              <div class="review-block-name"><a href="#">nktailor</a></div>
+              <div class="review-block-date">January 29, 2016<br/>1 day ago</div>
+            </div>
+            <div class="col-sm-9">
+              <div class="review-block-rate">
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="review-block-title">this was nice in buy</div>
+              <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-3">
+              <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+              <div class="review-block-name"><a href="#">nktailor</a></div>
+              <div class="review-block-date">January 29, 2016<br/>1 day ago</div>
+            </div>
+            <div class="col-sm-9">
+              <div class="review-block-rate">
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="review-block-title">this was nice in buy</div>
+              <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    </div> <!-- /container -->
+  </body>
+</html>

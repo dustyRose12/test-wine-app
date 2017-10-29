@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   # get '/' => 'wines#index'
   get '/wines' => 'wines#index'
+  get '/scan_barcode' => 'wines#scan_barcode'
+  post '/wines/get_barcode' => 'wines#get_barcode'
 
   get '/wines/new' => 'wines#new'
   post '/wines' => 'wines#create'

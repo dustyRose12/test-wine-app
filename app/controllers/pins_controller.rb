@@ -25,13 +25,15 @@ class PinsController < ApplicationController
                                   wine_id: params[:wine_id]                                 
                                   )
     if @pin.save
-      flash[:success] = "Wine Successfully Pinned"
+      flash[:success] = "Wine Successfully Added"
       redirect_to '/cellar'
     else
       @wines = Wine.all
       @users = User.all
+      @wine = Wine.find(params[:wine_id])
 
       @errors = @pin.errors.full_messages
+      render "wines/show.html.erb"
     end
 
   end

@@ -2,3 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#barcode-scanner canvas.drawingBuffer, #barcode-scanner video.drawingBuffer {
+  display: none;
+}
+
+#barcode-scanner canvas, #barcode-scanner video {
+  width: 100%;
+  height: auto;
+}

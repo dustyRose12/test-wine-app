@@ -1,10 +1,135 @@
-<h1>Log In</h1>
-<%= form_tag '/login', method: :post do %>
-  <div>
-    Email: <input type="email" name="email">
+<html>
+<head>
+  <title>Log In | Wine-to-Table</title>
+</head>
+
+<body>
+<!-- PAGE HEADER WITH BACKGROUND IMAGE -->
+    <div id="page-header-signin" class="page-header has-background-image">
+      <div class="overlay background-img-no-overlay"></div>
+      <div class="container">
+        <h1 class="page-title page-title-new">WELCOME</h1>
+      </div>
+    </div>
+    <!-- END PAGE HEADER WITH BACKGROUND IMAGE -->
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+      <div class="container">
+      
+        <!-- SIGN IN FORM -->
+      <%= form_tag '/login', method: :post do %>
+        <div class="well well-form-wrapper center-block">
+          <p class="lead">User your username/email</p>
+          <form class="form-horizontal label-left">
+            <div class="form-group">
+              <label for="signin-username" class="col-sm-3  control-label">Username/Email*</label>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="signin-username" name="email">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="signin-password" class="col-sm-3  control-label">Password*</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" id="signin-password" name="password">
+              </div>
+            </div>
+              <div class="form-group">
+              <div class="col-sm-9 col-md-offset-3">
+                <label class="fancy-checkbox">
+                  <input type="checkbox">
+                  <span>Remember me next time</span>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg center-block"><i class="fa fa-sign-in"></i> SIGN IN</button>
+          </form>
+        </div>
+            <% end %>
+        <!-- END SIGN IN FORM -->
+      </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="assets/img/logo/bravana-default.png" alt="Bravana logo" class="logo-footer">
+            <br>
+            <br>
+            <p>Proactively aggregate B2B initiatives before extensive channels. Monotonectally extend interactive methods of empowerment through excellent applications.</p>
+            <p>No need to wait, <a href="#">send us a quote</a></p>
+            <br>
+            <address class="contact-info">
+              <p><i class="icon icon_pin_alt ico-styled text-primary"></i> 1234 North Main Street New York, NY 22222</p>
+              <p><i class="icon icon_phone ico-styled text-primary"></i> (1800) 765 - 4321</p>
+              <p><i class="icon icon_mail_alt ico-styled text-primary"></i> <a href="mailto:email@yourdomain.com">email@yourdomain.com</a></p>
+            </address>
+          </div>
+          <div class="col-md-4">
+            <h4 class="footer-heading">LATEST NEWS</h4>
+            <ul class="list-unstyled latest-news-footer">
+              <li class="news-item">
+                <h5 class="title"><a href="#">Dynamically Pontificate Highly Efficient Vortals</a></h5>
+                <span>Oct 12, 2015</span>
+              </li>
+              <li class="news-item">
+                <h5 class="title"><a href="#">Globally pontificate cross-platform resources without turnkey e-commerce</a></h5>
+                <span>Oct 11, 2015</span>
+              </li>
+              <li class="news-item">
+                <h5 class="title"><a href="#">Credibly administrate one-to-one e-tailers for diverse value.</a></h5>
+                <span>Oct 10, 2015</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4 class="footer-heading">GET CONNECTED</h4>
+            <ul class="list-inline social-icons social-icons-small">
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-rss"></i></a></li>
+              <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+            <div class="margin-bottom-50"></div>
+            <h4 class="footer-heading">NEWSLETTER</h4>
+            <p>Get the latest update from us by subscribing to our newsletter.</p>
+            <form class="newsletter-form" method="post">
+              <div class="input-group input-group-lg">
+                <input type="email" class="form-control" name="email" placeholder="youremail@domain.com">
+                <span class="input-group-btn"><button class="btn btn-primary" type="button"><i class="fa fa-spinner fa-spin"></i><span>SUBSCRIBE</span></button>
+                </span>
+              </div>
+              <div class="alert"></div>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="copyright-text left">&copy;2016 The Develovers. All Rights Reserved.</p>
+          <nav class="right">
+            <ul class="list-inline">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Terms</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </footer>
+    <!-- END FOOTER -->
+    <div class="back-to-top">
+      <a href="#top"><i class="fa fa-chevron-up"></i></a>
+    </div>
   </div>
-  <div>
-    Password: <input type="password" name="password">
-  </div>
-  <input type="submit" name="Log In">
-<% end %>
+    <!-- JAVASCRIPT -->
+  <script src="/assets/js/jquery-2.1.1.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/easing/jquery.easing.min.js"></script>
+  <script src="/assets/js/bravana.js"></script>
+
+</body>
+
+</html>

@@ -28,7 +28,9 @@ class Wine < ApplicationRecord
 
   def user_rating
 
-    wine_ratings = reviews.map { |review| review.rating }
+    wine_all_ratings = reviews.map { |review| review.rating }
+
+    wine_ratings = wine_all_ratings.compact
 
     if existing_avg_user_rating > 0
         if wine_ratings.empty?
@@ -83,6 +85,7 @@ class Wine < ApplicationRecord
   end
 
   def full_stars
+
       if self.user_rating
         return self.user_rating.truncate(0).to_i
     else
@@ -102,6 +105,14 @@ class Wine < ApplicationRecord
       return 0
     end
   
+  end
+
+  def region_empty?
+    if self.region.name == ""
+      true
+    else
+      false
+    end
   end
 
   def overall_rating

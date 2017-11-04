@@ -2,10 +2,20 @@ class PinsController < ApplicationController
 
   def index
     if current_user
-      @pins = Pin.where(user_id: current_user)
+      @pins = Pin.where(user_id: current_user.id)
     else
       flash[:warning] = "Please log in to see Your Cellar"
     end
+
+    @personal_category_count = PersonalCategory.where(user_id: current_user.id).count
+
+    @first_personal_category = PersonalCategory.where(user_id: current_user.id).first
+    
+    @all_other_personal_categories = PersonalCategory.where(user_id: current_user.id).all[1..-1]
+
+    @all_personal_categories = PersonalCategory.where(user_id: current_user.id)
+
+   
 
   end
 
@@ -32,7 +42,8 @@ class PinsController < ApplicationController
       @users = User.all
       @wine = Wine.find(params[:wine_id])
 
-      @errors = @pin.errors.full_messages
+      @errors = @pin.errors.full_messages.last
+      flash[:warning] = "#{@errors}"
       render "wines/show.html.erb"
     end
 

@@ -12672,7 +12672,8 @@ html, body {
   padding: 88px 0;
   position: relative;
   color: #fff;
-  background-image: url('../img/page-header-default-bg.jpg?1461296838');
+/*  background-image: url('../img/page-header-default-bg.jpg?1461296838');
+*/  background-image: url('../img/page-header-default-bg.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

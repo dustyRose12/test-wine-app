@@ -21,10 +21,8 @@
 <div class="container-fluid">
 <div class="row">
   <div class="col-md-4 col-sm-6">
-      <div class="well my-well">
-    <img class= "wine_image_show_pg" src=<%= @wine.default_image %>>
-        <br>
-        <br>
+      <div class="well my-well-show-pg box1and2">
+    <img src=<%= @wine.default_image %>>
        <h5 class="element1">Expert Rating: <%= @wine.expert_rating_for_show %></h5><h5 class="element2">User Rating: <%= @wine.user_rating_for_show%></h5>
         <h5 align="center">Overall Rating: <%= @wine.overall_rating_for_show %></h5>
       </div>
@@ -32,7 +30,7 @@
 
 <!-- MAIN WINE INFO BOX -->
    <div class="col-md-4 col-sm-6">
-      <div class="well my-well">
+      <div class="well my-well-show-pg box1and2">
         <h4 class="product-title"><a href ="/wines/<%= @wine.id %>"><%= @wine.name %></a></h4>
 <!--         STAR REVIEW -->   
         <p class="product-rating">
@@ -47,15 +45,21 @@
                   <i class="fa fa-star-o"></i>
             <% end %>
                    <span class="sr-only"><%= @wine.existing_avg_user_rating%> stars</span>
-                   <span class="rating-detail">( <%= @wine.user_rating %> stars based on <%= @wine.user_rating_count %> reviews )</span>
+                   <span class="rating-detail">( <%= @wine.user_rating %> based on <%= @wine.user_rating_count %> reviews )</span>
 
           <% else %><!--  if there are 0 reviews -->
                 <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><span class="rating-detail"> ( No Reviews Yet ) </span>
           <% end %>
         </p>
+        <br>
 <!--         END STAR REVIEW -->
        
-        <p>Region: <b><%= @wine.region.name %>, <%= @wine.region.country.name %></b></p>
+        <p>Region: <b>
+              <% if @wine.region_empty? %>
+                <%= @wine.region.country.name %></b></p>
+              <% else %>
+                <%= @wine.region.name %>, <%= @wine.region.country.name %></b></p>
+                <% end %>
         <p>Wine type: <b><%= @wine.varietal.wine_type %></b></p>
         <p>Varietal: <b><%= @wine.varietal.name %></b></p>
         <p>Producer: <b><%= @wine.producer.name %></b></p>
@@ -67,16 +71,13 @@
 
 <!-- DESCRIPTION & ADD TO CELLAR BOX-->
       <div class="col-md-4 col-sm-6">
-          <div class="well my-well">
+          <div class="well my-well-show-pg">
           <h4>Tasting Notes:</h4>
           <br>
             <p><%= @wine.description %></p>
             <br>
-            <br>
        <!-- Hidden Form that creates new Pin to Cellar via pins/new -->
-      <% @errors.each do |error| %>
-        <div><%= error %></div>  
-      <% end %>
+ 
           <%= form_tag "/pins", method: :post do %>
                 <input type="hidden" name="user_id" value="<%= current_user.id %>">
                 <input type="hidden" name="wine_id" value="<%= @wine.id %>">  
@@ -93,14 +94,16 @@
 <div class="row">
  <div class="col-md-12 col-sm-12">
       <div class="well review-box">
-        <h4 class="section-heading">Review this Wine: <div class="rating"></h4>
+      <% if @wine.reviews.where(user_id: current_user.id).last %>
+        <h4 class="section-heading">Edit Your Review for this Wine: <div class="rating"></h4>
 
-  
 
-        <%= form_tag '/reviews', method: :post, class: "form-horizontal" do %>
+        <%= form_tag "/reviews/#{@wine.reviews.where(user_id: current_user.id).last.id}", method: :patch, class: "form-horizontal" do %>
               <div class="form-group">
                 <label for="contact-message" class="control-label sr-only">Review</label>
                 <div class="review-block-rate">
+                <div class="rating-stars">
+              
                   <button  id="star-btn-1" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                   </button>
@@ -116,6 +119,61 @@
                   <button  id="star-btn-5" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
                     <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                   </button>
+                
+                  </div>
+              </div>
+            <input type="hidden" name="rating" id="star-rating">
+           </select> 
+                <div class="col-sm-12">
+
+                  <textarea class="form-control" id="contact-message" name="description" rows="5" cols="30" placeholder="<%= @wine.reviews.where(user_id: current_user.id).last.description %>" ></textarea>
+                  <input type="hidden" name="wine_id" value="<%= @wine.id %>">
+                </div>
+              </div>
+             
+              <div class="form-group">
+                <div class="col-sm-12">
+                  <button id="submit-button" type="submit" class="btn btn-primary button-color-seagreen edit-button-left"><i class="fa loading-icon"></i> <span>Edit Your Review</span></button>
+                </div>
+              </div>
+            
+            <% end %>
+            <%= form_tag "/reviews/#{@wine.reviews.where(user_id: current_user.id).last.id}", method: :delete, class: "form-horizontal" do %>
+
+                  <div class="form-group">
+                <div class="col-sm-12">
+                  <button id="submit-button" type="submit" class="btn button-color-delete delete-button-right"><i class="fa loading-icon"></i> <span>Delete Your Review</span></button>
+                   <input type="hidden" name="wine_id" value="<%= @wine.id %>">
+                </div>
+              </div>
+            <% end %>
+    
+       
+      <% else %> <!-- IF THE WINE HASN'T BEEN REVIEWED BY THIS USER YET -->
+        <h4 class="section-heading">Review this Wine: <div class="rating"></h4>
+
+
+        <%= form_tag '/reviews', method: :post, class: "form-horizontal" do %>
+              <div class="form-group">
+                <label for="contact-message" class="control-label sr-only">Review</label>
+                <div class="review-block-rate">
+                <div class="rating-stars">
+                  <button  id="star-btn-1" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  </button>
+                  <button  id="star-btn-2" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  </button>
+                  <button  id="star-btn-3" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  </button>
+                  <button  id="star-btn-4" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  </button>
+                  <button  id="star-btn-5" type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  </button>
+                  </div>
               </div>
             <input type="hidden" name="rating" id="star-rating">
            </select> 
@@ -131,7 +189,8 @@
                 </div>
               </div>
             
-            <% end %>  
+            <% end %> 
+            <% end %> 
         </div>
       </div>
     </div>
@@ -164,25 +223,25 @@
                      <hr/>
                         <img src="<%= review.user.profile_pic %>"" class="img-circle avatar" alt="avatar">
                         <div class="text">
+                       <span class="rating" align="left">
                           <strong class="name"><%= review.user.name %></strong>
                          <!--  <span class="rating"> -->
                        <!--  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-full"></i> -->
                       <% if review.rating < 6 %>
-                       <span class="rating">
                           <% (5-review.rating).times do %>
                                 <i class="fa fa-star-o"></i>
                           <% end %> 
                           <% review.rating.times do %>
                                 <i class="fa fa-star"></i>
                           <% end %> 
+                      <% end %>
                         </span>
-                      <% end %>
-                      <% if review.rating == nil %>
-                        <% 5.times do %>
+                 <!--      < if review.rating == nil %>
+                        < 5.times do %>
                           <i class="fa fa-star-o"></i>
-                        <% end %>
+                        < end %>
                         <h5> No Reviews Yet </h5>
-                      <% end %>
+                      < end %> -->
 
                          <!--  < if %>
                               <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><span class="rating-detail"> ( No Reviews Yet ) </span>
@@ -201,10 +260,7 @@
                   
                   <% if (Review.where(wine_id: @wine.id)).empty?  %> 
                 <div class="testimonial-rating" align="left"> <!-- this made the stars appear yellow like the other stars, but needs to be aligned left -->
-                   <div class="product-reviews">
-                   <div class="row">
                     <div class="col-sm-6">
-
                   <span class="rating">
                    <% 5.times do %>
                           <i class="fa fa-star-o"></i>
@@ -213,19 +269,18 @@
                     <p><i>No Reviews Yet</i></p>
                           </div>
                         </div>
-                      </div>
-                    </div>
+  
                    <% end %> <!-- this is the end if there are no reviews -->
 
-                  <p class="text-right"><a href="#">See all reviews <i class="fa fa-long-arrow-right"></i></a></p>
-                  </div> <!-- this the end for tab reviews -->
+<!--                   <p class="text-right"><a href="#">See all reviews <i class="fa fa-long-arrow-right"></i></a></p>
+ -->                  </div> <!-- this the end for tab reviews -->
                   <!-- product complete description -->
               <div class="tab-pane fade" id="tab-description">
                 <h2 class="sr-only">Expert Reviews</h2>
                 <% if @wine.expert_review == "N/A" %>
                     <p><i>No Reviews Yet</i></p>
                 <% else %>
-                <p><i><%= @wine.expert_review %></i></p>
+                    <p><i><%= @wine.expert_review %></i></p>
                 <% end %>
 
               </div>

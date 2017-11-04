@@ -26,7 +26,10 @@ class PersonalCategoriesController < ApplicationController
     else
       @users = User.all
 
-      @errors = @pin.errors.full_messages
+      @errors = @personal_category.errors.full_messages.last
+      flash[:warning] = "#{@errors}"
+      redirect_to '/cellar'
+
     end
 
   end
@@ -50,8 +53,10 @@ class PersonalCategoriesController < ApplicationController
     else
       @users = User.all
 
-      @errors = @pin.errors.full_messages
-      render "edit.html.erb"
+      @errors = @personal_category.errors.full_messages.last
+      flash[:warning] = "#{@errors}"
+      redirect_to "/cellar"
+
     end
   end
 

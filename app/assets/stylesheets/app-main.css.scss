@@ -30,7 +30,7 @@ a.dropdown-toggle {
 }
 .middle-navbar{
   height: 80px;
-  padding-left: 20px !important;
+  padding-left: 5px !important;
   margin-left: 0px !important;
   // vertical-align: middle !important;
 }
@@ -39,17 +39,21 @@ a.dropdown-toggle {
 
 }
 
+.my-search-bar{
+  // float: right !important;
+  vertical-align: middle !important;
+
+}
+
 .bottom-navbar{
   background-color: #93b2b4 !important;
   border-radius: 4px;
   height: 56px;
-
-
-  // background-color: #618D8F !important;
 }
 
 .bottom-navbar-text{
   color: white !important;
+  vertical-align: middle !important;
 }
 .panel-primary {
      background-color: #3f7577 !important;
@@ -82,8 +86,6 @@ img.center {
   margin-right: auto;
 }
 
-.wine_image_show_pg{
-}
 
 .rating {
   unicode-bidi: bidi-override;
@@ -149,10 +151,6 @@ img.center {
   text-decoration: underline;
 }
 
-.my-well {
-  background-color: #ffffff;
-}
-
 .my-well-index-pg {
   background-color: #f1f4f4;
   min-height: 20px;
@@ -170,6 +168,25 @@ img.center {
   max-height: 150px;
   width: auto;
 }
+
+.my-well-show-pg {
+  background-color: #ffffff;
+}
+
+.my-well-show-pg img{
+  max-height: 320px;
+  width: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20px;
+}
+
+.box1and2{
+  height: 425px;
+}
+
+
 .review-box{
   background-color: #f1f4f4;
 }
@@ -177,4 +194,102 @@ img.center {
 .top-of-results{
   display: inline !important;
 }
+
+.show-pg-rating-summary{
+  display: inline;
+}
+
+.rating-stars{
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.edit-delete-buttons-one-line{
+  display: inline !important;
+}
+
+.edit-button-left{
+  display:inline-block; margin-right: 50px; 
+  float: left !important;
+}
+
+.delete-button-right{
+  display:inline-block;
+  float: right !important;
+}
+
+.button-color-delete{
+  background-color: #c56a68 !important;
+  color: #ffffff;
+}
+
+.background-img-no-overlay{
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.page-title-new{
+    // text-align:center;
+    padding-left: 366px;
+    font-size: 38px !important;
+    color: #A9A9A9 !important;
+}
+
+.category-btn-right{
+  margin-left: 15px !important;
+}
+
+.new-category-to-right{
+  margin-left: 10px !important;
+}
+
+.add-button{
+  background-color: #93b2b4; 
+  border-color: #93b2b4 !important;
+}
+.add-button:hover {
+  background-color: #134a4d; 
+  border-color: #134a4d;
+}
+
+.edit-button{
+  background-color: #ecc3a0; 
+  border-color: #ecc3a0;
+}
+.edit-button:hover{
+  background-color: #7f601f; 
+  border-color: #7f601f;
+}
+
+.delete-button{
+  background-color: #c56a68; 
+  border-color: #c56a68;
+}
+
+.delete-button:hover {
+  background-color: #7f211f; 
+  border-color: #7f211f;
+}
+
+.my-well-cellar-pg {
+  background-color: #f1f4f4;
+  min-height: 20px;
+  // height: 800px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  overflow: hidden;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.my-well-cellar-pg img{
+  max-height: 150px;
+  width: auto;
+}
+
+.cellar-info{
+  text-indent: 30px;
+}
+
 

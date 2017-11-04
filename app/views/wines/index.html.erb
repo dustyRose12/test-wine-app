@@ -208,7 +208,12 @@
                       <img class= "wine_image center" src="<%= wine.default_image %>" class="img-responsive" alt="Product Image">
                     </a><br><br>
                     <div class="product-info">
-                            <p><i>Region:</i> <b><%= wine.region.name %>, <%= wine.region.country.name %></b></p>
+                            <p><i>Region:</i> <b>
+                                 <% if wine.region_empty? %>
+                                  <%= wine.region.country.name %></b></p>
+                                <% else %>
+                                  <%= wine.region.name %>, <%= wine.region.country.name %></b></p>
+                                <% end %>
                             <p><i>Wine type:</i> <b><%= wine.varietal.wine_type %></b></p>
                             <p><i>Varietal:</i> <b><%= wine.varietal.name %></b></p>
                             <p><i>Price:</i> <b><%= number_to_currency(wine.price) %></b></p>
@@ -235,29 +240,29 @@
     </div>
 
 
-<br>
+<!-- <br>
 <br>
 <div class="container-fluid">
 <div class="row">
-  <% @wines.each do |wine| %>
+  < @wines.each do |wine| %>
    <div class="col-md-4 col-sm-6 product-index-single">
       <div class="well">
-        <h4><a href ="/wines/<%= wine.id %>"><%= wine.name %></a></h4><br>
-        <img class= "wine_image center" src="<%= wine.default_image %>"><br>
-        <p>Region: <b><%= wine.region.name %>, <%= wine.region.country.name %></b></p>
-        <p>Wine type: <b><%= wine.varietal.wine_type %></b></p>
-        <p>Varietal: <b><%= wine.varietal.name %></b></p>
-        <p>Price: <b><%= number_to_currency(wine.price) %></b></p>
-        <p>Expert Rating: <b><%= wine.expert_rating %></b></p>
-        <p>User Rating: <b><%= wine.user_rating %></b>  ( based on <b><%= wine.user_rating_count %></b> reviews )</p>
-        <p>Overall Rating: <b><%= wine.overall_rating %></b></p><br>
+        <h4><a href ="/wines/<= wine.id %>"><= wine.name %></a></h4><br>
+        <img class= "wine_image center" src="<= wine.default_image %>"><br>
+        <p>Region: <b><= wine.region.name %>, <= wine.region.country.name %></b></p>
+        <p>Wine type: <b><= wine.varietal.wine_type %></b></p>
+        <p>Varietal: <b><= wine.varietal.name %></b></p>
+        <p>Price: <b><= number_to_currency(wine.price) %></b></p>
+        <p>Expert Rating: <b><= wine.expert_rating %></b></p>
+        <p>User Rating: <b><= wine.user_rating %></b>  ( based on <b><= wine.user_rating_count %></b> reviews )</p>
+        <p>Overall Rating: <b><= wine.overall_rating %></b></p><br>
 
-        <p><i><%= wine.description %></i></p>
+        <p><i><= wine.description %></i></p>
       </div>
     </div>
-  <% end %>
+  < end %>
 </div>
-</div>
+</div> -->
 
 
     <!-- END FOOTER -->

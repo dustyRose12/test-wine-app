@@ -1,0 +1,269 @@
+<h3 class="section-heading">My Wine Cellar</h3>
+<div class="container-fluid">
+
+<!-- NAV PILL -->
+  <h2><small>Personal Categories</small></h2>
+      <% if current_user.pins %><!--  (if the user has pins) --> 
+     <!--  START NAV PILL TABS   -->    
+            <ul class="nav nav-pills tabs-iconized" role="tablist">
+              <li class="active"><a href="#chapter0" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> All Favorite Wines</a></li>
+
+              <% if @personal_category_count > 0 %><!--  (if the user also has personal_categories) -->
+                  <li><a href="#chapter1" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> <%= @first_personal_category.name %></a></li>
+                
+                <% @all_other_personal_categories.each do |personal_category|%>
+                  <li><a href="#chapter_<%= personal_category.id %>" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> <%= personal_category.name %></a></li>
+                <% end %>
+                  <li><a href="#chapter_last" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> Add / Edit Categories</a></li>
+                  </ul><!--  nav pills list -->
+
+<!--   START NAV PILL CONTENT -->
+           <div class="tab-content">
+            <div class="tab-pane fade in active" id="chapter0">
+               
+                   <div class="row">
+                   <br>
+                     <% @pins.each do |pin| %>
+                     <div class="col-md-9 col-sm-12">
+                       <div class="col-md-6 col-sm-6 product-index-single">
+                          <div class="my-well-cellar-pg">
+                            <h4 align="center"><a href ="/wines/<%= pin.wine.id %>"><%= pin.wine.name %></h4><br>
+                            <img class= "wine_image center" src=<%= pin.wine.default_image %>></a><br>
+                                <p align="center"><i>Expert Rating:</i> <b><%= pin.wine.expert_rating_for_show %></b></p>
+                                <p align="center"><i>User Rating:</i> <b><%= pin.wine.user_rating_for_show %></b>  ( based on <b><%= pin.wine.user_rating_count %></b> reviews )</p>
+                                <p align="center"><i>Overall Rating:</i> <b><%= pin.wine.overall_rating %></b></p>
+                                <br>
+                                <p align="center"><i>Region:</i> <b>
+                                   <% if pin.wine.region_empty? %>
+                                    <%= pin.wine.region.country.name %></b></p>
+                                  <% else %>
+                                    <%= pin.wine.region.name %>, <%= pin.wine.region.country.name %></b></p>
+                                  <% end %>
+                                <p align="center"><i>Wine type:</i> <b><%= pin.wine.varietal.wine_type %></b></p>
+                                <p align="center"><i>Varietal:</i> <b><%= pin.wine.varietal.name %></b></p>
+                                <p align="center"><i>Price:</i> <b><%= number_to_currency(pin.wine.price) %></b></p>
+                                <br>
+
+                              <p><strong>Description: </strong></p>
+                              <p><%= pin.wine.description %></p>
+                              </div>
+                              </div>
+                            
+<!-- this lets you select an existing personal_category to add the pin to (by creating a new personal_category_pin): -->
+                            <div class="col-md-6 col-sm-6 product-index-single">
+                              <div class="my-well-cellar-pg">
+
+                             <% if current_user %>
+                                  <!-- DISPLAY current Personal Categories that this Pin belongs to: -->
+                                  <p><strong>Personal Categories this Wine belongs to: </p></strong>
+                                  <% if pin.personal_categories.empty? %>
+                                            <ul>
+                                              <strong><li class="fa fa-envira"> N/A</li></strong>
+                                            </ul>
+                                    <% else %>          
+                                        <% pin.personal_categories.each do |per_cat| %>
+                                            <ul>
+                                          <!--   DELETE PIN FROM CAT LINK-->
+                                                <% pcps = pin.personal_category_pins %>
+                                                <% pcps.each do |pcp| %>
+                                                        <% if pcp.personal_category %>
+                                                          <% if pcp.personal_category.name == per_cat.name %>
+                                                                 <% @pcp_id = pcp.id %>
+                                                          <% end %>
+                                                        <% end %>
+                                                <% end %>   
+                                                 <%= form_tag "/personal_category_pins/#{@pcp_id}", method: :delete do %>
+                                              <p><strong><li class="fa fa-envira"> <%=  per_cat.name %>
+                                              
+                                                    <input type="hidden" name="pin_id" value="<%= pin.id %>">
+                                                    <input type="hidden" name="personal_category_id" value="<%= per_cat.id %>">  
+                                                    <input type="submit" value="( Delete Wine from this Category )" class="button-as-link link-addtowishlist"> 
+                                                        </strong></p>
+                                              </li>
+                                               <% end %>
+                                            </ul>
+                                        <% end %>
+                                  <% end %>
+                                  <br>
+                                        <!-- ADD to other CATs -->
+                             <p><strong>Add Wine to Personal Categories: </p></strong>
+                                    <%= form_tag "/personal_category_pins", method: :post do %>
+                                      <input type="hidden" name="pin_id" value="<%= pin.id %>">
+                                      <div class="row">
+                                      <div class="col-md-6">
+                                      <select class="form-control" name="personal_category_id" value="personal_category_id">
+                                      <%=  current_user.personal_categories.each do |personal_category| %>
+                                            <option value= "<%= personal_category.id %>"><span><%= personal_category.name %></span></option>
+                                        <% end %>
+                                       </select> 
+                                       </div>
+                                       <div class="col-md-6">
+                                       <input type="submit" class="btn btn-primary btn-fullrounded category-btn-right add-button" value="Add to Category">
+                                       </div>
+                                       </div>
+                                      <% end %>
+
+                                  <br>  
+                           <!--        Delete PIN from Cellar -->
+                                  <%= link_to "Delete Wine from Cellar", "/pins/#{pin.id }", method: :delete, class: "btn btn-primary btn-fullrounded category-btn-right delete-button pull-right" %>  
+                               <% else %>
+                                    <p>Please <a href="/login">Login</a> to Edit Cellar</p>
+                               <% end %>
+                               </div>
+                              
+                              </div><!--  this ends the second column  -->
+                            </div> <!-- this ends the col-md-9 -->
+                          <% end %>
+                        </div> <!-- for the div class row starting the pins loop -->
+                  </div> <!-- for the chapter0 div -->
+
+              <div class="tab-pane fade" id="chapter1">
+                  <h4><%= @first_personal_category.name %></h4>
+                    <p>This is gonna be a grid of wines in this category</p>
+                  </div>
+         
+                  <% @all_other_personal_categories.each do |personal_category|%>
+                      <div class="tab-pane fade" id="chapter_<%= personal_category.id %>">
+                        <h4><%= personal_category.name %></h4>
+                        <p>This is gonna be a grid of wines in this category</p>
+                        </div> 
+                  <% end %>
+                    <!-- this creates a new personal_category from scratch to add the pin to: -->
+                    <div class="tab-pane fade" id="chapter_last">
+                    <br>
+                    <h4>Add New Category:</h4>
+                      <%= form_tag "/personal_categories", method: :post do %>
+                      <p class="form-inline"><strong><i>Enter Category Name:   <input type="text" class ="new-category-to-right" name="name"></strong></i>
+                      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                      <input type="submit" class="btn btn-primary btn-fullrounded category-btn-right add-button" value="Create New Category"></p>
+                    <% end %>
+                    <hr/>
+                    <h4>Edit / Delete Category:</h4>
+                   <!--  select dropdown version: -->
+                      <div class="form-group">
+                        <div class="col-md-9">
+                          <p class="form-inline"><strong><i>Select Category:  </strong></i>
+                          <select class="form-control">
+                          <% @all_personal_categories.each do |personal_category| %>
+                              <option value="<%= personal_category.id %>"><%= personal_category.name %></option>
+                            <% end %>
+                          </select></p>
+
+                      <!--   <= link_to "Edit Personal Category", "/personal_categories/#{personal_category.id}/edit", class: "btn btn-warning" %>
+                        <= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-danger" %> --> 
+                      </div>
+                    </div>
+
+                   <!--     list all with edit / delete buttons version:  -->
+                   <div class="col-md-12">
+                   <hr/>
+                    <% @all_personal_categories.each do |personal_category| %>
+                        <%= form_tag "/personal_categories/#{personal_category.id}", method: :patch do %>
+                          <p class="form-inline"><strong><%= personal_category.name %>:   <input type="text" class ="new-category-to-right" name="name"></strong>
+                          <input class="btn btn-primary btn-fullrounded category-btn-right edit-button" type="submit" value="Edit Category">
+            <!--          <= link_to "Edit Category", "/personal_categories/#{personal_category.id}", method: :patch, class: "btn btn-primary btn-fullrounded category-btn-right edit-button" %>  -->
+                      <%= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-primary btn-fullrounded category-btn-right delete-button" %> 
+                        <% end %>
+                      </p>
+                    <% end %>
+                    </div>
+
+
+                  </div>
+              </div><!--  (this is div tab content) -->
+            <% end %> <!-- ends the if personal categories count loop -->
+
+
+
+
+            <% elsif current_user.pins.blank? %><!--  (if the user has no pins) -->
+           <!--  NAV PILLS -->
+             <ul class="nav nav-pills tabs-iconized" role="tablist">
+              <li class="active"><a href="#chapter0" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> All Favorite Wines</a></li>
+              <% if @personal_category_count > 0 %><!--  (if the user also has personal_categories) -->
+                  <li><a href="#chapter1" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> <%= @first_personal_category.name %></a></li>
+                
+                <% @all_other_personal_categories.each do |personal_category|%>
+                  <li><a href="#chapter_<%= personal_category.id %>" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> <%= personal_category.name %></a></li>
+                <% end %>
+                  <li><a href="#chapter_last" role="tab" data-toggle="tab"><i class="fa fa-envira"></i> Add / Edit Categories</a></li>
+                  </ul><!--  nav pills -->
+           <!--  PILLS CONTENT --> 
+              <div class="tab-content">
+
+                <div class="tab-pane fade in active" id="chapter0">
+                  <p>Add some wines to your Cellar!</p>
+              </div>
+
+ <!-- this creates a new personal_category from scratch to add the pin to: -->
+                    <div class="tab-pane fade" id="chapter_last">
+                    <br>
+                    <h4>Add New Category:</h4>
+                      <%= form_tag "/personal_categories", method: :post do %>
+                      <p class="form-inline"><strong><i>Enter Category Name:   <input type="text" class ="new-category-to-right" name="name"></strong></i>
+                      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                      <input type="submit" class="btn btn-primary btn-fullrounded category-btn-right add-button" value="Create New Category"></p>
+                    <% end %>
+                    <hr/>
+                    <h4>Edit / Delete Category:</h4>
+                   <!--  select dropdown version: -->
+                      <div class="form-group">
+                        <div class="col-md-9">
+                          <p class="form-inline"><strong><i>Select Category:  </strong></i>
+                          <select class="form-control">
+                          <% @all_personal_categories.each do |personal_category| %>
+                              <option value="<%= personal_category.id %>"><%= personal_category.name %></option>
+                            <% end %>
+                          </select></p>
+
+                      <!--   <= link_to "Edit Personal Category", "/personal_categories/#{personal_category.id}/edit", class: "btn btn-warning" %>
+                        <= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-danger" %> --> 
+                      </div>
+                    </div>
+
+                   <!--     list all with edit / delete buttons version:  -->
+                   <div class="col-md-12">
+                   <hr/>
+                    <% @all_personal_categories.each do |personal_category| %>
+                        <%= form_tag "/personal_categories/#{personal_category.id}", method: :patch do %>
+                          <p class="form-inline"><strong><%= personal_category.name %>:   <input type="text" class ="new-category-to-right" name="name"></strong>
+                          <input class="btn btn-primary btn-fullrounded category-btn-right edit-button" type="submit" value="Edit Category">
+            <!--          <= link_to "Edit Category", "/personal_categories/#{personal_category.id}", method: :patch, class: "btn btn-primary btn-fullrounded category-btn-right edit-button" %>  -->
+                      <%= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-primary btn-fullrounded category-btn-right delete-button" %> 
+                        <% end %>
+                      </p>
+                    <% end %>
+                    </div>
+                  </div>
+              </div><!--  (this is div tab content) -->
+           <% end %> <!-- ends the if user has pins or no pins else -->
+
+
+      <!--  <div class="tab-content">
+              <div class="tab-pane fade in active" id="chapter1">
+                <h4>Tab Chapter 1</h4>
+                <p>Phosfluorescently revolutionize viral leadership via turnkey technology. Synergistically monetize intermandated strategic theme areas through multimedia based.</p>
+              </div>
+              <div class="tab-pane fade" id="chapter2">
+                <h4>Tab Chapter 2</h4>
+                <p>Continually mesh resource sucking synergy before sustainable e-commerce. Efficiently incentivize leading-edge alignments with go forward expertise. Conveniently myocardinate leveraged process improvements through progressive models. Collaboratively.</p>
+              </div>
+              <div class="tab-pane fade" id="chapter3">
+                <h4>Tab Chapter 3</h4>
+                <p>Competently implement bricks-and-clicks collaboration and idea-sharing rather than visionary internal or "organic" sources. Rapidiously matrix premium core competencies for.</p>
+              </div>
+              <div class="tab-pane fade" id="chapter4">
+                <h4>Tab Chapter 4</h4>
+                <p>Dramatically supply adaptive imperatives and stand-alone content. Seamlessly pursue exceptional solutions after web-enabled potentialities. Synergistically negotiate alternative best practices whereas professional "outside the box" thinking. Completely expedite dynamic.</p>
+              </div>
+            </div> -->
+            <!-- END NAV PILL -->
+
+      
+       <% else %>
+              <p>Please <a href="/login">Login</a> to Edit Cellar</p>
+        <% end %>
+      
+</div>
+
+

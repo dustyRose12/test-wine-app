@@ -17,9 +17,18 @@ class PersonalCategoryPinsController < ApplicationController
                                                                       pin_id: params[:pin_id],
                                                                       personal_category_id: params[:personal_category_id]
                                                                       )
-    p "ERRORS"
-    p @personal_category_pin.errors.full_messages
-    redirect_to "/cellar"
+
+      if @personal_category_pin.save
+        flash[:success] = "Wine successfully added to personal category"
+        redirect_to '/cellar'
+    else
+      @users = User.all
+
+      # @errors = @personal_category_pin.errors.full_messages.last
+      flash[:warning] = "This wine already belongs to this personal category"
+      redirect_to '/cellar'
+
+    end
 
 
   end
@@ -46,6 +55,7 @@ class PersonalCategoryPinsController < ApplicationController
     personal_category_pin = PersonalCategoryPin.find(params[:id])
     personal_category_pin.destroy
 
+    flash[:warning] = "Wine successfully removed from this Category"
     redirect_to "/cellar"
   end
 

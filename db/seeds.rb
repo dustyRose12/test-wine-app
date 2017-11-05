@@ -190,8 +190,14 @@ wines.each do |wine_hash|
 
     if varietal_from_hash == "Other Red Blends"
       varietal_from_hash = "Red Blends"
+    elsif varietal_from_hash == "Other Red Wine"
+      varietal_from_hash = "Red Blends"
     elsif varietal_from_hash == "Other White Blends"
       varietal_from_hash = "White Blends"
+    elsif varietal_from_hash == "Other White Wine"
+      varietal_from_hash = "White Blends"
+    elsif varietal_from_hash == "Albarino"
+      varietal_from_hash = "Albariño"
     end
 
 

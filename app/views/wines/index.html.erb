@@ -16,170 +16,111 @@
     <div class="page-content">
       <div class="container">
         <div class="row">
-          <div class="col-md-2">
-            <!-- FILTER CATEGORY -->
-            <div class="widget widget-filter">
-              <h4 class="widget-title">FILTER BY VARIETAL</h4>
-              <ul class="list-unstyled product-attribute-link-list">
-                <li>
-                  <a href="">Women</a> <span>(44)</span>
-                  <ul class="list-unstyled product-subcategory-list">
-                    <li>- <a href="#">Dress</a> <span>(30)</span></li>
-                    <li>- <a href="#">Shoes</a> <span>(14)</span></li>
-                  </ul>
-                </li>
-                <li><a href="#">Men</a> <span>(35)</span></li>
-                <li><a href="#">Kids</a> <span>(26)</span></li>
-                <li><a href="#">Accessories</a> <span>(67)</span></li>
-                <li class="active"><a href="#">Best Deal</a> <span>(78)</span></li>
-              </ul>
-            </div>
-            <!-- END FILTER CATEGORY -->
-            <!-- FILTER BRAND -->
-            <div class="widget widget-filter">
-              <h4 class="widget-title">FILTER BY COUNTRY</h4>
-              <ul class="list-unstyled product-attribute-link-list">
-                <li class="active"><a href="#">JFashion</a> <span>(23)</span></li>
-                <li><a href="#">ABC</a> <span>(45)</span></li>
-                <li><a href="#">KidsOnly</a> <span>(18)</span></li>
-                <li><a href="#">AllBeauty</a> <span>(75)</span></li>
-              </ul>
-            </div>
-            <!-- END FILTER BRAND -->
-            <!-- FILTER PRICE -->
-            <div class="widget widget-filter filter-price">
-              <h4 class="widget-title">FILTER BY PRICE</h4>
-              <input type="text" class="input-range" name="price-range" value="">
-              <input type="number" class="form-control input-price" id="price-from" placeholder="From"> -
-              <input type="number" class="form-control input-price" id="price-to" placeholder="To">
-            </div>
-            <!-- END FILTER PRICE -->
-            <!-- FILTER SIZE -->
-       <!--      <div class="widget widget-filter">
-              <h4 class="widget-title">FILTER BY SIZE</h4>
-              <ul class="list-inline product-size-list">
-                <li><a href="#">XS</a></li>
-                <li class="active"><a href="#">S</a></li>
-                <li><a href="#">M</a></li>
-                <li><a href="#">L</a></li>
-                <li><a href="#">XL</a></li>
-              </ul>
-            </div> -->
-            <!-- END FILTER SIZE -->
-            <!-- FILTER COLOR -->
-           <!--  <div class="widget widget-filter">
-              <h4 class="widget-title">FILTER BY COLOR</h4>
-              <ul class="list-inline product-color-list">
-                <li>
-                  <a href="#" style="background-color: #F5A623;"></a>
-                </li>
-                <li class="active">
-                  <a href="#" style="background-color: #D0021B;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #D0021B;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #BD10E0;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #417505;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #50E3C2;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #8B572A;"></a>
-                </li>
-                <li class="active">
-                  <a href="#" style="background-color: #71787B;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #4F95AF;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #94B79C;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #1A1A1A;"></a>
-                </li>
-                <li class="active">
-                  <a href="#" style="background-color: #CBCBCB;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #C73B3B;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #B5C73B;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #FFF200;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #1BD023;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #323A93;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #933232;"></a>
-                </li>
-                <li>
-                  <a href="#" style="background-color: #329364;"></a>
-                </li>
-              </ul>
-            </div> -->
-            <!-- END FILTER COLOR -->
-          </div> <!-- this one is for col-md-2 -->
-          <div class="col-md-10">
-            <!-- BANNER CAROUSEL -->
-          <!--   <div id="carousel-banner" class="owl-carousel carousel-pagination-inside">
-              <div>
-                <a href="#"><img src="/assets/img/shop/banner1.jpg" class="img-responsive" alt="Banner 1"></a>
-              </div>
-              <div>
-                <a href="#"><img src="/assets/img/shop/banner2.jpg" class="img-responsive" alt="Banner 2"></a>
-              </div>
-            </div> -->
-            <!-- END BANNER CAROUSEL -->
+          <div class="col-md-2"> <!-- (beginning of sidebar filters) -->
 
+            <!-- FILTER by WINE_TYPE into VARIETAL -->
+            <% if params[:user_wine_type].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">Filter by: VARIETAL</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.varietal_types(params[:user_wine_type]).each do |varietal| %>
+                  <li>
+                    <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_varietal=<%= varietal %>"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+            <!-- END FILTER -->
+
+            <!-- FILTER by WINE_TYPE into COUNTRY only-->
+            <% if params[:user_wine_type].present? && !params[:user_varietal].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">Filter by: COUNTRY</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+              <% Wine.country_types(params[:user_wine_type]).each do |country| %>
+                 <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_country=<%= country %>"><%= country %></a>
+
+                </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+            <!-- END FILTER -->
+
+             <!-- FILTER by WINE_TYPE into VARIETAL THEN COUNTRY -->
+            <% if params[:user_wine_type].present? && params[:user_varietal].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">Filter by: COUNTRY</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+              <% Wine.country_types(params[:user_wine_type]).each do |country| %>
+                 <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_varietal=<%= params[:user_varietal] %>&user_country=<%= country %>"><%= country %></a>
+
+                </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+            <!-- END FILTER -->
+
+                   <!-- FILTER by WINE_TYPE into REGION only-->
+            <% if params[:user_wine_type].present? && !params[:user_varietal].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">Filter by: REGION</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+              <% Wine.region_types(params[:user_wine_type]).each do |region| %>
+                 <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_region=<%= region %>"><%= region %></a>
+                </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+             <!-- END FILTER -->
+
+          <!-- FILTER by WINE_TYPE into VARIETAL THEN REGION -->
+            <% if params[:user_wine_type].present? && params[:user_varietal].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">Filter by: REGION</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+              <% Wine.region_types(params[:user_wine_type]).each do |region| %>
+                 <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_varietal=<%= params[:user_varietal] %>&user_region=<%= region %>"><%= region %></a>
+                </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %>
+            <!-- END FILTER -->
+      
+
+
+            </div> <!-- this one is for col-md-2 (beginning of sidebar filters) -->
+
+          <div class="col-md-10"><!--  (beginning of wine grid) -->
             <!-- PRODUCT DISPLAY -->
             <div class="product-display">
-              <!-- DISPLAY CONTROLS -->
+              <!-- DISPLAY CONTROLS --> <!-- FILTERING FROM TOP DROPDOWN -->
               <span class="top-of-results">
               <div class="display-controls clearfix">
                 <div class="controls-left">
-                  <form class="form-inline">
+                <%= form_tag "/wines" , method: :get, class: "form-inline" do %>
                     <div class="form-group">
                       <label>Sort by:</label>
-                      <select class="form-control">
-                        <option value="user_rating">User Rating (High - Low)</option>
-                        <option value="expert_rating">Expert Rating (High - Low)</option>
-                        <option value="overall_rating">Overall Rating (High - Low)</option>
+                      <input type="hidden" name="user_wine_type" value="<%= params[:user_wine_type] %>">
+                      <input type="hidden" name="user_varietal" value="<%= params[:user_varietal] %>">
+                      
+                      <select class="form-control" name="dropdown_filter">
+                        <option value="user_rating_high">User Rating (High - Low)</option>
+                        <option value="expert_rating_high">Expert Rating (High - Low)</option>
+                        <option value="overall_rating_high">Overall Rating (High - Low)</option>
                         <option value="price_lowest">Price Lowest</option>
                         <option value="price_highest">Price Highest</option>
                         <option value="most_reviewed">Popularity</option>
                       </select>
                     </div>
-                 <!--    <div class="form-group">
-                      <label>Show:</label>
-                      <select class="form-control">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="40">40</option>
-                      </select>
-                    </div> -->
-                 <!--    <div class="form-group">
-                      <label>View:</label>
-                      <label class="radio-icon" title="Grid View">
-                        <input type="radio" name="view-mode" checked="checked" title="Grid View"><span><i class="fa fa-th"></i></span>
-                      </label>
-                      <label class="radio-icon" title="List View">
-                        <input type="radio" name="view-mode" title="List View"><span><i class="fa fa-list"></i></span>
-                      </label>
-                    </div> -->
-                  </form>
+                    <button type="submit">Apply</button>
+                  <% end %>
+
+        
                 </div>
 
                 <div class="controls-right">
@@ -197,6 +138,7 @@
               </div> <!-- this one is for display-controls clearfix -->
 
               <!-- END DISPLAY CONTROLS -->
+
                 <!-- PRODUCT GRID -->
               <ul class="list-inline row product-grid product-index-single">
                <% @wines.each do |wine| %>
@@ -240,29 +182,6 @@
     </div>
 
 
-<!-- <br>
-<br>
-<div class="container-fluid">
-<div class="row">
-  < @wines.each do |wine| %>
-   <div class="col-md-4 col-sm-6 product-index-single">
-      <div class="well">
-        <h4><a href ="/wines/<= wine.id %>"><= wine.name %></a></h4><br>
-        <img class= "wine_image center" src="<= wine.default_image %>"><br>
-        <p>Region: <b><= wine.region.name %>, <= wine.region.country.name %></b></p>
-        <p>Wine type: <b><= wine.varietal.wine_type %></b></p>
-        <p>Varietal: <b><= wine.varietal.name %></b></p>
-        <p>Price: <b><= number_to_currency(wine.price) %></b></p>
-        <p>Expert Rating: <b><= wine.expert_rating %></b></p>
-        <p>User Rating: <b><= wine.user_rating %></b>  ( based on <b><= wine.user_rating_count %></b> reviews )</p>
-        <p>Overall Rating: <b><= wine.overall_rating %></b></p><br>
-
-        <p><i><= wine.description %></i></p>
-      </div>
-    </div>
-  < end %>
-</div>
-</div> -->
 
 
     <!-- END FOOTER -->

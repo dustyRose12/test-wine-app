@@ -166,6 +166,15 @@ class Wine < ApplicationRecord
 
   end
 
+  def expert_rating_for_sort
+    if expert_rating
+      expert_rating
+    else
+      return 0
+    end
+
+  end
+
   def user_rating_for_show
     if user_rating
       user_rating
@@ -173,6 +182,30 @@ class Wine < ApplicationRecord
       return "N/A"
     end
 
+  end
+
+  def price_for_sort_lowest
+    if price
+      price
+    else
+      return 10000 #made this really high so that the N/A prices show up at the end of the results
+    end
+  end
+
+   def price_for_sort_highest
+    if price
+      price
+    else
+      return 0 #made this really low so that the N/A prices show up at the end of the results
+    end
+  end
+
+  def price_for_show
+    if price
+      price
+    else
+      return "N/A"
+    end
   end
 
 
@@ -187,11 +220,13 @@ class Wine < ApplicationRecord
 
   end
 
-  #FINISH LATER, need to add Country search
   def self.search(search_term)
       wines = []
 
-      if Wine.joins(:producer).where("producers.name iLIKE ?", "%#{search_term}%").any? #search by Producer
+      if Wine.by_country(search_term).any? #search by Country
+        wines <<  Wine.by_country(search_term)   
+
+      elsif Wine.joins(:producer).where("producers.name iLIKE ?", "%#{search_term}%").any? #search by Producer
         wines << Wine.joins(:producer).where("producers.name iLIKE ?", "%#{search_term}%")
 
       elsif Wine.where("name iLIKE ?", "%#{search_term}%").any? #search by Name
@@ -203,13 +238,45 @@ class Wine < ApplicationRecord
       elsif Wine.joins(:region).where("regions.name iLIKE ?", "%#{search_term}%").any? #search by Region
         wines << Wine.joins(:region).where("regions.name iLIKE ?", "%#{search_term}%") 
 
-      # search by Country, NOT WORKING  
-      # elsif Wine.includes(:region).where("regions.country.name iLIKE ?", "%#{search_term}%").any? #search by Country
-      #   wines << Wine.includes(:region).where("region.countries.name iLIKE ?", "%#{search_term}%") 
-
       end
 
       return wines.flatten.uniq
       
   end
+  
+  def self.by_country(country_name)
+    country = Country.where('name ILIKE ?', "%#{country_name.downcase}%").first
+    return [] unless country
+    Wine.includes(:region).where(regions: { country_id: country.id } )
+  end
+
+  def self.varietal_types(wine_type)
+    if wine_type == 'Red'
+      ['Bordeaux Red Blends', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Montepulciano','Pinot Noir', 'Red Blends', 'Sangiovese', 'Syrah/Shiraz', 'Tempranillo', 'Zinfandel']
+    elsif wine_type == 'White'
+      ['Albariño','Chardonnay', 'Chenin Blanc', 'Pinot Gris/Grigio', 'Riesling', 'Sauvignon Blanc', 'Viognier', 'White Blends']
+    elsif wine_type == 'Rosé'
+      ['Rosé']
+    elsif wine_type == 'Sparkling and Champagne'
+      ['Sparkling and Champagne']
+    elsif wine_type == 'Dessert'
+      ['Dessert']
+    elsif wine_type == 'Sherry, Port, Madeira'
+      ['Sherry, Port, Madeira']
+    end
+  end
+
+   def self.country_types(wine_type)
+    if wine_type == 'Red' or wine_type == 'White' or wine_type == 'Rosé' or wine_type == 'Sparkling and Champagne' or wine_type == 'Dessert' or wine_type == 'Sherry, Port, Madeira'
+      ['Argentina', 'Australia', 'Chile', 'France', 'Germany', 'Italy', 'New Zealand', 'Portugal', 'Spain', 'South Africa', 'US']
+    end
+  end
+
+    def self.region_types(wine_type)
+      if wine_type == 'Red' or wine_type == 'White' or wine_type == 'Rosé' or wine_type == 'Sparkling and Champagne' or wine_type == 'Dessert' or wine_type == 'Sherry, Port, Madeira'
+        ['Alsace', 'Bordeaux', 'Burgundy', 'Champagne', 'Jerez', 'Napa Valley, California', 'Mosel', 'Rioja', 'Sonoma, California', 'Tuscany', 'Washington']
+     end
+   end
+
+
 end

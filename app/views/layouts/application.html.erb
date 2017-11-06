@@ -151,12 +151,12 @@
             <li class="dropdown">
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">WINE TYPE <i class="fa fa-angle-down"></i></a>
               <ul class="dropdown-menu" role="menu">
-                  <li><a href="/wines/?user_wine_type=Red">Red</a></li> 
-                  <li><a href="/wines/?user_wine_type=White">White</a></li>
-                  <li><a href="/wines/?user_wine_type=Rosé">Rosé</a></li>
-                  <li><a href="/wines/?user_wine_type=Sparkling and Champagne">Sparkling & Champagne</a></li>
-                  <li><a href="/wines/?user_wine_type=Dessert">Dessert</a></li>
-                  <li><a href="/wines/?user_wine_type=Sherry, Port, Madeira">Sherry, Port, Madeira</a></li>
+                  <li><a href="/wines/?user_wine_type=Red&from_type=true">Red</a></li> 
+                  <li><a href="/wines/?user_wine_type=White&from_type=true">White</a></li>
+                  <li><a href="/wines/?user_wine_type=Rosé&from_type=true">Rosé</a></li>
+                  <li><a href="/wines/?user_wine_type=Sparkling and Champagne&from_type=true">Sparkling & Champagne</a></li>
+                  <li><a href="/wines/?user_wine_type=Dessert&from_type=true">Dessert</a></li>
+                  <li><a href="/wines/?user_wine_type=Sherry, Port, Madeira&from_type=true">Sherry, Port, Madeira</a></li>
               </ul>
             </li>
 
@@ -164,7 +164,7 @@
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">VARIETAL <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown-menu">
                     <% Varietal.all.each do |varietal| %>
-                      <li><a href="/wines/?user_varietal=<%= varietal.name %>"><%=varietal.name%></a></li>
+                      <li><a href="/wines/?user_varietal=<%= varietal.name %>&from_var=<%= true %>"><%=varietal.name%></a></li>
                     <% end%>
                 </ul>
               </li>
@@ -173,7 +173,7 @@
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">COUNTRY <i class="fa fa-angle-down"></i></a>
               <ul class="dropdown-menu">
                 <% Country.all.each do |country| %>
-                    <li><a href="/wines/?user_country=<%= country.id %>"><%=country.name%></a></li>
+                    <li><a href="/wines/?user_country=<%= country.id %>&from_country=<%= true %>"><%=country.name%></a></li>
                 <% end%>
               </ul>
             </li>
@@ -182,7 +182,9 @@
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">REGION <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown-menu">
                     <% Region.all.each do |region| %>
-                       <li><a href="/wines/?user_region=<%= region.name %>"><%=region.name%></a></li>
+                      <% if region.name.present? %>
+                       <li><a href="/wines/?user_region=<%= region.name %>&from_region=true"><%=region.name%></a></li>
+                       <% end %>
                     <% end%>
                 </ul>
             </li>

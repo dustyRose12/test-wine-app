@@ -245,38 +245,63 @@ class Wine < ApplicationRecord
   end
   
   def self.by_country(country_name)
-    country = Country.where('name ILIKE ?', "%#{country_name.downcase}%").first
+    country = Country.where('name ILIKE ?', "%#{country_name}%").first
     return [] unless country
     Wine.includes(:region).where(regions: { country_id: country.id } )
   end
 
-  def self.varietal_types(wine_type)
-    if wine_type == 'Red'
+  def self.varietal_types(param)
+    if param == 'Red'
       ['Bordeaux Red Blends', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Montepulciano','Pinot Noir', 'Red Blends', 'Sangiovese', 'Syrah/Shiraz', 'Tempranillo', 'Zinfandel']
-    elsif wine_type == 'White'
+    elsif param == 'White'
       ['Albariño','Chardonnay', 'Chenin Blanc', 'Pinot Gris/Grigio', 'Riesling', 'Sauvignon Blanc', 'Viognier', 'White Blends']
-    elsif wine_type == 'Rosé'
+    elsif param == 'Rosé'
       ['Rosé']
-    elsif wine_type == 'Sparkling and Champagne'
+    elsif param == 'Sparkling and Champagne'
       ['Sparkling and Champagne']
-    elsif wine_type == 'Dessert'
-      ['Dessert']
-    elsif wine_type == 'Sherry, Port, Madeira'
-      ['Sherry, Port, Madeira']
+    elsif param == 'Dessert'
+      ['Other: Dessert']
+    elsif param == 'Sherry, Port, Madeira'
+      ['Other: Sherry, Port, Madeira']
+    elsif param
+      ['Albariño', 'Chardonnay', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Montepulciano','Pinot Gris/Grigio','Pinot Noir', 'Red Blends', 'Riesling', 'Sangiovese', 'Sauvignon Blanc', 'Syrah/Shiraz', 'Tempranillo', 'Zinfandel', 'White Blends']
     end
   end
 
-   def self.country_types(wine_type)
-    if wine_type == 'Red' or wine_type == 'White' or wine_type == 'Rosé' or wine_type == 'Sparkling and Champagne' or wine_type == 'Dessert' or wine_type == 'Sherry, Port, Madeira'
-      ['Argentina', 'Australia', 'Chile', 'France', 'Germany', 'Italy', 'New Zealand', 'Portugal', 'Spain', 'South Africa', 'US']
+   def self.country_types(param)
+    if param == 'Red' or param == 'White' or param == 'Rosé' or param == 'Sparkling and Champagne' or param == 'Dessert' or param == 'Sherry, Port, Madeira'
+     return ['Argentina', 'Australia', 'Chile', 'France', 'Germany', 'Italy', 'New Zealand', 'Portugal', 'Spain', 'South Africa', 'US']
+    end
+    Varietal.all.each do |var|
+      if param == var.name
+        return ['Argentina', 'Australia', 'Chile', 'France', 'Germany', 'Italy', 'New Zealand', 'Portugal', 'Spain', 'South Africa', 'US']
+      end
     end
   end
 
-    def self.region_types(wine_type)
-      if wine_type == 'Red' or wine_type == 'White' or wine_type == 'Rosé' or wine_type == 'Sparkling and Champagne' or wine_type == 'Dessert' or wine_type == 'Sherry, Port, Madeira'
-        ['Alsace', 'Bordeaux', 'Burgundy', 'Champagne', 'Jerez', 'Napa Valley, California', 'Mosel', 'Rioja', 'Sonoma, California', 'Tuscany', 'Washington']
-     end
+  def self.region_types(param)
+      if param == 'Red' or param == 'White' or param == 'Rosé' or param == 'Sparkling and Champagne' or param == 'Dessert' or param == 'Sherry, Port, Madeira'
+        return ['Alsace', 'Bordeaux', 'Burgundy', 'Champagne', 'Jerez', 'Napa Valley, California', 'Mosel', 'Rioja', 'Sonoma, California', 'Tuscany', 'Washington']
+     else
+        Varietal.all.each do |var|
+         if param == var.name
+          return ['Alsace', 'Bordeaux', 'Burgundy', 'Champagne', 'Jerez', 'Napa Valley, California', 'Mosel', 'Rioja', 'Sonoma, California', 'Tuscany', 'Washington']
+         end
+        end
+      end
+
    end
+
+   def self.wine_type(param)
+    # Country.all.each do |country|
+      if param
+        return ['Red', 'White', 'Rosé', 'Sparkling and Champagne', 'Dessert', 'Sherry, Port, Madeira']
+      end
+    # end
+
+  end
 
 
 end
+
+

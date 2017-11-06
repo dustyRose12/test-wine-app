@@ -20,10 +20,18 @@ class WinesController < ApplicationController
     sort_order = params[:sort_order].present? && params[:sort_order]
     dropdown_filter = params[:dropdown_filter].present? && params[:dropdown_filter]
 
+    from_type = params[:from_type].present? && params[:from_type]
+    from_var = params[:from_var].present? && params[:from_var]
+    from_country = params[:from_country].present? && params[:from_country]
+    from_region = params[:from_region].present? && params[:from_region]
+
+
+    user_wine_type_from_v = params[:user_wine_type_from_v].present? && params[:user_wine_type_from_v]
+
+
     page_trending = params[:page_trending]
     page_wine_of_day = params[:page_wine_of_day]
     page_best_of = params[:page_best_of]
-    #TODO: finish user_rating sort and overall_rating sort
 
 
     #this one works for the VINTAGE oldest-newest / newest-oldest, PRICE low-high / high-low, EXPERT RATING high-low / low-high
@@ -37,10 +45,432 @@ class WinesController < ApplicationController
       @wines = @wines.order(sort_attribute)
       return @wines
     end
+#==============================================================
+    # this is for the TOP FILTERS (WINE_TYPE start + ratings):
+    if sort_wine_type && dropdown_filter && from_type
+      if dropdown_filter == 'user_rating_high'
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
 
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
 
-    # this is for the SIDEBAR COMBO FILTERS (wine_type + varietal + country):
-    if sort_wine_type && varietal_sort && country_sort
+        @wines_c = wine_type_wines & country_wines unless varietal_wines.any?
+        @wines_r = wine_type_wines & region_wines unless varietal_wines.any?
+        @wines_v = wine_type_wines & varietal_wines unless (region_wines.any? or country_wines.any?)
+        @wines_vc = wine_type_wines & varietal_wines & country_wines unless region_wines.any? 
+        @wines_vr = wine_type_wines & varietal_wines & region_wines unless country_wines.any?
+        @wines_nofilter = wine_type_wines if (varietal_wines.empty? && country_wines.empty? && region_wines.empty?)
+
+        @wines = []
+
+        if @wines_c
+          @wines = @wines_c
+        end
+       if @wines_r
+          @wines += @wines_r
+        end
+        if @wines_v
+          @wines += @wines_v
+        end
+        if @wines_vc
+          @wines += @wines_vc
+        end
+        if @wines_vr
+          @wines += @wines_vr
+        end
+        if @wines_nofilter
+          @wines += @wines_nofilter
+        end
+
+        @wines = @wines.flatten.uniq
+        @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'expert_rating_high'
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+
+        @wines_c = wine_type_wines & country_wines unless varietal_wines.any?
+        @wines_r = wine_type_wines & region_wines unless varietal_wines.any?
+        @wines_v = wine_type_wines & varietal_wines unless (region_wines.any? or country_wines.any?)
+        @wines_vc = wine_type_wines & varietal_wines & country_wines unless region_wines.any? 
+        @wines_vr = wine_type_wines & varietal_wines & region_wines unless country_wines.any?
+        @wines_nofilter = wine_type_wines if (varietal_wines.empty? && country_wines.empty? && region_wines.empty?)
+
+        @wines = []
+
+        if @wines_c
+          @wines = @wines_c
+        end
+       if @wines_r
+          @wines += @wines_r
+        end
+        if @wines_v
+          @wines += @wines_v
+        end
+        if @wines_vc
+          @wines += @wines_vc
+        end
+        if @wines_vr
+          @wines += @wines_vr
+        end
+        if @wines_nofilter
+          @wines += @wines_nofilter
+        end
+
+        @wines = @wines.flatten.uniq
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+
+      elsif dropdown_filter == 'overall_rating_high'
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+
+        @wines_c = wine_type_wines & country_wines unless varietal_wines.any?
+        @wines_r = wine_type_wines & region_wines unless varietal_wines.any?
+        @wines_v = wine_type_wines & varietal_wines unless (region_wines.any? or country_wines.any?)
+        @wines_vc = wine_type_wines & varietal_wines & country_wines unless region_wines.any? 
+        @wines_vr = wine_type_wines & varietal_wines & region_wines unless country_wines.any?
+        @wines_nofilter = wine_type_wines if (varietal_wines.empty? && country_wines.empty? && region_wines.empty?)
+
+        @wines = []
+
+        if @wines_c
+          @wines = @wines_c
+        end
+       if @wines_r
+          @wines += @wines_r
+        end
+        if @wines_v
+          @wines += @wines_v
+        end
+        if @wines_vc
+          @wines += @wines_vc
+        end
+        if @wines_vr
+          @wines += @wines_vr
+        end
+        if @wines_nofilter
+          @wines += @wines_nofilter
+        end
+
+        @wines = @wines.flatten.uniq
+        @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'price_lowest'
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+
+        @wines_c = wine_type_wines & country_wines unless varietal_wines.any?
+        @wines_r = wine_type_wines & region_wines unless varietal_wines.any?
+        @wines_v = wine_type_wines & varietal_wines unless (region_wines.any? or country_wines.any?)
+        @wines_vc = wine_type_wines & varietal_wines & country_wines unless region_wines.any? 
+        @wines_vr = wine_type_wines & varietal_wines & region_wines unless country_wines.any?
+        @wines_nofilter = wine_type_wines if (varietal_wines.empty? && country_wines.empty? && region_wines.empty?)
+
+        @wines = []
+
+        if @wines_c
+          @wines = @wines_c
+        end
+       if @wines_r
+          @wines += @wines_r
+        end
+        if @wines_v
+          @wines += @wines_v
+        end
+        if @wines_vc
+          @wines += @wines_vc
+        end
+        if @wines_vr
+          @wines += @wines_vr
+        end
+        if @wines_nofilter
+          @wines += @wines_nofilter
+        end
+
+        @wines = @wines.flatten.uniq
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }  
+
+       elsif dropdown_filter == 'price_highest'
+       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+
+        @wines_c = wine_type_wines & country_wines unless varietal_wines.any?
+        @wines_r = wine_type_wines & region_wines unless varietal_wines.any?
+        @wines_v = wine_type_wines & varietal_wines unless (region_wines.any? or country_wines.any?)
+        @wines_vc = wine_type_wines & varietal_wines & country_wines unless region_wines.any? 
+        @wines_vr = wine_type_wines & varietal_wines & region_wines unless country_wines.any?
+        @wines_nofilter = wine_type_wines if (varietal_wines.empty? && country_wines.empty? && region_wines.empty?)
+
+        @wines = []
+
+        if @wines_c
+          @wines = @wines_c
+        end
+       if @wines_r
+          @wines += @wines_r
+        end
+        if @wines_v
+          @wines += @wines_v
+        end
+        if @wines_vc
+          @wines += @wines_vc
+        end
+        if @wines_vr
+          @wines += @wines_vr
+        end
+        if @wines_nofilter
+          @wines += @wines_nofilter
+        end
+        
+        @wines = @wines.flatten.uniq
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+
+      elsif dropdown_filter == 'most_reviewed'
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+
+        @wines_c = wine_type_wines & country_wines unless varietal_wines.any?
+        @wines_r = wine_type_wines & region_wines unless varietal_wines.any?
+        @wines_v = wine_type_wines & varietal_wines unless (region_wines.any? or country_wines.any?)
+        @wines_vc = wine_type_wines & varietal_wines & country_wines unless region_wines.any? 
+        @wines_vr = wine_type_wines & varietal_wines & region_wines unless country_wines.any?
+        @wines_nofilter = wine_type_wines if (varietal_wines.empty? && country_wines.empty? && region_wines.empty?)
+
+        @wines = []
+
+        if @wines_c
+          @wines = @wines_c
+        end
+       if @wines_r
+          @wines += @wines_r
+        end
+        if @wines_v
+          @wines += @wines_v
+        end
+        if @wines_vc
+          @wines += @wines_vc
+        end
+        if @wines_vr
+          @wines += @wines_vr
+        end
+        if @wines_nofilter
+          @wines += @wines_nofilter
+        end
+
+        @wines = @wines.flatten.uniq
+        @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
+
+      end     
+      return @wines
+    end
+
+    #==================================================================
+
+# this is for the TOP FILTERS (VARIETAL start + ratings):
+    if varietal_sort && dropdown_filter && from_var
+      if dropdown_filter == 'user_rating_high'
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = varietal_wines & country_wines unless region_wines.any?
+        @wines = varietal_wines & region_wines unless country_wines.any?
+        @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'expert_rating_high'
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = varietal_wines & country_wines unless region_wines.any?
+        @wines = varietal_wines & region_wines unless country_wines.any?
+        @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+
+      elsif dropdown_filter == 'overall_rating_high'
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = varietal_wines & country_wines unless region_wines.any?
+        @wines = varietal_wines & region_wines unless country_wines.any?
+        @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'price_lowest'
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = varietal_wines & country_wines unless region_wines.any?
+        @wines = varietal_wines & region_wines unless country_wines.any?
+        @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }
+
+       elsif dropdown_filter == 'price_highest'
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = varietal_wines & country_wines unless region_wines.any?
+        @wines = varietal_wines & region_wines unless country_wines.any?
+        @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+
+      elsif dropdown_filter == 'most_reviewed'
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+        country_wines = Wine.by_country(country_sort)
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = varietal_wines & country_wines unless region_wines.any?
+        @wines = varietal_wines & region_wines unless country_wines.any?
+        @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
+
+      end     
+      return @wines
+    end
+#===================================================================
+     # this is for the TOP FILTERS (COUNTRY start + ratings):
+    if country_sort && dropdown_filter && from_country
+      if dropdown_filter == 'user_rating_high'
+        country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = country_wines & wine_type_wines unless varietal_wines.any?
+        @wines = country_wines & varietal_wines unless wine_type_wines.any?
+        @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'expert_rating_high'
+        country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = country_wines & wine_type_wines unless varietal_wines.any?
+        @wines = country_wines & varietal_wines unless wine_type_wines.any?
+        @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+
+      elsif dropdown_filter == 'overall_rating_high'
+        country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = country_wines & wine_type_wines unless varietal_wines.any?
+        @wines = country_wines & varietal_wines unless wine_type_wines.any?
+        @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'price_lowest'
+        country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = country_wines & wine_type_wines unless varietal_wines.any?
+        @wines = country_wines & varietal_wines unless wine_type_wines.any?
+        @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }
+
+       elsif dropdown_filter == 'price_highest'
+        country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = country_wines & wine_type_wines unless varietal_wines.any?
+        @wines = country_wines & varietal_wines unless wine_type_wines.any?
+        @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+
+      elsif dropdown_filter == 'most_reviewed'
+        country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = country_wines & wine_type_wines unless varietal_wines.any?
+        @wines = country_wines & varietal_wines unless wine_type_wines.any?
+        @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
+      end     
+      return @wines
+    end
+
+    # #this one is for the type of wine, i.e, red or white
+    # if sort_wine_type
+    #     @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+    #     return @wines
+    # end
+
+   #===================================================================
+     # this is for the TOP FILTERS (REGION start + ratings):
+    if region_sort && dropdown_filter && from_region
+      if dropdown_filter == 'user_rating_high'
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = region_wines & wine_type_wines unless varietal_wines.any?
+        @wines = region_wines & varietal_wines unless wine_type_wines.any?
+        @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'expert_rating_high'
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = region_wines & wine_type_wines unless varietal_wines.any?
+        @wines = region_wines & varietal_wines unless wine_type_wines.any?
+        @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+
+      elsif dropdown_filter == 'overall_rating_high'
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = region_wines & wine_type_wines unless varietal_wines.any?
+        @wines = region_wines & varietal_wines unless wine_type_wines.any?
+        @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
+
+      elsif dropdown_filter == 'price_lowest'
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = region_wines & wine_type_wines unless varietal_wines.any?
+        @wines = region_wines & varietal_wines unless wine_type_wines.any?
+        @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }
+
+       elsif dropdown_filter == 'price_highest'
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = region_wines & wine_type_wines unless varietal_wines.any?
+        @wines = region_wines & varietal_wines unless wine_type_wines.any?
+        @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+
+      elsif dropdown_filter == 'most_reviewed'
+        region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+        @wines = region_wines & wine_type_wines unless varietal_wines.any?
+        @wines = region_wines & varietal_wines unless wine_type_wines.any?
+        @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
+        @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
+      end     
+      return @wines
+    end
+
+  #===================================================================
+
+    # this is for the SIDEBAR FILTERS ( WINE_TYPE ==> varietal ==> country):
+    if sort_wine_type && varietal_sort && country_sort && from_type
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       country_wines = Wine.by_country(country_sort)
@@ -50,8 +480,8 @@ class WinesController < ApplicationController
 
     end
 
-    # this is for the SIDEBAR COMBO FILTERS (wine_type + varietal + region):
-    if sort_wine_type && varietal_sort && region_sort
+    # this is for the SIDEBAR FILTERS ( WINE_TYPE ==> varietal ==> region):
+    if sort_wine_type && varietal_sort && region_sort && from_type
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
@@ -61,88 +491,123 @@ class WinesController < ApplicationController
 
     end
 
-    # this is for the SIDEBAR COMBO FILTERS (wine_type + varietal):
-    if sort_wine_type && varietal_sort
+    # this is for the SIDEBAR FILTERS ( WINE_TYPE ==> varietal):
+    if sort_wine_type && varietal_sort && from_type
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       @wines = wine_type_wines & varietal_wines
       return @wines
     end
 
-      # this is for the SIDEBAR COMBO FILTERS (wine_type + country):
-    if sort_wine_type && country_sort
+      # this is for the SIDEBAR FILTERS (WINE_TYPE ==> country):
+    if sort_wine_type && country_sort && from_type
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       country_wines = Wine.by_country(country_sort)
       @wines =  wine_type_wines & country_wines
       return @wines
     end
 
-      # this is for the SIDEBAR COMBO FILTERS (wine_type + region):
-    if sort_wine_type && region_sort
+      # this is for the SIDEBAR FILTERS ( WINE_TYPE ==> region):
+    if sort_wine_type && region_sort && from_type
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
       @wines = wine_type_wines & region_wines
       return @wines
     end
 
+#=========================================
 
 
-    # this is for the TOP COMBO FILTERS (wine_type + user rating):
-    if sort_wine_type && dropdown_filter
-      if dropdown_filter == 'user_rating_high'
-        @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
-        @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
-      elsif dropdown_filter == 'expert_rating_high'
-        @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
-      elsif dropdown_filter == 'overall_rating_high'
-        @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
-        @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
-      elsif dropdown_filter == 'price_lowest'
-        @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
-        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }  
-       elsif dropdown_filter == 'price_highest'
-        @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
-        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
-      elsif dropdown_filter == 'most_reviewed'
-        @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
-        @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
-      end     
+    # HAVENT DONE just this one: this is for the SIDEBAR FILTERS (VARIETAL ==> country ==> region):
+    if varietal_sort && country_sort && region_sort && from_var
+      varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+      country_wines = Wine.by_country(country_sort)
+      region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
+
+      @wines =  varietal_wines & country_wines & region_wines
+      return @wines
+
+    end
+
+    # this is for the SIDEBAR FILTERS (VARIETAL ==> country):
+    if varietal_sort && country_sort && from_var
+      varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+      country_wines = Wine.by_country(country_sort)
+      @wines = varietal_wines & country_wines
       return @wines
     end
 
-     # this is for the TOP COMBO FILTERS (varietal + user rating):
-    if varietal_sort && dropdown_filter
-      if dropdown_filter == 'user_rating_high'
-        @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-        @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
-      elsif dropdown_filter == 'expert_rating_high'
-        @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
-      elsif dropdown_filter == 'overall_rating_high'
-        @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-        @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
-      elsif dropdown_filter == 'price_lowest'
-        @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }  
-       elsif dropdown_filter == 'price_highest'
-        @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
-      elsif dropdown_filter == 'most_reviewed'
-        @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
-        @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
-      end     
+      # this is for the SIDEBAR FILTERS (VARIETAL ==> region):
+    if varietal_sort && region_sort && from_var
+      varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+      region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
+      @wines =  varietal_wines & region_wines
       return @wines
     end
 
-    #this one is for the type of wine, i.e, red or white
+
+  #====================================================
+
+  # this is for the SIDEBAR COMBO FILTERS ( COUNTRY ==> wine_type):
+    if country_sort && sort_wine_type && from_country
+      country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+      wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+      @wines =  wine_type_wines & country_wines
+      return @wines
+    end
+
+      # this is for the SIDEBAR COMBO FILTERS (COUNTRY ==> varietal):
+    if country_sort && varietal_sort && from_country
+      country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+      varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+      @wines =  varietal_wines & country_wines
+      return @wines
+    end
+
+  #====================================================
+
+  # this is for the SIDEBAR COMBO FILTERS ( REGION ==> wine_type):
+    if region_sort && sort_wine_type && from_region
+      region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+      wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+      @wines =  wine_type_wines & region_wines
+      return @wines
+    end
+
+      # this is for the SIDEBAR COMBO FILTERS (REGION ==> varietal):
+    if region_sort && varietal_sort && from_region
+      region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
+      varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+      @wines =  region_wines & varietal_wines
+      return @wines
+    end
+
+  #====================================================
+  # this is for the SIDEBAR COMBO FILTERS ( VINTAGE - WINE TYPE):
+    if user_wine_type_from_v && sort_attribute && sort_min && sort_max && sort_order 
+
+      if sort_attribute && sort_min && sort_max && order_attribute
+      sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
+      elsif sort_attribute && order_attribute 
+        sort_wines = @wines.order({sort_attribute => order_attribute})
+      elsif sort_attribute 
+        sort_wines = @wines.order(sort_attribute)
+      end
+
+      wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: user_wine_type_from_v } )
+      @wines =  wine_type_wines & sort_wines
+      p sort_wines
+      return @wines
+    end
+  #====================================================
+
+
+  #this is for regular TOP NAV BAR simple FILTERS:
+
     if sort_wine_type
         @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
         return @wines
     end
-
-
-
     #this one is for the varietal, i.e, riesling 
     if varietal_sort
       @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
@@ -334,3 +799,4 @@ class WinesController < ApplicationController
 
 
 end
+

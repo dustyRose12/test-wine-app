@@ -760,7 +760,7 @@ class WinesController < ApplicationController
   end
 
   def random
-    wine_id = Purse.all.sample.id
+    wine_id = Wine.all.sample.id
     redirect_to "/wines/#{wine_id}"
   end
 
@@ -768,6 +768,7 @@ class WinesController < ApplicationController
       @wine = Wine.find_by(upc: params[:upc])
      
       if @wine
+        flash[:success] = "Here is the Wine you scanned:"
         render json: { id: @wine.id, url: "/wines/#{@wine.id}" }
       else
         flash[:danger] = "Wine not found"
@@ -778,23 +779,6 @@ class WinesController < ApplicationController
   def scan_barcode
   end
 
-
-  # could potentially use this later
-  # def pin
-  #   type = params[:type]
-  #   if type == "pinned"
-  #     current_user.pins << @wine
-  #     redirect_to :back, notice: 'You pinned this wine'
-
-  #   elsif type == "unpinned"
-  #     current_user.pins.delete(@wine)
-  #     redirect_to :back, notice: 'You unpinned this wine'
-
-  #   else
-  #     # Type missing, nothing happens
-  #     redirect_to :back, notice: 'Nothing happened.'
-  #   end
-  # end
 
 
 

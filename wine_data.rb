@@ -1420,11 +1420,19 @@
 {:name=>"Saracco Moscato d'Asti 2016", :varietal=>"Muscat", :vintage=>2016, :producer=>"Saracco", :wine_type=>"White Wine", :region=>"Asti, Piedmont", :country=>"Italy", :price=>14, :description=>"Saracco Moscato is as sweet and seductive as the hills where it is born and grows; as vibrant and sharp as the mountains that surround and protect the land on the horizon; refreshing and effervescent, like the wind rushing down from the Alps towards their hills. Served cold with its delicate and persistent bubbles, it is like a refreshing shower in summer.", :image_url=>"www.wine.com/labels/167725h.jpg", :expert_rating=>92.0, :professional_reviews=>"This fragrant dessert wine opens with intense aromas of citrus blossom, white peach and a touch of sage. The elegantly foaming creamy palate offers candied apricot, tangerine zest and ginger. Lively acidity gives it a crisp refreshing finish.", :user_rating=>4.4, :user_rating_count=>25}]
 
 
+
 # {:name=>"Goretti Montefalco Rosso 2010", :varietal=>"Other Red Blends", :vintage=>2010, :producer=>"Goretti", :wine_type=>"Red Wine", :region=>"Veneto", :country=>"Italy", :price=>nil, :description=>"The passion of the Goretti winery has been fundamental in a family history of wine making spanning generations, and it exists today as the family continues its participation in the Italian world of viticulture with pride, passion and exceptionally consistent quality.\r\nThis bold red wine blend of Sangiovese coupled with Merlot and the Umbrian grape Sagrantino is underlined by a beautiful ruby red color with good luminosity. Very intense bouquet with a clean and delicate fragrance. A marked presence of mature berry-fruit such as blackberries together with spiced floral notes. Expresses an overwhelming pleasantness, warm and austere, with perfect harmony.\r\nBlend: 60% Sangiovese, 20% Merlot, 20% Sagrantino", :image_url=>"www.wine.com/labels/139450h.jpg", :expert_rating=>nil, :professional_reviews=>"N/A", :user_rating=>0.0, :user_rating_count=>0},
 
 # {:name=>"Apothic Red Blend 2015", :varietal=>"Other Red Blends", :vintage=>2015, :producer=>"Apothic", :wine_type=>"Red Wine", :region=>", California", :country=>"US", :price=>16, :description=>"A bold blend of primarily Zinfandel, Syrah, Merlot, and Cabernet Sauvignon, Apothic Red leaves a lasting impression of flavor and texture on the palate. Zinfandel offers bold dark fruit flavors and spicy notes, complemented by the soft mouthfeel of Merlot. The Syrah adds layers of smooth blueberry, while the Cabernet Sauvignon delivers ripe fruit flavors and a firm structure. This decadent blend is framed by hints of black cherry, vanilla, and mocha. ", :image_url=>"www.wine.com/labels/178214h.jpg", :expert_rating=>88.0, :professional_reviews=>"A crowd-pleasing wine, the 2015 Apothic Red Winemaker's Blend is an easy-drinker. Blended with Zinfandel, Syrah, Cabernet Sauvignon, and Merlot, this up-front wine works well with lightly grilled foods as well as mildly spicy appetizers. (Tasted: May 3, 2017, San Francisco, CA)", :user_rating=>3.9, :user_rating_count=>64}
 
+#NEW ONES SPECIFICALLY FOR UPC LABELS:
 
+wines = [
+
+
+
+
+]
 
 
 

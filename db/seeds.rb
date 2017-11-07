@@ -223,7 +223,8 @@ wines.each do |wine_hash|
                                       description: wine_hash[:description],
                                       expert_review: prof_review,
                                       existing_avg_user_rating: wine_hash[:user_rating],
-                                      existing_avg_user_rating_count: wine_hash[:user_rating_count]
+                                      existing_avg_user_rating_count: wine_hash[:user_rating_count],
+                                      upc: wine_hash[:upc]
                                       })
     img = "https://" + wine_hash[:image_url]
 

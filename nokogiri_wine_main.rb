@@ -8,7 +8,7 @@ wines = []
 
   wine_hash = {}
 
-  doc = Nokogiri::HTML(open("https://www.wine.com/product/peter-michael-point-rouge-chardonnay-2014/#{178214+ counter}"))
+  doc = Nokogiri::HTML(open("https://www.wine.com/product/peter-michael-point-rouge-chardonnay-2014/#{153741+ counter}"))
 
   break if doc.css('.pipName').empty?
 

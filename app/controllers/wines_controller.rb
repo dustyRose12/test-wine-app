@@ -721,7 +721,7 @@ class WinesController < ApplicationController
     @varietals = Varietal.all
     @region = Region.all
 
-    @purse = Purse.find(params[:id])
+    @wine = Wine.find(params[:id])
   end
 
   def update

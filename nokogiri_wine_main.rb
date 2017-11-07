@@ -8,7 +8,7 @@ wines = []
 
   wine_hash = {}
 
-  doc = Nokogiri::HTML(open("https://www.wine.com/product/peter-michael-point-rouge-chardonnay-2014/#{153741+ counter}"))
+  doc = Nokogiri::HTML(open("https://www.wine.com/product/peter-michael-point-rouge-chardonnay-2014/#{151602+ counter}"))
 
   break if doc.css('.pipName').empty?
 
@@ -30,7 +30,7 @@ wines = []
   
   elsif doc.css('div.prodInfo ul.prodAttr li.icon.icon-champagne.prodAttr_icon.prodAttr_icon-champagne')
     wine_hash[:wine_type] = "Sparkling & Champagne"
-  else
+  else            
     wine_hash[:wine_type] = "Dessert, Sherry & Port"
   end
 

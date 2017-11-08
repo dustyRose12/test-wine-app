@@ -34,11 +34,13 @@ function load_quagga(){
             },
             data: { upc: code },
             success: function (response) {
-              console.log('succeeded request', response)
+              console.log('succeeded request', response);
               window.location = response.url;
             },
             error: function(error) {
-              console.log('request failed', error)
+              console.log('request failed', error);
+              alert('Wine Not Found. Try Again!');
+              window.location = '/scan_barcode';
             }
           });
         }

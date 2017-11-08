@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171029194231) do
+ActiveRecord::Schema.define(version: 20171108010438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,12 @@ ActiveRecord::Schema.define(version: 20171029194231) do
     t.decimal "existing_avg_user_rating", precision: 2, scale: 1
     t.integer "existing_avg_user_rating_count"
     t.string "upc"
+    t.string "store_one"
+    t.text "link_one"
+    t.string "store_two"
+    t.text "link_two"
+    t.string "store_three"
+    t.text "link_three"
   end
 
 end

@@ -12743,7 +12743,9 @@ html, body {
 }
 
 #page-header-signup {
-  background-image: url('../img/page-header-signup-bg.jpg?1461333518');
+ background-image: url('../img/page-header-signup-bg.jpg?1461333518');
+/* background-image: url('../img/page-header-signup-bg.jpg?');
+*/
 }
 
 /* ------------

@@ -4,43 +4,18 @@
 </head>
 <body>
 <!-- PAGE HEADER WITH BACKGROUND IMAGE -->
-    <div id="page-header-signup" class="page-header has-background-image">
-      <div class="overlay"></div>
+<!-- took out the ID from this one so it would go to the default img-->    
+  <div class="page-header has-background-image">
+      <div class="overlay background-img-no-overlay"></div>
       <div class="container">
-        <h1 class="page-title">SIGN UP</h1>
+        <h1 class="page-title page-title-new">SIGN UP</h1>
       </div>
     </div>
     <!-- END PAGE HEADER WITH BACKGROUND IMAGE -->
     <!-- PAGE CONTENT -->
     <div class="page-content">
       <div class="container">
-   <!--      <div class="col-md-6">
-          <section class="no-padding-top">
-            <h2 class="section-heading no-margin-top">Membership Benefits</h2>
-            <p>Continually implement functionalized technology rather than worldwide partnerships. Progressively harness bleeding-edge methodologies without low-risk.</p>
-            <div class="icon-info icon-info-left icon-info-big">
-              <i class="icon icon_pencil-edit ico-styled-lg text-primary"></i>
-              <div class="text">
-                <h2 class="title">Carefully Handcrafted</h2>
-                <p>Holisticly harness just in time technologies via corporate scenarios. Intrinsicly predominate ubiquitous outsourcing through an expanded array of functionalities.</p>
-              </div>
-            </div>
-            <div class="icon-info icon-info-left icon-info-big">
-              <i class="icon icon_mobile ico-styled-lg  text-primary"></i>
-              <div class="text">
-                <h2 class="title">Mobile Friendly</h2>
-                <p>Holisticly harness just in time technologies via corporate scenarios. Intrinsicly predominate ubiquitous outsourcing through an expanded array of functionalities.</p>
-              </div>
-            </div>
-            <div class="icon-info icon-info-left icon-info-big">
-              <i class="icon icon_like ico-styled-lg  text-primary"></i>
-              <div class="text">
-                <h2 class="title">Slider Revolution</h2>
-                <p>Holisticly harness just in time technologies via corporate scenarios. Intrinsicly predominate ubiquitous outsourcing through an expanded array of functionalities.</p>
-              </div>
-            </div>
-          </section>
-        </div> -->
+ 
           <!-- SIGN UP FORM -->
     <%= form_tag '/users', method: :post do %>
         <div class="col-md-6">
@@ -55,12 +30,6 @@
                 </div>
               </div>
               <br>
-           <!--    <div class="form-group">
-                <label for="signup-lastname" class="col-sm-3 control-label">Last Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="signup-lastname">
-                </div>
-              </div> -->
               <div class="form-group">
                 <label for="signup-email" class="col-sm-3 control-label">Email*</label>
                 <div class="col-sm-9">
@@ -144,110 +113,13 @@
       </div> <!-- whole content div -->
     </div> <!-- whole content div -->
     <!-- END PAGE CONTENT -->
-    <!-- FOOTER -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <img src="assets/img/logo/bravana-default.png" alt="Bravana logo" class="logo-footer">
-            <br>
-            <br>
-            <p>Proactively aggregate B2B initiatives before extensive channels. Monotonectally extend interactive methods of empowerment through excellent applications.</p>
-            <p>No need to wait, <a href="#">send us a quote</a></p>
-            <br>
-            <address class="contact-info">
-              <p><i class="icon icon_pin_alt ico-styled text-primary"></i> 1234 North Main Street New York, NY 22222</p>
-              <p><i class="icon icon_phone ico-styled text-primary"></i> (1800) 765 - 4321</p>
-              <p><i class="icon icon_mail_alt ico-styled text-primary"></i> <a href="mailto:email@yourdomain.com">email@yourdomain.com</a></p>
-            </address>
-          </div>
-          <div class="col-md-4">
-            <h4 class="footer-heading">LATEST NEWS</h4>
-            <ul class="list-unstyled latest-news-footer">
-              <li class="news-item">
-                <h5 class="title"><a href="#">Dynamically Pontificate Highly Efficient Vortals</a></h5>
-                <span>Oct 12, 2015</span>
-              </li>
-              <li class="news-item">
-                <h5 class="title"><a href="#">Globally pontificate cross-platform resources without turnkey e-commerce</a></h5>
-                <span>Oct 11, 2015</span>
-              </li>
-              <li class="news-item">
-                <h5 class="title"><a href="#">Credibly administrate one-to-one e-tailers for diverse value.</a></h5>
-                <span>Oct 10, 2015</span>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-4">
-            <h4 class="footer-heading">GET CONNECTED</h4>
-            <ul class="list-inline social-icons social-icons-small">
-              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fa fa-rss"></i></a></li>
-              <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            </ul>
-            <div class="margin-bottom-50"></div>
-            <h4 class="footer-heading">NEWSLETTER</h4>
-            <p>Get the latest update from us by subscribing to our newsletter.</p>
-            <form class="newsletter-form" method="post">
-              <div class="input-group input-group-lg">
-                <input type="email" class="form-control" name="email" placeholder="youremail@domain.com">
-                <span class="input-group-btn"><button class="btn btn-primary" type="button"><i class="fa fa-spinner fa-spin"></i><span>SUBSCRIBE</span></button>
-                </span>
-              </div>
-              <div class="alert"></div>
-            </form>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p class="copyright-text left">&copy;2016 The Develovers. All Rights Reserved.</p>
-          <nav class="right">
-            <ul class="list-inline">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Help</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </footer>
-    <!-- END FOOTER -->
-    <div class="back-to-top">
-      <a href="#top"><i class="fa fa-chevron-up"></i></a>
-    </div>
-  </div>
-  <!-- END WRAPPER -->
-  <!-- JAVASCRIPT -->
-  <script src="assets/js/jquery-2.1.1.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/plugins/easing/jquery.easing.min.js"></script>
-  <script src="assets/js/bravana.js"></script>
 
-<h1>Sign Up</h1>
-<%= form_tag '/users', method: :post do %>
-<div>
-  Name: <input type="text" name="name">
-</div>
-<div>
-  Email: <input type="email" name="email">
-</div>
-<div>
-  Username: <input type="text" name="username">
-</div>
-<div>
-  Password: <input type="password" name="password">
-</div>
-<div>
-  Confirm Password: <input type="password" name="password_confirmation">
-</div>
-<div>
-  Profile Picture: <input type="text" name="profile_pic">
-</div>
-<input type="submit" name="Submit">
-<% end %>
+  <!-- JAVASCRIPT -->
+  <script src="/assets/js/jquery-2.1.1.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/easing/jquery.easing.min.js"></script>
+  <script src="/assets/js/bravana.js"></script>
+
 
 </body>
 

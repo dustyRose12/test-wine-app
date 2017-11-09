@@ -1,4 +1,5 @@
-
+<html>
+<body>
 <!-- PAGE HEADER DEFAULT -->
     <div class="page-header">
       <div class="container">
@@ -22,7 +23,7 @@
           <!-- WINE_TYPE ==> VARIETAL only -->
           <% if params[:user_wine_type].present? && params[:from_type].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from type)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:user_wine_type]).each do |varietal| %>
                   <li>
@@ -36,7 +37,7 @@
             <!-- WINE_TYPE ==> COUNTRY only-->
           <% if params[:user_wine_type].present? && params[:from_type].present? && !params[:user_varietal].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: COUNTRY (from type)</h4>
+              <h4 class="widget-title">COUNTRY:</h4>
               <ul class="list-unstyled product-attribute-link-list">
               <% Wine.country_types(params[:user_wine_type]).each do |country| %>
                  <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_country=<%= country %>&from_type=<%= params[:from_type] %>"><%= country %></a>
@@ -50,7 +51,7 @@
              <!-- WINE_TYPE ==> VARIETAL ==> COUNTRY -->
           <% if params[:user_wine_type].present? && params[:user_varietal].present? && params[:from_type].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: COUNTRY (from type)</h4>
+              <h4 class="widget-title">COUNTRY:</h4>
               <ul class="list-unstyled product-attribute-link-list">
               <% Wine.country_types(params[:user_wine_type]).each do |country| %>
                  <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_varietal=<%= params[:user_varietal] %>&user_country=<%= country %>&from_type=<%= params[:from_type] %>"><%= country %></a>
@@ -64,7 +65,7 @@
               <!-- WINE_TYPE ==> REGION only-->
           <% if params[:user_wine_type].present? && !params[:user_varietal].present? && params[:from_type].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: REGION (from type)</h4>
+              <h4 class="widget-title">REGION:</h4>
               <ul class="list-unstyled product-attribute-link-list">
               <% Wine.region_types(params[:user_wine_type]).each do |region| %>
                  <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_region=<%= region %>&from_type=<%= params[:from_type] %>"><%= region %></a>
@@ -78,7 +79,7 @@
            <!-- WINE_TYPE ==> VARIETAL ==> REGION -->
           <% if params[:user_wine_type].present? && params[:user_varietal].present? && params[:from_type].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: REGION (from type)</h4>
+              <h4 class="widget-title">REGION:</h4>
               <ul class="list-unstyled product-attribute-link-list">
               <% Wine.region_types(params[:user_wine_type]).each do |region| %>
                  <li> <a href="/wines/?user_wine_type=<%= params[:user_wine_type]%>&user_varietal=<%= params[:user_varietal] %>&user_region=<%= region %>&from_type=<%= params[:from_type] %>"><%= region %></a>
@@ -95,7 +96,7 @@
             <!-- VARIETAL ==> COUNTRY only-->
           <% if params[:user_varietal].present? && params[:from_var].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: COUNTRY(from var)</h4>
+              <h4 class="widget-title">COUNTRY:</h4>
               <ul class="list-unstyled product-attribute-link-list">
               <% Wine.country_types(params[:user_varietal]).each do |country| %>
                  <li> <a href="/wines/?user_varietal=<%= params[:user_varietal]%>&user_country=<%= country %>&from_var=<%= params[:from_var] %>"><%= country %></a>
@@ -108,7 +109,7 @@
              <!-- VARIETAL ==> REGION only-->
           <% if params[:user_varietal].present? && params[:from_var].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: REGION (from var)</h4>
+              <h4 class="widget-title">REGION:</h4>
               <ul class="list-unstyled product-attribute-link-list">
               <% Wine.region_types(params[:user_varietal]).each do |region| %>
                  <li> <a href="/wines/?user_varietal=<%= params[:user_varietal]%>&user_region=<%= region %>&from_var=<%= params[:from_var] %>"><%= region %></a>
@@ -118,20 +119,6 @@
             </div>
           <% end %>
 
-            <!-- DOES NOT WORK - FILTER by VARIETAL into COUNTRY THEN REGION-->
-        <!--     < if params[:user_varietal].present? && params[:user_country].present? && !params[:user_wine_type].present? %>
-            <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: REGION</h4>
-              <ul class="list-unstyled product-attribute-link-list">
-                < Wine.region_types(params[:user_varietal]).each do |region| %>
-                 <li> <a href="/wines/?user_varietal=<= params[:user_varietal]%>&user_country=<= params[:user_country]%>&user_region=<= region %>"<= region %></a>
-                </li>
-                < end %>
-              </ul>
-            </div>
-            < end %> -->
-            <!-- END FILTER -->
-
      
 <!-- END VARIETAL -->
 
@@ -140,7 +127,7 @@
             <!-- COUNTRY ==> WINE_TYPE -->
           <% if params[:user_country].present? && params[:from_country].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: WINE TYPE (from country)</h4>
+              <h4 class="widget-title">WINE TYPE:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.wine_type(params[:user_country]).each do |wine_type| %>
                   <li>
@@ -154,7 +141,7 @@
                <!-- COUNTRY ==> VARIETAL -->
           <% if params[:user_country].present? && params[:from_country].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from country)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:user_country]).each do |varietal| %>
                   <li>
@@ -170,7 +157,7 @@
 <!-- REGION  START -->    
          <% if params[:user_region].present? && params[:from_region].present? %>
                   <div class="widget widget-filter">
-                    <h4 class="widget-title">Filter by: WINE TYPE (from region)</h4>
+                    <h4 class="widget-title">WINE TYPE:</h4>
                     <ul class="list-unstyled product-attribute-link-list">
                       <% Wine.wine_type(params[:user_region]).each do |wine_type| %>
                         <li>
@@ -182,7 +169,7 @@
           <% end %> 
           <% if params[:user_region].present? && params[:from_region].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from region)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:user_region]).each do |varietal| %>
                   <li>
@@ -197,11 +184,11 @@
 <!-- VINTAGE  START -->           
               <% if params[:sort].present? && params[:sort] == "vintage" && params[:from_vintage].present? %>
                   <div class="widget widget-filter">
-                    <h4 class="widget-title">Filter by: WINE TYPE (from vintage)</h4>
+                    <h4 class="widget-title">WINE TYPE:</h4>
                     <ul class="list-unstyled product-attribute-link-list">
                       <% Wine.wine_type(params[:sort]).each do |wine_type| %>
                         <li>
-                          <a href="/wines/?sort=<%=params[:sort]%>&user_wine_type=<%= wine_type %>&from_vintage=<%= params[:from_vintage] %>"><%= wine_type %></a>
+                          <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_wine_type=<%= wine_type %>&from_vintage=<%= params[:from_vintage] %>"><%= wine_type %></a>
                         </li>
                       <% end %>
                     </ul>
@@ -209,29 +196,41 @@
           <% end %>  
           <% if params[:sort].present? && params[:sort] == "vintage" && params[:from_vintage].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from vintage)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:sort]).each do |varietal| %>
                   <li>
-                    <a href="/wines/?sort=<%=params[:sort]%>&user_varietal=<%= varietal %>&from_vintage=<%= params[:from_vintage] %>"><%= varietal %></a>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_varietal=<%= varietal %>&from_vintage=<%= params[:from_vintage] %>"><%= varietal %></a>
                   </li>
                 <% end %>
               </ul>
             </div>
             <% end %> 
-      
 
+          <% if params[:sort].present? && params[:sort] == "vintage" && params[:from_vintage].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:sort]).each do |country| %>
+                  <li>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&from_vintage=<%= params[:from_vintage] %>"><%= country %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+    
 
 <!--       END VINTAGE       -->
 
 <!-- PRICE  START -->    
           <% if params[:sort].present? && params[:sort] == "price" && params[:from_price].present? %>
                   <div class="widget widget-filter">
-                    <h4 class="widget-title">Filter by: WINE TYPE (from price)</h4>
+                    <h4 class="widget-title">WINE TYPE:</h4>
                     <ul class="list-unstyled product-attribute-link-list">
                       <% Wine.wine_type(params[:sort]).each do |wine_type| %>
                         <li>
-                          <a href="/wines/?sort=<%=params[:sort]%>&user_wine_type=<%= wine_type %>&from_price=<%= params[:from_price] %>"><%= wine_type %></a>
+                          <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_wine_type=<%= wine_type %>&from_price=<%= params[:from_price] %>"><%= wine_type %></a>
                         </li>
                       <% end %>
                     </ul>
@@ -239,11 +238,24 @@
           <% end %>  
           <% if params[:sort].present? && params[:sort] == "price" && params[:from_price].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from price)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:sort]).each do |varietal| %>
                   <li>
-                    <a href="/wines/?sort=<%=params[:sort]%>&user_varietal=<%= varietal %>&from_price=<%= params[:from_price] %>"><%= varietal %></a>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_varietal=<%= varietal %>&from_price=<%= params[:from_price] %>"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+
+            <% if params[:sort].present? && params[:sort] == "price" && params[:from_price].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:sort]).each do |country| %>
+                  <li>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&from_price=<%= params[:from_price] %>"><%= country %></a>
                   </li>
                 <% end %>
               </ul>
@@ -257,11 +269,11 @@
 <!-- EXPERT  START -->    
       <% if params[:sort].present? && params[:sort] == "expert_rating" && params[:from_exp_rating].present? %>
                   <div class="widget widget-filter">
-                    <h4 class="widget-title">Filter by: WINE TYPE (from expert rating)</h4>
+                    <h4 class="widget-title">WINE TYPE:</h4>
                     <ul class="list-unstyled product-attribute-link-list">
                       <% Wine.wine_type(params[:sort]).each do |wine_type| %>
                         <li>
-                          <a href="/wines/?sort=<%=params[:sort]%>&user_wine_type=<%= wine_type %>&from_exp_rating=<%= params[:from_exp_rating] %>"><%= wine_type %></a>
+                          <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_wine_type=<%= wine_type %>&from_exp_rating=<%= params[:from_exp_rating] %>"><%= wine_type %></a>
                         </li>
                       <% end %>
                     </ul>
@@ -269,11 +281,23 @@
           <% end %>  
           <% if params[:sort].present? && params[:sort] == "expert_rating" && params[:from_exp_rating].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from expert rating)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:sort]).each do |varietal| %>
                   <li>
-                    <a href="/wines/?sort=<%=params[:sort]%>&user_varietal=<%= varietal %>&from_exp_rating=<%= params[:from_exp_rating] %>"><%= varietal %></a>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_varietal=<%= varietal %>&from_exp_rating=<%= params[:from_exp_rating] %>"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+          <% if params[:sort].present? && params[:sort] == "expert_rating" && params[:expert_rating].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:sort]).each do |country| %>
+                  <li>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&expert_rating=<%= params[:expert_rating] %>"><%= country %></a>
                   </li>
                 <% end %>
               </ul>
@@ -287,11 +311,11 @@
 <!-- USER  START -->  
         <% if params[:user_sort].present? && params[:from_user_rating].present? %>
                   <div class="widget widget-filter">
-                    <h4 class="widget-title">Filter by: WINE TYPE (from user rating)</h4>
+                    <h4 class="widget-title">WINE TYPE:</h4>
                     <ul class="list-unstyled product-attribute-link-list">
                       <% Wine.wine_type(params[:user_sort]).each do |wine_type| %>
                         <li>
-                          <a href="/wines/?user_sort=<%=params[:user_sort]%>&user_wine_type=<%= wine_type %>&from_user_rating=<%= params[:from_user_rating] %>"><%= wine_type %></a>
+                          <a href="/wines/?user_sort=<%=params[:user_sort]%>&sort_order=<%= params[:sort_order] %>&user_wine_type=<%= wine_type %>&from_user_rating=<%= params[:from_user_rating] %>"><%= wine_type %></a>
                         </li>
                       <% end %>
                     </ul>
@@ -299,11 +323,23 @@
           <% end %>    
         <% if params[:user_sort].present? && params[:from_user_rating].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from user rating)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:user_sort]).each do |varietal| %>
                   <li>
-                    <a href="/wines/?user_sort=<%=params[:user_sort]%>&user_varietal=<%= varietal %>&from_user_rating=<%= params[:from_user_rating] %>"><%= varietal %></a>
+                    <a href="/wines/?user_sort=<%=params[:user_sort]%>&sort_order=<%= params[:sort_order] %>&user_varietal=<%= varietal %>&from_user_rating=<%= params[:from_user_rating] %>"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+          <% if params[:user_sort].present? && params[:from_user_rating].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:user_sort]).each do |country| %>
+                  <li>
+                    <a href="/wines/?user_sort=<%=params[:user_sort]%>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&from_user_rating=<%= params[:from_user_rating] %>"><%= country %></a>
                   </li>
                 <% end %>
               </ul>
@@ -317,11 +353,11 @@
 <!-- OVERALL  START -->  
         <% if params[:overall_sort].present? && params[:from_overall_rating].present? %>
                   <div class="widget widget-filter">
-                    <h4 class="widget-title">Filter by: WINE TYPE (from overall rating)</h4>
+                    <h4 class="widget-title">WINE TYPE:</h4>
                     <ul class="list-unstyled product-attribute-link-list">
                       <% Wine.wine_type(params[:overall_sort]).each do |wine_type| %>
                         <li>
-                          <a href="/wines/?overall_sort=<%=params[:overall_sort]%>&user_wine_type=<%= wine_type %>&from_overall_rating=<%= params[:from_overall_rating] %>"><%= wine_type %></a>
+                          <a href="/wines/?overall_sort=<%=params[:overall_sort]%>&sort_order=<%= params[:sort_order] %>&user_wine_type=<%= wine_type %>&from_overall_rating=<%= params[:from_overall_rating] %>"><%= wine_type %></a>
                         </li>
                       <% end %>
                     </ul>
@@ -329,26 +365,189 @@
           <% end %>  
              <% if params[:overall_sort].present? && params[:from_overall_rating].present? %>
             <div class="widget widget-filter">
-              <h4 class="widget-title">Filter by: VARIETAL (from overall rating)</h4>
+              <h4 class="widget-title">VARIETAL:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.varietal_types(params[:overall_sort]).each do |varietal| %>
                   <li>
-                    <a href="/wines/?overall_sort=<%=params[:overall_sort]%>&user_varietal=<%= varietal %>&from_overall_rating=<%= params[:from_overall_rating] %>"><%= varietal %></a>
+                    <a href="/wines/?overall_sort=<%=params[:overall_sort]%>&sort_order=<%= params[:sort_order] %>&user_varietal=<%= varietal %>&from_overall_rating=<%= params[:from_overall_rating] %>"><%= varietal %></a>
                   </li>
                 <% end %>
               </ul>
             </div>
             <% end %>     
+          <% if params[:overall_sort].present? && params[:from_overall_rating].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:overall_sort]).each do |country| %>
+                  <li>
+                    <a href="/wines/?overall_sort=<%=params[:overall_sort]%>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&from_overall_rating=<%= params[:from_overall_rating] %>"><%= country %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
       
 
 
 <!--       END OVERALL       -->
 
 <!-- SEARCH BOX  START -->    
+
+    <!-- SEARCH BOX ==> VARIETAL -->
+          <% if params[:search_term].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">VARIETAL:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.varietal_types(params[:search_term]).each do |varietal| %>
+                  <li>
+                    <a href="/wines/?search_term=<%=params[:search_term]%>&user_varietal=<%= varietal %>&from_search=true"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <% if params[:search_term].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:search_term]).each do |country| %>
+                  <li>
+                    <a href="/wines/?search_term=<%=params[:search_term]%>&user_country=<%= country %>&from_search=true"><%= country %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
       
-
-
 <!--       END SEARCH BOX       -->
+
+<!-- PAGES START -->   
+
+<!-- PAGES  (trending) ==> wine_type -->
+    <% if params[:page_trending].present? %>
+                  <div class="widget widget-filter">
+                    <h4 class="widget-title">WINE TYPE:</h4>
+                    <ul class="list-unstyled product-attribute-link-list">
+                      <% Wine.wine_type(params[:page_trending]).each do |wine_type| %>
+                        <li>
+                          <a href="/wines/?page_trending=<%=params[:page_trending]%>&user_wine_type=<%= wine_type %>&from_pages=true"><%= wine_type %></a>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+          <% end %> 
+    <!-- trending ==> varietal -->
+          <% if params[:page_trending].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">VARIETAL:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.varietal_types(params[:page_trending]).each do |varietal| %>
+                  <li>
+                    <a href="/wines/?page_trending=<%=params[:page_trending]%>&user_varietal=<%= varietal %>&from_pages=true"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+<!--   trending ==> country-->
+          <% if params[:page_trending].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:page_trending]).each do |country| %>
+                  <li>
+                    <a href="/wines/?page_trending=<%=params[:page_trending]%>&user_country=<%= country %>&from_pages=true"><%= country %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+
+<!-- PAGES  (wine of day) ==> wine_type -->
+      <% if params[:page_wine_of_day].present? %>
+                  <div class="widget widget-filter">
+                    <h4 class="widget-title">WINE TYPE:</h4>
+                    <ul class="list-unstyled product-attribute-link-list">
+                      <% Wine.wine_type(params[:page_wine_of_day]).each do |wine_type| %>
+                        <li>
+                          <a href="/wines/?page_wine_of_day=<%=params[:page_wine_of_day]%>&user_wine_type=<%= wine_type %>&from_pages=true"><%= wine_type %></a>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+          <% end %> 
+    <!-- wine of day ==> varietal -->
+          <% if params[:page_wine_of_day].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">VARIETAL:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.varietal_types(params[:page_wine_of_day]).each do |varietal| %>
+                  <li>
+                    <a href="/wines/?page_wine_of_day=<%=params[:page_wine_of_day]%>&user_varietal=<%= varietal %>&from_pages=true"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+<!--   wine of day ==> country-->
+          <% if params[:page_wine_of_day].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:page_wine_of_day]).each do |country| %>
+                  <li>
+                    <a href="/wines/?page_wine_of_day=<%=params[:page_wine_of_day]%>&user_country=<%= country %>&from_pages=true"><%= country %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+  <!-- PAGES  (best of) ==> wine_type -->
+    <% if params[:page_best_of].present? %>
+                  <div class="widget widget-filter">
+                    <h4 class="widget-title">WINE TYPE:</h4>
+                    <ul class="list-unstyled product-attribute-link-list">
+                      <% Wine.wine_type(params[:page_best_of]).each do |wine_type| %>
+                        <li>
+                          <a href="/wines/?page_best_of=<%=params[:page_best_of]%>&user_wine_type=<%= wine_type %>&from_pages=true"><%= wine_type %></a>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+          <% end %> 
+    <!-- best of ==> varietal -->
+          <% if params[:page_best_of].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">VARIETAL:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.varietal_types(params[:page_best_of]).each do |varietal| %>
+                  <li>
+                    <a href="/wines/?page_best_of=<%=params[:page_best_of]%>&user_varietal=<%= varietal %>&from_pages=true"><%= varietal %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+<!--   best of ==> country-->
+          <% if params[:page_best_of].present? %>
+            <div class="widget widget-filter">
+              <h4 class="widget-title">COUNTRY:</h4>
+              <ul class="list-unstyled product-attribute-link-list">
+                <% Wine.country_types(params[:page_best_of]).each do |country| %>
+                  <li>
+                    <a href="/wines/?page_best_of=<%=params[:page_best_of]%>&user_country=<%= country %>&from_pages=true"><%= country %></a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+            <% end %> 
+
+<!--       END  PAGES       -->
 
 
 
@@ -358,42 +557,64 @@
             <!-- PRODUCT DISPLAY -->
             <div class="product-display">
               <!-- DISPLAY CONTROLS --> <!-- FILTERING FROM TOP DROPDOWN -->
-              <span class="top-of-results">
-              <div class="display-controls clearfix">
+              <div class="display-controls clearfix one-line">
+           <!--    <span class="top-of-results"> tried adding this myself it didn't do anything-->
                 <div class="controls-left">
                 <%= form_tag "/wines" , method: :get, class: "form-inline" do %>
                     <div class="form-group">
                       <label>Sort by:</label>
-                    <input type="hidden" name="user_wine_type" value="<%= params[:user_wine_type] %>">
-                    <input type="hidden" name="from_type" value="<%= params[:from_type] %>">
+                        <input type="hidden" name="user_wine_type" value="<%= params[:user_wine_type] %>">
+                        <input type="hidden" name="from_type" value="<%= params[:from_type] %>">
 
-                      <input type="hidden" name="user_varietal" value="<%= params[:user_varietal] %>">
-                      <input type="hidden" name="from_var" value="<%= params[:from_var] %>">
+                          <input type="hidden" name="user_varietal" value="<%= params[:user_varietal] %>">
+                          <input type="hidden" name="from_var" value="<%= params[:from_var] %>">
 
-                      <input type="hidden" name="user_country" value="<%= params[:user_country] %>">
-                       <input type="hidden" name="from_country" value="<%= params[:from_country] %>">
+                          <input type="hidden" name="user_country" value="<%= params[:user_country] %>">
+                           <input type="hidden" name="from_country" value="<%= params[:from_country] %>">
 
-                       <input type="hidden" name="user_region" value="<%= params[:user_region] %>">
-                       <input type="hidden" name="from_region" value="<%= params[:from_region] %>">
+                           <input type="hidden" name="user_region" value="<%= params[:user_region] %>">
+                           <input type="hidden" name="from_region" value="<%= params[:from_region] %>">
+
+                            <input type="hidden" name="sort" value="<%= params[:sort] %>">
+                            <input type="hidden" name="sort_order" value="<%= params[:sort_order] %>">
+                            <input type="hidden" name="sort_min" value="<%= params[:sort_min] %>">
+                            <input type="hidden" name="sort_max" value="<%= params[:sort_max] %>">
+
+                            <input type="hidden" name="from_vintage" value="<%= params[:from_vintage] %>">
+                            <input type="hidden" name="from_price" value="<%= params[:from_price] %>">
+                            <input type="hidden" name="from_exp_rating" value="<%= params[:from_exp_rating] %>">
 
 
-                      <select class="form-control" name="dropdown_filter">
-                        <option value="user_rating_high">User Rating (High - Low)</option>
-                        <option value="expert_rating_high">Expert Rating (High - Low)</option>
-                        <option value="overall_rating_high">Overall Rating (High - Low)</option>
-                        <option value="price_lowest">Price Lowest</option>
-                        <option value="price_highest">Price Highest</option>
-                        <option value="most_reviewed">Popularity</option>
-                      </select>
-                    </div>
+                            <input type="hidden" name="user_sort" value="<%= params[:user_sort] %>">
+                           <input type="hidden" name="from_user_rating" value="<%= params[:from_user_rating] %>">
+
+                           <input type="hidden" name="overall_sort" value="<%= params[:overall_sort] %>">
+                           <input type="hidden" name="from_overall_rating" value="<%= params[:from_overall_rating] %>">
+
+                          <input type="hidden" name="search_term" value="<%= params[:search_term] %>">
+                           <input type="hidden" name="from_search" value="<%= params[:from_search] %>">
+
+                           <input type="hidden" name="page_trending" value="<%= params[:page_trending] %>">         <input type="hidden" name="page_wine_of_day" value="<%= params[:page_wine_of_day] %>">
+                           <input type="hidden" name="page_best_of" value="<%= params[:page_best_of] %>">
+
+                           <input type="hidden" name="from_pages" value="<%= params[:from_pages] %>">
+
+
+                            <select class="form-control" name="dropdown_filter">
+                              <option value="user_rating_high">User Rating (High - Low)</option>
+                              <option value="expert_rating_high">Expert Rating (High - Low)</option>
+                              <option value="overall_rating_high">Overall Rating (High - Low)</option>
+                              <option value="price_lowest">Price Lowest</option>
+                              <option value="price_highest">Price Highest</option>
+                              <option value="most_reviewed">Popularity</option>
+                            </select>
+                        </div> <!-- (this is for form group) -->
                     <button type="submit">Apply</button>
                   <% end %>
-
-        
-                </div>
+                </div> <!-- (this is for controls-left) -->
 
 <!-- PAGINATION DO LATER IF HAVE TIME -->
-            <!--     <div class="controls-right">
+                <div class="controls-right top-pagination-index-pg">
                   <ul class="pagination borderless">
                     <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i><span class="sr-only">Previous</span></a></li>
                     <li class="active"><a href="#">1</a></li>
@@ -403,10 +624,9 @@
                     <li><a href="#">5</a></li>
                     <li><a href="#"><i class="fa fa-angle-right"></i><span class="sr-only">Next</span></a></li>
                   </ul>
-                </div> -->
-                <br>
-                <br>
-                </span> <!-- top of results class -->
+                </div> <!-- (this is for controls-right) -->
+<!--                 END PAGINATION -->                
+          <!-- </span> top of results class --> 
               </div> <!-- this one is for display-controls clearfix -->
 
               <!-- END DISPLAY CONTROLS -->
@@ -456,39 +676,19 @@
     </div>
 
 
-
-
-    <!-- END FOOTER -->
-    <div class="back-to-top">
-      <a href="#top"><i class="fa fa-chevron-up"></i></a>
-    </div>
-
   <!-- JAVASCRIPT -->
   <script src="/assets/js/jquery-2.1.1.min.js"></script>
   <script src="/assets/js/bootstrap.min.js"></script>
   <script src="/assets/js/plugins/easing/jquery.easing.min.js"></script>
   <script src="/assets/js/plugins/owl-carousel/owl.carousel.min.js"></script>
-  <script src="/assets/js/plugins/range-slider/ion.rangeSlider.min.js"></script>
+  <script src="/assets/js/plugins/zoom/jquery.zoom.js"></script>
   <script src="/assets/js/bravana.js"></script>
   <script src="/assets/js/bravana-shop.js"></script>
 
 
-
-<!--     <section class="no-padding-bottom">
-      <div class="container">
-        <h2 class="section-heading">DUMMY CONTENT</h2>
-        <p>Compellingly repurpose superior leadership skills vis-a-vis high-quality quality vectors. Objectively repurpose value-added experiences vis-a-vis resource sucking results. Credibly productize professional infomediaries without accurate platforms. Energistically architect timely "outside the box" thinking without adaptive niches. Enthusiastically innovate focused products with.</p>
-        <p>Objectively matrix customer directed communities and one-to-one paradigms. Intrinsicly create prospective core competencies whereas mission-critical schemas. Distinctively transform optimal ROI rather than optimal "outside the box" thinking. Competently disseminate granular methodologies rather than next-generation users. Interactively innovate client-centric supply chains with virtual sources. Phosfluorescently network principle-centered niche markets through client-focused schemas. Energistically facilitate leading-edge models whereas alternative niches. Compellingly engage revolutionary communities without state of the art niches. Distinctively empower backward-compatible networks through 24/7.</p>
-      </div> 
- <div class="cta cta-solid-brand-bg cta-2-columns margin-top-50">
-        <div class="container">
-          <h2 class="heading">An elegant Bootstrap theme with tons of features</h2>
-         
-        </div>
-      </div>
-    </section> 
- -->
-
  <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+
+</body>
+</html>
 
  

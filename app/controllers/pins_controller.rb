@@ -45,6 +45,7 @@ class PinsController < ApplicationController
       @errors = @pin.errors.full_messages.last
       flash[:warning] = "#{@errors}"
       render "wines/show.html.erb"
+  
     end
 
   end

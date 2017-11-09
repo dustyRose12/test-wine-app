@@ -1,3 +1,5 @@
+<html>
+<body>
 <h3 class="section-heading">Wine Cellar</h3>
 <div class="container-fluid">
 
@@ -258,21 +260,20 @@
                     <hr/>
                     <h4>Edit / Delete Category:</h4>
                    <!--  select dropdown version: -->
-                      <div class="form-group">
+                    <!--   <div class="form-group">
                         <div class="col-md-9">
                           <p class="form-inline"><strong><i>Select Category:  </strong></i>
                           <select class="form-control">
-                          <% @all_personal_categories.each do |personal_category| %>
-                              <option value="<%= personal_category.id %>"><%= personal_category.name %></option>
-                            <% end %>
+                          < @all_personal_categories.each do |personal_category| %>
+                              <option value="<= personal_category.id %>"><= personal_category.name %></option>
+                            < end %>
                           </select></p>
                       </div>
-                    </div>
+                    </div> -->
 
                    <!--     list all with edit / delete buttons version:  -->
                    <div class="col-md-12">
-                   <hr/>
-                    <% @all_personal_categories.each do |personal_category| %>
+                     <% @all_personal_categories.each do |personal_category| %>
                         <%= form_tag "/personal_categories/#{personal_category.id}", method: :patch do %>
                           <p class="form-inline"><strong><%= personal_category.name %>:   <input type="text" class ="new-category-to-right" name="name"></strong>
                           <input class="btn btn-primary btn-fullrounded category-btn-right edit-button" type="submit" value="Edit Category">
@@ -338,21 +339,21 @@
                   <% end %>
                   <hr/>
                   <h4>Edit / Delete Category:</h4>
+                  <br>
                  <!--  select dropdown version: -->
-                    <div class="form-group">
+        <!--             <div class="form-group">
                       <div class="col-md-9">
                         <p class="form-inline"><strong><i>Select Category:  </strong></i>
                         <select class="form-control">
-                        <% @all_personal_categories.each do |personal_category| %>
-                            <option value="<%= personal_category.id %>"><%= personal_category.name %></option>
-                          <% end %>
+                        < @all_personal_categories.each do |personal_category| %>
+                            <option value="<= personal_category.id %>"><= personal_category.name %></option>
+                          < end %>
                         </select></p>
                       </div>
-                    </div>
+                    </div> -->
 
                    <!--     list all with EDIT/DELETE buttons version:  -->
                    <div class="col-md-12">
-                   <hr/>
                     <% @all_personal_categories.each do |personal_category| %>
                         <%= form_tag "/personal_categories/#{personal_category.id}", method: :patch do %>
                           <p class="form-inline"><strong><%= personal_category.name %>:   <input type="text" class ="new-category-to-right" name="name"></strong>
@@ -369,4 +370,16 @@
  <% end %> <!-- ends first IF current_user.pins (user has pins or no pins if elsif end) -->
 </div>
 
+
+  <!-- JAVASCRIPT -->
+  <script src="/assets/js/jquery-2.1.1.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/easing/jquery.easing.min.js"></script>
+  <script src="/assets/js/plugins/owl-carousel/owl.carousel.min.js"></script>
+  <script src="/assets/js/plugins/zoom/jquery.zoom.js"></script>
+  <script src="/assets/js/bravana.js"></script>
+  <script src="/assets/js/bravana-shop.js"></script>
+
+</body>
+</html>
 

@@ -65,7 +65,17 @@
         <p>Producer: <b><%= @wine.producer.name %></b></p>
         <p>Vintage: <b><%= @wine.vintage %></b></p>
         <p>Price: <b><%= number_to_currency(@wine.price) %></b></p>
-       
+        <br>
+         <!-- Hidden Form that creates new Pin to Cellar via pins/new -->
+         <div class="add-to-cellar text-center">
+        <% if current_user %>
+          <%= form_tag "/pins", method: :post do %>
+                <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                <input type="hidden" name="wine_id" value="<%= @wine.id %>">  
+                <button type="submit" class="btn btn-primary cellar-btn"><i class="fa fa-heart"></i> Add to My Cellar</button>
+           <% end %>
+          <% end %>
+       </div>
       </div>
     </div>
 
@@ -75,15 +85,16 @@
           <h4>Tasting Notes:</h4>
           <br>
             <p><%= @wine.description %></p>
-            <br>
-       <!-- Hidden Form that creates new Pin to Cellar via pins/new -->
- 
-          <%= form_tag "/pins", method: :post do %>
-                <input type="hidden" name="user_id" value="<%= current_user.id %>">
-                <input type="hidden" name="wine_id" value="<%= @wine.id %>">  
-                <p><i class="fa fa-heart"></i><input type="submit" value=" Add to My Cellar" class="button-as-link link-addtowishlist"></p>
-           <% end %>
-
+          <br>
+          <p><strong><i>Where to Buy:</i></strong></p>
+          <% if @wine.store_one%>
+          <strong><li class="fa fa-envira fa-lg"><a href="<%= @wine.link_one %>" target="_blank"> <%= @wine.store_one %></a></li></strong>
+          <% else %>
+          <strong><li class="fa fa-envira fa-lg"> N/A</li></strong>
+          <% end %>
+          <% if @wine.store_two%>
+          <strong><li class="fa fa-envira fa-lg"><a href="<%= @wine.link_two %>" target="_blank"> <%= @wine.store_two %></a></li></strong>
+          <% end %>
           </div>
         </div>
     </div>
@@ -94,6 +105,7 @@
 <div class="row">
  <div class="col-md-12 col-sm-12">
       <div class="well review-box">
+      <% if current_user %>
       <% if @wine.reviews.where(user_id: current_user.id).last %>
         <h4 class="section-heading">Edit Your Review for this Wine: <div class="rating"></h4>
 
@@ -147,7 +159,6 @@
                 </div>
               </div>
             <% end %>
-    
        
       <% else %> <!-- IF THE WINE HASN'T BEEN REVIEWED BY THIS USER YET -->
         <h4 class="section-heading">Review this Wine: <div class="rating"></h4>
@@ -191,6 +202,11 @@
             
             <% end %> 
             <% end %> 
+            <% else %>
+            <h4 class="section-heading">Log In to add your Review</h4>
+
+          <% end %>
+
         </div>
       </div>
     </div>
@@ -289,57 +305,7 @@
                   </div> <!-- this closes div class bottom -->
     </div>
     </div>
-             <!-- FOOTER -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="row">
-              <div class="col-sm-6">
-                <h4 class="footer-heading footer-heading-simple">GENERAL</h4>
-                <ul class="list-unstyled link-list">
-                  <li><a href="#">About us</a></li>
-                  <li><a href="#">Who we are</a></li>
-                  <li><a href="#">Terms</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                </ul>
-              </div>
-              <div class="col-sm-6">
-                <h4 class="footer-heading footer-heading-simple">WINE GUIDES</h4>
-                <ul class="list-unstyled link-list">
-                  <li><a href="#">How to buy</a></li>
-                  <li><a href="#">Wine Guide</a></li>
-                  <li><a href="#">License</a></li>
-                  <li><a href="#">Support</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-6">
-                <h4 class="footer-heading footer-heading-simple">CONTACT US</h4>
-                <address>
-                  <i class="icon icon_phone ico-styled text-primary"></i>
-                  <abbr title="Phone">P:</abbr> (1800) 765 - 4321, (1800) 765 - 4322
-                  <br>
-                  <br>
-                  <i class="icon icon_mail_alt ico-styled text-primary"></i> <a href="mailto:dustyrose125@gmail.com">dustyrose125@gmail.com</a>
-                </address>
-              </div>
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class="copyright-text text-center margin-top-30 no-margin-bottom">&copy;2016 The Develovers. All Rights Reserved.</p>
-    </footer>
-    <!-- END FOOTER -->
-    <div class="back-to-top">
-      <a href="#top"><i class="fa fa-chevron-up"></i></a>
-    </div>
-  <!-- END WRAPPER -->
+  
   <!-- JAVASCRIPT -->
   <script src="/assets/js/jquery-2.1.1.min.js"></script>
   <script src="/assets/js/bootstrap.min.js"></script>
@@ -348,6 +314,55 @@
   <script src="/assets/js/plugins/zoom/jquery.zoom.js"></script>
   <script src="/assets/js/bravana.js"></script>
   <script src="/assets/js/bravana-shop.js"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    console.log('rating')
+    var ratingInput = $("#star-rating");
+
+    $('#star-btn-1').on("click", function() {
+      console.log('click 1')
+      ratingInput.val(1);
+      $(this).addClass('btn-warning');
+    }) 
+
+     $('#star-btn-2').on("click", function() {
+      console.log('click 2')
+      ratingInput.val(2);
+      $(this).addClass('btn-warning');
+      $('#star-btn-1').addClass('btn-warning')
+    }) 
+
+    $('#star-btn-3').on("click", function() {
+     console.log('click 3')
+     ratingInput.val(3);
+     $(this).addClass('btn-warning');
+     $('#star-btn-1').addClass('btn-warning')
+     $('#star-btn-2').addClass('btn-warning')
+   }) 
+
+   $('#star-btn-4').on("click", function() {
+    console.log('click 4')
+    ratingInput.val(4);
+    $(this).addClass('btn-warning');
+    $('#star-btn-1').addClass('btn-warning')
+    $('#star-btn-2').addClass('btn-warning')
+    $('#star-btn-3').addClass('btn-warning')
+  }) 
+
+  $('#star-btn-5').on("click", function() {
+   console.log('click 5')
+   ratingInput.val(5);
+   $(this).addClass('btn-warning');
+   $('#star-btn-1').addClass('btn-warning')
+   $('#star-btn-2').addClass('btn-warning')
+   $('#star-btn-3').addClass('btn-warning')
+   $('#star-btn-4').addClass('btn-warning')
+ }) 
+
+    
+  });
+</script>
 
 </body>
 
@@ -551,7 +566,7 @@
   </body>
 </html> -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(document).ready(function() {
     console.log('rating')
     var ratingInput = $("#star-rating");
@@ -598,4 +613,4 @@
 
     
   });
-</script>
+</script> -->

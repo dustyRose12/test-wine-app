@@ -175,9 +175,9 @@ img.center {
 
 .my-well-show-pg img{
   max-height: 320px;
+  margin-left: auto;
   width: auto;
   display: block;
-  margin-left: auto;
   margin-right: auto;
   padding-bottom: 20px;
 }
@@ -270,6 +270,9 @@ img.center {
   border-color: #7f211f;
 }
 
+.cellar-btn{
+  border-radius: 2px;
+}
 .my-well-cellar-pg {
   background-color: #f1f4f4;
   min-height: 20px;
@@ -291,5 +294,59 @@ img.center {
 .cellar-info{
   text-indent: 30px;
 }
+
+.search-form {
+  padding-top: 15px;
+}
+
+.one-line {
+  display: flex;
+  align-items: center;
+  padding-bottom: 40px;
+}
+
+.top-pagination-index-pg{
+  position: absolute;
+  right: 10px;
+}
+
+.add-to-cellar{
+}
+
+.homepage-heading{
+  // text-decoration: underline;
+
+}
+.homepage-info{
+  font-size: 18px;
+}
+
+.list-info{
+  font-size: 18px;
+  font-style: italic;
+  padding-bottom:15px;
+}
+
+.home-icon-left{
+  padding-left: 75px;
+}
+.text-from-icons{
+  color: white;
+  font-weight: bold;
+}
+
+.home-icon-center{
+
+}
+
+.home-icon-right{
+  margin-right: 75px !important;
+  color: white !important;
+}
+
+.icon-info-right.icon-info-big .title {
+  font-size: 16px;
+  font-weight: 700;
+  }
 
 

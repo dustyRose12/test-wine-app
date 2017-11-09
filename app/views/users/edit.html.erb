@@ -1,30 +1,101 @@
-<% if @errors %>
- <div id="error-explanation"
-  <% @errors.each do |error| %>
-    <h2><%= error %></h2>
-  <% end %>
-  </div>
-<% end %>
 
-<h2>Edit Your Profile</h2>
-  <%= form_tag "/users/#{@user.id}", method: :patch do %>
-  <div>
-    Name: <input type="text" name="name" placeholder="<%= @user.name %>">
-  </div>
-  <div>
-    Email: <input type="email" name="email" placeholder="<%= @user.email %>">
-  </div>
-  <div>
-    Username: <input type="text" name="username" placeholder="<%= @user.username %>">
-  </div>
-  <div>
-    Password: <input type="password" name="password">
-  </div>
-  <div>
-    Confirm Password: <input type="password" name="password_confirmation">
-  </div>
-  <div>
-    Profile Picture: <input type="text" name="profile_pic" placeholder="<%= @user.profile_pic %>">
-  </div>
-  <input class="btn btn-success" type="submit" value="Update Profile">
-<% end %>
+<html>
+<head>
+  <title>Sign Up | Wine-to-Table</title>
+</head>
+<body>
+
+<!-- PAGE HEADER WITH BACKGROUND IMAGE -->
+<!-- took out the ID from this one so it would go to the default img-->    
+  <div class="page-header has-background-image">
+      <div class="overlay background-img-no-overlay"></div>
+      <div class="container">
+        <h1 class="page-title page-title-new">.</h1>
+      </div>
+    </div>
+    <!-- END PAGE HEADER WITH BACKGROUND IMAGE -->
+
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+      <div class="container">
+            <% if @errors %>
+             <div id="error-explanation"
+              <% @errors.each do |error| %>
+                <h2><%= error %></h2>
+              <% end %>
+              </div>
+            <% end %>
+ 
+          <!-- SIGN UP FORM -->
+    <%= form_tag "/users/#{@user.id}", method: :patch do %>
+        <div class="col-md-6">
+          <div class="well well-form-wrapper">
+            <h2 class="heading">Edit Your Profile</h2>
+            <br>
+            <form class="form-horizontal label-left">
+              <div class="form-group">
+                <label for="signup-firstname" class="col-sm-3 control-label">Name*</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="signup-firstname" name="name" placeholder="<%= @user.name %>">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="signup-email" class="col-sm-3 control-label">Email*</label>
+                <div class="col-sm-9">
+                  <input type="email" class="form-control" id="signup-email" name="email" placeholder="<%= @user.email %>">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="signup-username" class="col-sm-3  control-label">Username*</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="signup-username" name="username" placeholder="<%= @user.username %>">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="signup-username" class="col-sm-3  control-label">Profile Picture (URL)</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="signup-username" name="profile_pic" placeholder="<%= @user.profile_pic %>">
+                </div>
+              </div>
+              <br><br>
+              <div class="form-group">
+                <label for="signup-password" class="col-sm-3  control-label">Password*</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" id="signup-password" name="password">
+                </div>
+              </div>
+              <br>
+              <div class="form-group">
+                <label for="signup-password" class="col-sm-3  control-label">Password Confirmation*</label>
+                <div class="col-sm-9">
+                  <input type="password" class="form-control" id="signup-password" name="password_confirmation">
+                </div>
+              </div>
+    
+              <br><br>
+              <button type="submit" class="btn btn-primary btn-lg center-block"><i class="fa fa-check-circle"></i> SUBMIT</button>
+            </form>
+          </div>
+        </div>
+        <% end %>
+
+          <!-- END SIGN UP FORM -->
+
+      </div> <!-- whole content div -->
+    </div> <!-- whole content div -->
+    <!-- END PAGE CONTENT -->
+ 
+  <!-- JAVASCRIPT -->
+  <script src="/assets/js/jquery-2.1.1.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/easing/jquery.easing.min.js"></script>
+  <script src="/assets/js/bravana.js"></script>
+
+
+</body>
+
+</html>

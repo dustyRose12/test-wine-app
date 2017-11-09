@@ -18,6 +18,8 @@ class Wine < ApplicationRecord
   has_many :users, through: :pins
 
 
+
+
   def default_image
     if images.count > 0
       images.first.url
@@ -264,7 +266,7 @@ class Wine < ApplicationRecord
     elsif param == 'Sherry, Port, Madeira'
       ['Other: Sherry, Port, Madeira']
     elsif param
-      ['Albariño', 'Chardonnay', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Montepulciano','Pinot Gris/Grigio','Pinot Noir', 'Red Blends', 'Riesling', 'Sangiovese', 'Sauvignon Blanc', 'Syrah/Shiraz', 'Tempranillo', 'Zinfandel', 'White Blends']
+      ['Albariño', 'Chardonnay', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Montepulciano','Pinot Gris/Grigio','Pinot Noir', 'Red Blends', 'Riesling', 'Rosé', 'Sangiovese', 'Sauvignon Blanc', 'Sparkling and Champagne', 'Syrah/Shiraz', 'Tempranillo', 'Zinfandel', 'White Blends']
     end
   end
 
@@ -276,6 +278,10 @@ class Wine < ApplicationRecord
       if param == var.name
         return ['Argentina', 'Australia', 'Chile', 'France', 'Germany', 'Italy', 'New Zealand', 'Portugal', 'Spain', 'South Africa', 'US']
       end
+    end
+    # if param == "vintage" or param == "price" or param == "expert_rating" or param == "user_rating" or param == "overall_rating" or param == "search_term"
+    if param
+      return ['Argentina', 'Australia', 'Chile', 'France', 'Germany', 'Italy', 'New Zealand', 'Portugal', 'Spain', 'South Africa', 'US']
     end
   end
 
@@ -298,6 +304,14 @@ class Wine < ApplicationRecord
         return ['Red', 'White', 'Rosé', 'Sparkling and Champagne', 'Dessert', 'Sherry, Port, Madeira']
       end
     # end
+
+  end
+
+  # FIX LATER IF HAVE TIME to account for time
+  def self.wine_of_day
+    start_time = Time.now.utc
+    one_day_later = start_time + 1.day
+    today_wine = Wine.order("RANDOM()").take(1)
 
   end
 

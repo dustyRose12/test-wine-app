@@ -4,11 +4,9 @@
     <div class="page-header">
       <div class="container">
         <h1 class="page-title pull-left"></h1>
-        <ol class="breadcrumb link-accent">
-          <li><a href="#">Breadcrumb1</a></li>
-          <li><a href="#">Breadcrumb2</a></li>
-          <li class="active">Red wines or whatever current one</li>
-        </ol>
+       <ol class="breadcrumb">
+        <%= render_breadcrumbs :tag => :li, :separator => "" %>
+      </ol>
       </div>
     </div>
     <!-- END PAGE HEADER DEFAULT -->

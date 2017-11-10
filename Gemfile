@@ -33,6 +33,7 @@ gem 'ratyrate'
 gem 'kaminari', '~> 1.1.1'
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
+gem 'breadcrumbs_on_rails'
 
 
 group :development, :test do

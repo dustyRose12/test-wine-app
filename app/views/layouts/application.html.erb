@@ -75,17 +75,19 @@
               </div> -->
             <!-- </form> -->
            <!--  < end %> -->
-
+         
 
           <div class="right">
             <ul class="nav navbar-nav navbar-right">
              <% if current_user %>
-                <li><a href="/cellar" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm add-button">My Cellar</span></a></li>
-                <li><a href="/users/<%= current_user.id %>/edit" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm add-button">My Profile</span></a></li>
-                <li><a href="/logout" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm add-button">Log Out</span></a></li>
+                <li><a href="/scan_barcode" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Scan Wine Barcode</span></a></li>
+                <li><a href="/cellar" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Cellar</span></a></li>
+                <li><a href="/users/<%= current_user.id %>/edit" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Profile</span></a></li>
+                <li><a href="/logout" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Log Out</span></a></li>
         <% else %>
-                <li><a href="/signup">Sign Up</a></li>
-                <li><a href="/login">Log In</a></li>
+                <li><a href="/scan_barcode" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm">Scan Wine Barcode</span></a></li>
+                <li><a href="/signup" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm">Sign Up</span></a></li>
+                <li><a href="/login" class='as-button'><span class="btn btn-primary btn-fullrounded btn-sm">Log In</span></a></li>
         <% end %>   
             </ul>
           </div>

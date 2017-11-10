@@ -2,6 +2,7 @@ class WinesController < ApplicationController
 
   before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy] 
 
+
   def index
     @wines = Wine.all
 
@@ -79,7 +80,10 @@ class WinesController < ApplicationController
         end
 
         @wines = @wines.flatten.uniq
+
+
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
 
       elsif dropdown_filter == 'expert_rating_high'
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -117,7 +121,9 @@ class WinesController < ApplicationController
         end
 
         @wines = @wines.flatten.uniq
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse 
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
+  
 
       elsif dropdown_filter == 'overall_rating_high'
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -155,7 +161,9 @@ class WinesController < ApplicationController
         end
 
         @wines = @wines.flatten.uniq
+
         @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
 
       elsif dropdown_filter == 'price_lowest'
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -193,7 +201,8 @@ class WinesController < ApplicationController
         end
 
         @wines = @wines.flatten.uniq
-        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest }  
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_lowest } 
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25) 
 
        elsif dropdown_filter == 'price_highest'
        wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -232,6 +241,7 @@ class WinesController < ApplicationController
         
         @wines = @wines.flatten.uniq
         @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
 
       elsif dropdown_filter == 'most_reviewed'
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -270,6 +280,7 @@ class WinesController < ApplicationController
 
         @wines = @wines.flatten.uniq
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
 
       end     
       return @wines
@@ -295,7 +306,7 @@ class WinesController < ApplicationController
         @wines = varietal_wines & country_wines unless region_wines.any?
         @wines = varietal_wines & region_wines unless country_wines.any?
         @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse
 
       elsif dropdown_filter == 'overall_rating_high'
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
@@ -334,6 +345,7 @@ class WinesController < ApplicationController
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
 
       end     
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 #===================================================================
@@ -393,6 +405,7 @@ class WinesController < ApplicationController
         @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
       end     
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -452,7 +465,8 @@ class WinesController < ApplicationController
         @wines = region_wines & varietal_wines unless wine_type_wines.any?
         @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
-      end     
+      end   
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)  
       return @wines
     end
 
@@ -497,7 +511,7 @@ class WinesController < ApplicationController
       elsif dropdown_filter == 'most_reviewed'
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
       end  
-
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
   end
    
@@ -539,7 +553,8 @@ class WinesController < ApplicationController
 
       elsif dropdown_filter == 'most_reviewed'
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
-      end     
+      end   
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)  
       return @wines
     end
   #===================================================================
@@ -579,7 +594,8 @@ class WinesController < ApplicationController
 
       elsif dropdown_filter == 'most_reviewed'
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
-      end     
+      end  
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)   
       return @wines
     end
   #===================================================================
@@ -613,7 +629,8 @@ class WinesController < ApplicationController
 
       elsif dropdown_filter == 'most_reviewed'
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
-      end     
+      end   
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)  
       return @wines
 
     end
@@ -627,7 +644,7 @@ class WinesController < ApplicationController
         elsif page_wine_of_day
           pages_wines =  Wine.order("RANDOM()").take(1)
         elsif page_best_of
-          pages_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(9)
+          pages_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(25)
         end
 
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -657,7 +674,8 @@ class WinesController < ApplicationController
       elsif dropdown_filter == 'most_reviewed'
         @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
       end    
-
+      
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
       
     end
@@ -677,6 +695,7 @@ class WinesController < ApplicationController
       country_wines = Wine.by_country(country_sort)
 
       @wines =  wine_type_wines & varietal_wines & country_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
 
     end
@@ -688,6 +707,7 @@ class WinesController < ApplicationController
       region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
 
       @wines =  wine_type_wines & varietal_wines & region_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
 
     end
@@ -697,6 +717,7 @@ class WinesController < ApplicationController
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       @wines = wine_type_wines & varietal_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -705,6 +726,7 @@ class WinesController < ApplicationController
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       country_wines = Wine.by_country(country_sort)
       @wines =  wine_type_wines & country_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -713,6 +735,7 @@ class WinesController < ApplicationController
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
       @wines = wine_type_wines & region_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -724,6 +747,7 @@ class WinesController < ApplicationController
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       country_wines = Wine.by_country(country_sort)
       @wines = varietal_wines & country_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -732,6 +756,7 @@ class WinesController < ApplicationController
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       region_wines = Wine.joins(:region).where("regions.name iLIKE ?", "%#{region_sort}%" )
       @wines =  varietal_wines & region_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -743,6 +768,7 @@ class WinesController < ApplicationController
       country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       @wines =  wine_type_wines & country_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -751,6 +777,7 @@ class WinesController < ApplicationController
       country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
       @wines =  varietal_wines & country_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -761,6 +788,7 @@ class WinesController < ApplicationController
       region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       @wines =  wine_type_wines & region_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -769,6 +797,7 @@ class WinesController < ApplicationController
       region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
       @wines =  region_wines & varietal_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -779,16 +808,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
            @wines =  sort_wines & wine_type_wines
+           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && sort_wine_type && from_vintage
           sort_wines = @wines.order({sort_attribute => order_attribute})
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && sort_wine_type && from_vintage
           sort_wines = @wines.order(sort_attribute)
           wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
 # this is for the SIDEBAR FILTERS ( VINTAGE ==> varietal):
@@ -797,16 +829,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && varietal_sort && from_vintage
           sort_wines = @wines.order({sort_attribute => order_attribute})
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines = sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && varietal_sort && from_vintage
           sort_wines = @wines.order(sort_attribute)
           varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
 
@@ -816,16 +851,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && country_sort && from_vintage
           sort_wines = @wines.order({sort_attribute => order_attribute})
           country_wines = Wine.by_country(country_sort)
           @wines = sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && country_sort && from_vintage
           sort_wines = @wines.order(sort_attribute)
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
   
@@ -836,16 +874,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && sort_wine_type && from_price
           sort_wines = @wines.order({sort_attribute => order_attribute})
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && sort_wine_type && from_price
           sort_wines = @wines.order(sort_attribute)
           wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
   
@@ -855,16 +896,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && varietal_sort && from_price
           sort_wines = @wines.order({sort_attribute => order_attribute})
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && varietal_sort && from_price
           sort_wines = @wines.order(sort_attribute)
           varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
 
@@ -873,16 +917,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && country_sort && from_price
           sort_wines = @wines.order({sort_attribute => order_attribute})
           country_wines = Wine.by_country(country_sort)
           @wines = sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && country_sort && from_price
           sort_wines = @wines.order(sort_attribute)
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
   
@@ -893,16 +940,19 @@ class WinesController < ApplicationController
            sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && sort_wine_type && from_exp_rating
           sort_wines = @wines.order({sort_attribute => order_attribute})
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && sort_wine_type && from_exp_rating
           sort_wines = @wines.order(sort_attribute)
           wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =   sort_wines & wine_type_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
       # this is for the SIDEBAR FILTERS ( EXPERT ==> varietal):
@@ -911,16 +961,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && varietal_sort && from_exp_rating
           sort_wines = @wines.order({sort_attribute => order_attribute})
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && varietal_sort && from_exp_rating
           sort_wines = @wines.order(sort_attribute)
           varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
      # this is for the SIDEBAR FILTERS ( EXPERT ==> country):
@@ -928,16 +981,19 @@ class WinesController < ApplicationController
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && order_attribute && country_sort && from_exp_rating
           sort_wines = @wines.order({sort_attribute => order_attribute})
           country_wines = Wine.by_country(country_sort)
           @wines = sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       elsif sort_attribute && country_sort && from_exp_rating
           sort_wines = @wines.order(sort_attribute)
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
+          @wines = @wines.paginate(:page => params[:page], :per_page => 25)
           return @wines
       end
   
@@ -948,16 +1004,19 @@ class WinesController < ApplicationController
         user_wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
         @wines =  user_wines & wine_type_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && sort_order == "asc" && sort_wine_type && from_user_rating
         user_wines = @wines.sort_by { |wine| wine.user_rating_for_sort }
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
         @wines =  user_wines & wine_type_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && sort_wine_type && from_user_rating
       user_wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       @wines =  user_wines & wine_type_wines
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -967,16 +1026,19 @@ class WinesController < ApplicationController
         user_wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
         @wines =  user_wines & varietal_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && sort_order == "asc" && varietal_sort && from_user_rating
         user_wines = @wines.sort_by { |wine| wine.user_rating_for_sort }
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
         @wines =  user_wines & varietal_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && varietal_sort && from_user_rating
         user_wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
         @wines =  user_wines & varietal_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     end
 
@@ -986,16 +1048,19 @@ class WinesController < ApplicationController
         user_wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
         country_wines = Wine.by_country(country_sort)
         @wines =  user_wines & country_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && sort_order == "asc" && country_sort && from_user_rating
         user_wines = @wines.sort_by { |wine| wine.user_rating_for_sort }
         country_wines = Wine.by_country(country_sort)
         @wines =  user_wines & country_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && country_sort && from_user_rating
         user_wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
         country_wines = Wine.by_country(country_sort)
         @wines =  user_wines & country_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     end
  #====================================================
@@ -1005,11 +1070,13 @@ class WinesController < ApplicationController
         overall_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
          wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
         @wines =  overall_wines & wine_type_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
          return@wines
     elsif overall_sort && sort_order == "asc" && sort_wine_type && from_overall_rating
         overall_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
         @wines =  overall_wines & wine_type_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
       end
 
@@ -1019,11 +1086,13 @@ class WinesController < ApplicationController
         overall_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
         @wines =  overall_wines & varietal_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
          return@wines
     elsif overall_sort && sort_order == "asc" && varietal_sort && from_overall_rating
         overall_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
         @wines =  overall_wines & varietal_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
       end
 
@@ -1033,11 +1102,13 @@ class WinesController < ApplicationController
         overall_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
         country_wines = Wine.by_country(country_sort)
         @wines =  overall_wines & country_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
          return@wines
     elsif overall_sort && sort_order == "asc" && country_sort && from_overall_rating
         overall_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }
         country_wines = Wine.by_country(country_sort)
         @wines =  overall_wines & country_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
       end
 
@@ -1048,6 +1119,7 @@ class WinesController < ApplicationController
         search_wines = Wine.search(search_term)
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
         @wines =  search_wines & varietal_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
          return@wines
       end
 
@@ -1057,6 +1129,7 @@ class WinesController < ApplicationController
         search_wines = Wine.search(search_term)
         country_wines = Wine.by_country(country_sort)
         @wines =  search_wines & country_wines
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
          return@wines
       end
 
@@ -1067,7 +1140,7 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
 
       page_trending_wines =  Wine.order(:existing_avg_user_rating_count).last(9)
       page_wine_of_day_wines =  Wine.order("RANDOM()").take(1)
-      page_best_of_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(9)
+      page_best_of_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(25)
 
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
@@ -1078,6 +1151,7 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
       @wines = page_trending_wines & varietal_wines unless (wine_type_wines.any? or country_wines.any?)
       @wines = page_trending_wines & country_wines unless (wine_type_wines.any? or varietal_wines.any?)
       @wines = page_trending_wines if (wine_type_wines.empty? && varietal_wines.empty? && country_wines.empty?)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
 
     elsif page_wine_of_day
@@ -1085,6 +1159,7 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
       @wines = page_wine_of_day_wines & varietal_wines unless (wine_type_wines.any? or country_wines.any?)
       @wines = page_wine_of_day_wines & country_wines unless (wine_type_wines.any? or varietal_wines.any?)
       @wines = page_wine_of_day_wines if (wine_type_wines.empty? && varietal_wines.empty? && country_wines.empty?)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
 
     elsif page_best_of
@@ -1093,6 +1168,7 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
       @wines = page_best_of_wines & country_wines unless (wine_type_wines.any? or varietal_wines.any?)
 
       @wines = page_best_of_wines if (wine_type_wines.empty? && varietal_wines.empty? && country_wines.empty?)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -1108,32 +1184,40 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
   #this one works for the VINTAGE oldest-newest / newest-oldest, PRICE low-high / high-low, EXPERT RATING high-low / low-high
     if sort_attribute && sort_min && sort_max && order_attribute
       @wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     elsif sort_attribute && order_attribute 
       @wines = @wines.order({sort_attribute => order_attribute})
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     elsif sort_attribute 
       @wines = @wines.order(sort_attribute)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
+  #for wine type
     if sort_wine_type
         @wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     end
     #this one is for the varietal, i.e, riesling 
     if varietal_sort
-      @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
+      @wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } )
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25) 
       return @wines
     end
 
      if country_sort
         @wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     end
 
       if region_sort
         @wines = Wine.joins(:region).where(regions: { name: region_sort } )
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     end
 
@@ -1141,26 +1225,32 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
     # User_Rating Sort & Overall Rating Sort
     if user_sort && sort_order == "desc"
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }.reverse
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort && sort_order == "asc"
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort }
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     elsif user_sort
       @wines = @wines.sort_by { |wine| wine.user_rating_count}.reverse
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
     if overall_sort && sort_order == "desc"
         @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }.reverse
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return@wines
     elsif overall_sort && sort_order == "asc"
         @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort }
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
         return @wines
     end
 
     #Search box
     if search_term
       @wines = Wine.search(search_term)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end
 
@@ -1168,16 +1258,19 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
     # HOMEPAGE panel PAGES page_trending = params[:page_trending]
     if page_trending
       @wines = Wine.order(:existing_avg_user_rating_count).last(9)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
       #TODO: tack on this part to order the most reviewed 9 ones by order of best reviews: @wines.order(:existing_avg_user_rating). this syntax doesn't work.
     end
     if page_wine_of_day
       @wines = Wine.order("RANDOM()").take(1)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end 
     #TODO check the order that the wines are displayed, should be highest ratings first
      if page_best_of
-      @wines = Wine.where(vintage: 2016).order(:expert_rating).last(9)
+      @wines = Wine.where(vintage: 2016).order(:expert_rating).last(25)
+      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end 
 

@@ -28,7 +28,7 @@
       </div>
     </div>
 
-<!-- MAIN WINE INFO BOX -->
+<!-- MAIN WINE INFO & ADD TO CELLAR BOX -->
    <div class="col-md-4 col-sm-6">
       <div class="well my-well-show-pg box1and2">
         <h4 class="product-title"><a href ="/wines/<%= @wine.id %>"><%= @wine.name %></a></h4>
@@ -79,7 +79,7 @@
       </div>
     </div>
 
-<!-- DESCRIPTION & ADD TO CELLAR BOX-->
+<!-- DESCRIPTION & WHERE TO BUY BOX-->
       <div class="col-md-4 col-sm-6">
           <div class="well my-well-show-pg">
           <h4>Tasting Notes:</h4>
@@ -88,12 +88,12 @@
           <br>
           <p><strong><i>Where to Buy:</i></strong></p>
           <% if @wine.store_one%>
-          <strong><li class="fa fa-envira fa-lg"><a href="<%= @wine.link_one %>" target="_blank"> <%= @wine.store_one %></a></li></strong>
+          <strong style="display: inherit"><li class="fa fa-envira fa-lg" style="padding-bottom: 10px"><a href="<%= @wine.link_one %>" target="_blank"> <%= @wine.store_one %></a></li></strong>
           <% else %>
           <strong><li class="fa fa-envira fa-lg"> N/A</li></strong>
           <% end %>
           <% if @wine.store_two%>
-          <strong><li class="fa fa-envira fa-lg"><a href="<%= @wine.link_two %>" target="_blank"> <%= @wine.store_two %></a></li></strong>
+          <strong style="display: inherit"><li class="fa fa-envira fa-lg" style="padding-bottom: 10px"><a href="<%= @wine.link_two %>" target="_blank"> <%= @wine.store_two %></a></li></strong>
           <% end %>
           </div>
         </div>

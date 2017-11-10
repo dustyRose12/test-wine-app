@@ -613,16 +613,17 @@
                   <% end %>
                 </div> <!-- (this is for controls-left) -->
 
-<!-- PAGINATION DO LATER IF HAVE TIME -->
+<!-- PAGINATION FIX LATER IF HAVE TIME -->
+
                 <div class="controls-right top-pagination-index-pg">
                   <ul class="pagination borderless">
-                    <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i><span class="sr-only">Previous</span></a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
+                  <!--   <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i><span class="sr-only">Previous</span></a></li>
+                    <li class="active"><a href="#">1</a></li> -->
+                  <%= will_paginate @wines, renderer: BootstrapPagination::Rails, class: "pagination borderless controls-right" %>
+                   <!--  <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><i class="fa fa-angle-right"></i><span class="sr-only">Next</span></a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i><span class="sr-only">Next</span></a></li> -->
                   </ul>
                 </div> <!-- (this is for controls-right) -->
 <!--                 END PAGINATION -->                
@@ -674,6 +675,8 @@
         </div>
       </div>
     </div>
+
+
 
 
   <!-- JAVASCRIPT -->

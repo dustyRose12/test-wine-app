@@ -30,7 +30,7 @@
                
                    <div class="row">
                    <br>
-                     <% @pins.each do |pin| %>
+                     <% (@pins.order(:updated_at).reverse).each do |pin| %>
                      <div class="col-md-9 col-sm-12">
                        <div class="col-md-6 col-sm-6 product-index-single">
                           <div class="my-well-cellar-pg">
@@ -133,7 +133,7 @@
           <div class="row">
            <br>
 
-            <% @pins.each do |pin| %>
+            <% (@pins.order(:updated_at).reverse).each do |pin| %>
               <!--  CHECK if the PIN belongs to this CAT tab -->
               <% if pin.personal_categories.empty? %>
                       <!-- do nothing if pin has no personal_cats attached to it -->
@@ -255,32 +255,26 @@
                       <%= form_tag "/personal_categories", method: :post do %>
                       <p class="form-inline"><strong><i>Enter Category Name:   <input type="text" class ="new-category-to-right" name="name"></strong></i>
                       <input type="hidden" name="user_id" value="<%= current_user.id %>">
-                      <input type="submit" class="btn btn-primary btn-fullrounded category-btn-right add-button" value="Create New Category"></p>
+                      <input type="submit" class="btn btn-primary btn-fullrounded btn-sm category-btn-right add-button" value="Create New Category"></p>
                     <% end %>
                     <hr/>
                     <h4>Edit / Delete Category:</h4>
-                   <!--  select dropdown version: -->
-                    <!--   <div class="form-group">
-                        <div class="col-md-9">
-                          <p class="form-inline"><strong><i>Select Category:  </strong></i>
-                          <select class="form-control">
-                          < @all_personal_categories.each do |personal_category| %>
-                              <option value="<= personal_category.id %>"><= personal_category.name %></option>
-                            < end %>
-                          </select></p>
-                      </div>
-                    </div> -->
 
                    <!--     list all with edit / delete buttons version:  -->
                    <div class="col-md-12">
                      <% @all_personal_categories.each do |personal_category| %>
+                     <div class="row">
                         <%= form_tag "/personal_categories/#{personal_category.id}", method: :patch do %>
+                        <div class="col-md-4 edit-form-padding-right">
                           <p class="form-inline"><strong><%= personal_category.name %>:   <input type="text" class ="new-category-to-right" name="name"></strong>
-                          <input class="btn btn-primary btn-fullrounded category-btn-right edit-button" type="submit" value="Edit Category">
-            <!--          <= link_to "Edit Category", "/personal_categories/#{personal_category.id}", method: :patch, class: "btn btn-primary btn-fullrounded category-btn-right edit-button" %>  -->
-                      <%= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-primary btn-fullrounded category-btn-right delete-button" %> 
+                          </div>
+                          <div class="col-md-8">
+                          <input class="btn btn-primary btn-fullrounded btn-sm category-btn-right edit-button" type="submit" value="Edit Category">
+                      <%= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-primary btn-fullrounded btn-sm category-btn-right delete-button" %> 
                         <% end %>
+                        </div>
                       </p>
+                      </div>
                     <% end %>
                     </div>
 
@@ -335,40 +329,36 @@
                     <%= form_tag "/personal_categories", method: :post do %>
                     <p class="form-inline"><strong><i>Enter Category Name:   <input type="text" class ="new-category-to-right" name="name"></strong></i>
                     <input type="hidden" name="user_id" value="<%= current_user.id %>">
-                    <input type="submit" class="btn btn-primary btn-fullrounded category-btn-right add-button" value="Create New Category"></p>
+                    <input type="submit" class="btn btn-primary btn-fullrounded btn-sm category-btn-right add-button" value="Create New Category"></p>
                   <% end %>
                   <hr/>
                   <h4>Edit / Delete Category:</h4>
                   <br>
-                 <!--  select dropdown version: -->
-        <!--             <div class="form-group">
-                      <div class="col-md-9">
-                        <p class="form-inline"><strong><i>Select Category:  </strong></i>
-                        <select class="form-control">
-                        < @all_personal_categories.each do |personal_category| %>
-                            <option value="<= personal_category.id %>"><= personal_category.name %></option>
-                          < end %>
-                        </select></p>
-                      </div>
-                    </div> -->
 
                    <!--     list all with EDIT/DELETE buttons version:  -->
                    <div class="col-md-12">
                     <% @all_personal_categories.each do |personal_category| %>
+                    <div class="row">
                         <%= form_tag "/personal_categories/#{personal_category.id}", method: :patch do %>
+                          <div class="col-md-4 edit-form-padding-right">
                           <p class="form-inline"><strong><%= personal_category.name %>:   <input type="text" class ="new-category-to-right" name="name"></strong>
-                          <input class="btn btn-primary btn-fullrounded category-btn-right edit-button" type="submit" value="Edit Category">
+                          </div>
+                          <div class="col-md-8">
+                          <input class="btn btn-primary btn-fullrounded btn-sm category-btn-right edit-button" type="submit" value="Edit Category">
             <!--          <= link_to "Edit Category", "/personal_categories/#{personal_category.id}", method: :patch, class: "btn btn-primary btn-fullrounded category-btn-right edit-button" %>  -->
-                      <%= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-primary btn-fullrounded category-btn-right delete-button" %> 
+                      <%= link_to "Delete Category", "/personal_categories/#{personal_category.id }", method: :delete, class: "btn btn-primary btn-fullrounded btn-sm category-btn-right delete-button" %> 
                         <% end %>
+                        </div> <!-- (this is for col8) -->
                       </p>
+                      </div><!--  (this is for row) -->
                     <% end %>
-                    </div>
+                    </div> <!-- (this is for col 12) -->
                   </div>
               </div><!--  (this is div tab content) -->
 
  <% end %> <!-- ends first IF current_user.pins (user has pins or no pins if elsif end) -->
 </div>
+
 
 
   <!-- JAVASCRIPT -->

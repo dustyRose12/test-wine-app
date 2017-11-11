@@ -289,13 +289,13 @@
               </ul>
             </div>
             <% end %> 
-          <% if params[:sort].present? && params[:sort] == "expert_rating" && params[:expert_rating].present? %>
+          <% if params[:sort].present? && params[:sort] == "expert_rating" && params[:from_exp_rating].present? %>
             <div class="widget widget-filter">
               <h4 class="widget-title">COUNTRY:</h4>
               <ul class="list-unstyled product-attribute-link-list">
                 <% Wine.country_types(params[:sort]).each do |country| %>
                   <li>
-                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&expert_rating=<%= params[:expert_rating] %>"><%= country %></a>
+                    <a href="/wines/?sort=<%=params[:sort]%>&sort_min=<%= params[:sort_min] %>&sort_max=<%= params[:sort_max] %>&sort_order=<%= params[:sort_order] %>&user_country=<%= country %>&from_exp_rating=<%= params[:from_exp_rating] %>"><%= country %></a>
                   </li>
                 <% end %>
               </ul>
@@ -555,7 +555,7 @@
             <!-- PRODUCT DISPLAY -->
             <div class="product-display">
               <!-- DISPLAY CONTROLS --> <!-- FILTERING FROM TOP DROPDOWN -->
-              <div class="display-controls clearfix one-line">
+              <div class="display-controls clearfix one-line row">
            <!--    <span class="top-of-results"> tried adding this myself it didn't do anything-->
                 <div class="controls-left">
                 <%= form_tag "/wines" , method: :get, class: "form-inline" do %>
@@ -607,17 +607,17 @@
                               <option value="most_reviewed">Popularity</option>
                             </select>
                         </div> <!-- (this is for form group) -->
-                    <button type="submit">Apply</button>
+                    <button type="submit" class="btn btn-success add-button"><i class="fa fa-check"></i> Apply</button>
                   <% end %>
                 </div> <!-- (this is for controls-left) -->
 
 <!-- PAGINATION FIX LATER IF HAVE TIME -->
-
                 <div class="controls-right top-pagination-index-pg">
+
                   <ul class="pagination borderless">
                   <!--   <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i><span class="sr-only">Previous</span></a></li>
                     <li class="active"><a href="#">1</a></li> -->
-                  <%= will_paginate @wines, renderer: BootstrapPagination::Rails, class: "pagination borderless controls-right" %>
+                  <%= will_paginate @wines, inner_window: 1, outer_window: 1, renderer: BootstrapPagination::Rails, class: "pagination borderless controls-right" %>
                    <!--  <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
@@ -637,7 +637,7 @@
                 <li class="col-md-4 col-sm-6">
                 <div class="my-well-index-pg">
                   <div class="product-item">
-                      <h4 class="title"><a href="/wines/<%= wine.id %>"><%= wine.name %></a></h4>
+                      <h4 class="title" align="center"><a href="/wines/<%= wine.id %>"><%= wine.name %></a></h4>
                     <a href="/wines/<%= wine.id %>">
                       <img class= "wine_image center" src="<%= wine.default_image %>" class="img-responsive" alt="Product Image">
                     </a><br><br>
@@ -650,7 +650,11 @@
                                 <% end %>
                             <p><i>Wine type:</i> <b><%= wine.varietal.wine_type %></b></p>
                             <p><i>Varietal:</i> <b><%= wine.varietal.name %></b></p>
+                            <%if wine.price %>
                             <p><i>Price:</i> <b><%= number_to_currency(wine.price) %></b></p>
+                            <% else %>
+                            <p><i>Price:</i> <b><%= wine.price_for_show %></b></p>
+                            <% end %>
                             <br>
                             <p><i>Expert Rating:</i> <b><%= wine.expert_rating_for_show %></b></p>
                             <p><i>User Rating:</i> <b><%= wine.user_rating_for_show %></b>  ( based on <b><%= wine.user_rating_count %></b> reviews )</p>

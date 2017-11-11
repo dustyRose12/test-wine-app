@@ -98,7 +98,7 @@ class Wine < ApplicationRecord
   def half_stars
      if self.user_rating
          decimal = self.user_rating.modulo(1)
-         if decimal == 1 || decimal == 2
+         if decimal == 0 || decimal == 1 || decimal == 2
           return 0
         else
           return 1

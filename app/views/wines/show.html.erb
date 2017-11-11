@@ -5,14 +5,11 @@
     <div class="page-header breadcrumbs-only">
       <div class="container">
         <ol class="breadcrumb link-accent">
-          <li><a href="#">Red vs White vs Rose etc</a></li>
-          <li><a href="#">Varietal Riesling etc</a></li>
-          <li><a href="#">Country</a></li>
-          <li><a href="#">Region</a></li>
-          <li class="active">Wine name is the active link</li>
+          <%= render_breadcrumbs :tag => :li, :separator => "" %>
         </ol>
       </div>
     </div>
+
     <!-- END BREADCRUMBS -->
     <div class="page-content product-single">
       <div class="container wine-show-pg-container-space">
@@ -64,7 +61,11 @@
         <p>Varietal: <b><%= @wine.varietal.name %></b></p>
         <p>Producer: <b><%= @wine.producer.name %></b></p>
         <p>Vintage: <b><%= @wine.vintage %></b></p>
+        <%if @wine.price %>
         <p>Price: <b><%= number_to_currency(@wine.price) %></b></p>
+        <% else %>
+        <p>Price: <b><%= @wine.price_for_show %></b></p>
+        <% end %>
         <br>
          <!-- Hidden Form that creates new Pin to Cellar via pins/new -->
          <div class="add-to-cellar text-center">
@@ -232,12 +233,12 @@
                     <div class="col-sm-6">
                    
 
-                <% Review.where(wine_id: @wine.id).each do |review| %>
+                <% (Review.where(wine_id: @wine.id).order(:updated_at).reverse).each do |review| %>
                     <div class="col-sm-12">
                       <div class="testimonial-rating">
                      <!--  <div class="testimonial-rating margin-bottom-30"> the last ones had this class instead with margin-bottom-30-->
                      <hr/>
-                        <img src="<%= review.user.profile_pic %>"" class="img-circle avatar" alt="avatar">
+                        <img src="<%= review.user.default_profile_pic %>"" class="img-circle avatar" alt="avatar">
                         <div class="text">
                        <span class="rating" align="left">
                           <strong class="name"><%= review.user.name %></strong>

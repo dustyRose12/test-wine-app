@@ -28,6 +28,8 @@
   <!-- GOOGLE FONTS -->
   <link href='https://fonts.googleapis.com/css?family=Raleway:700,400,400italic,500' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,700,300,300italic' rel='stylesheet' type='text/css'>
+
+
   <!-- FAVICONS -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/bravana144.png">
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/bravana114.png">
@@ -61,21 +63,7 @@
               <li><a href="#"><i class="fa fa-youtube"></i></a></li>
               <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
             </ul> -->
-         <!--  </div> -->
-<!--           copied this search bar from my app (like this better):
-
-            this is the Bravana default search bar that it came with: -->
-<!--             <= form_tag "/wines", method: :get, class: "navbar-form navbar-left search-form", role: "search" do %>
- -->            <!-- <form class="navbar-form navbar-left search-form" method="get" role="search"> -->
-            <!--   <div class="input-group input-group-sm">
-                <input type="text" class="form-control">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                </span>
-              </div> -->
-            <!-- </form> -->
-           <!--  < end %> -->
-         
+         <!--  </div> -->         
 
           <div class="right">
             <ul class="nav navbar-nav navbar-right">
@@ -91,16 +79,6 @@
         <% end %>   
             </ul>
           </div>
-
-
-<!-- SEARCH BAR -->
-       <!--      <= form_tag "/wines", method: :get, class: "navbar-form navbar-right" do %>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="search_term">
-                <button type="submit" class="btn btn-default">Submit</button> 
-              </div>
-            < end %> -->
-
         </div>
       </div>
       <!-- END TOP BAR -->
@@ -127,16 +105,6 @@
   <!-- END SEARCH FORM -->
 
     </div>
-
-<!--         Search Bar
- -->       <!--  <div>
-        <= form_tag "/wines", method: :get, class: "navbar-form navbar-right" do %>
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="search_term">
-                <button type="submit" class="btn btn-default">Submit</button> 
-              </div>
-          < end %>
-          </div> -->
 
 
 
@@ -165,7 +133,7 @@
             <li class="dropdown">
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">VARIETAL <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown-menu">
-                    <% Varietal.all.each do |varietal| %>
+                    <% Varietal.all.order(:name).each do |varietal| %>
                       <li><a href="/wines/?user_varietal=<%= varietal.name %>&from_var=<%= true %>"><%=varietal.name%></a></li>
                     <% end%>
                 </ul>
@@ -174,7 +142,7 @@
             <li class="dropdown">
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">COUNTRY <i class="fa fa-angle-down"></i></a>
               <ul class="dropdown-menu">
-                <% Country.all.each do |country| %>
+                <% Country.all.order(:name).each do |country| %>
                     <li><a href="/wines/?user_country=<%= country.id %>&from_country=<%= true %>"><%=country.name%></a></li>
                 <% end%>
               </ul>
@@ -183,7 +151,7 @@
             <li class="dropdown">
               <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">REGION <i class="fa fa-angle-down"></i></a>
                 <ul class="dropdown-menu">
-                    <% Region.all.each do |region| %>
+                    <% Region.all.order(:name).each do |region| %>
                       <% if region.name.present? %>
                        <li><a href="/wines/?user_region=<%= region.name %>&from_region=true"><%=region.name%></a></li>
                        <% end %>
@@ -254,12 +222,13 @@
     </nav>
       <div class="container">
       <% flash.each do |name, message| %>
-        <div class="alert alert-<%= name %> alert-dismissible" role="alert">
+        <div class="alert alert-<%= name %> alert-dismissible" role="alert" id="flash">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <%= message %>
         </div>
       <% end %>
     <!-- END NAVBAR -->
+
     <!-- SLIDER -->
    <!--  <section id="slider-fullwidth" class="rev_slider no-padding">
       <ul>
@@ -451,6 +420,15 @@
     </div>
   <!-- END WRAPPER -->
 
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    setTimeout(function(){
+    $('#flash').fadeOut();
+    }, 3500);
+  })
+</script>
+
   <!-- JAVASCRIPT -->
   <script src="/assets/js/jquery-2.1.1.min.js"></script>
   <script src="/assets/js/bootstrap.min.js"></script>
@@ -458,6 +436,7 @@
   <script src="/assets/js/plugins/revolution/js/jquery.themepunch.tools.min.js"></script>
   <script src="/assets/js/plugins/revolution/js/jquery.themepunch.revolution.min.js"></script>
   <script src="/assets/js/plugins/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+  <script src="/assets/js/plugins/owl-carousel/owl.carousel.min.js"></script>
   <script src="/assets/js/bravana.js"></script>
   <script src="/assets/js/plugins/parsley-validation/parsley.js"></script>
   <script src="/assets/js/plugins/parsley-validation/parsley.min.js"></script>

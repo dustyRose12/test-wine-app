@@ -8,5 +8,14 @@ class User < ApplicationRecord
 
   has_many :personal_categories
   
+  def default_profile_pic
+    if self.profile_pic.to_s.empty?
+     "https://thesocietypages.org/socimages/files/2009/05/nopic_192.gif"
+    else
+      profile_pic
+    end
+  end
+
+
 
 end

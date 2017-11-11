@@ -1,17 +1,21 @@
-<div class="container-fluid">
-<div class="row">
-  <% @wines.each do |wine| %>
-   <div class="col-md-4 col-sm-6 product-index-single">
-      <div class="well">
-        <h2><a href ="/wines/<%= wine.id %>"><%= wine.producer.name %> <%= wine.vintage %> <%= wine.name %> <%= wine.varietal.name %> (<%= wine.region.name %>)</a></h2>
-        <h3>Expert Rating: <%= wine.expert_rating %></h3>
-        <h3>Wine type: <%= wine.varietal.wine_type %></h3>
-        <h3>Country: <%= wine.region.country.name %></h3>
-        <img class= "wine_image center" src=<%= wine.default_image %>>
-        <h4>Price: <%= number_to_currency(wine.price) %></h4>
-        <h4><%= wine.description %></h4>
+<!-- PAGE HEADER WITH BACKGROUND IMAGE -->
+<!-- took out the ID from this one so it would go to the default img-->    
+  <div class="page-header has-background-image">
+      <div class="overlay background-img-no-overlay"></div>
+      <div class="container">
+        <h1 class="page-title page-title-new"><%= @page %></h1>
       </div>
     </div>
-  <% end %>
+    <br>
+    <br>
+    <br>
+    <!-- END PAGE HEADER WITH BACKGROUND IMAGE -->
+
+<div class="col-md-10">
+  <h2><%=  (Page.where(region_name: @page))[0].region_name %>, <%= (Page.where(region_name: @page))[0].region_country %></h2>
+  <br>
+  <p><%= (Page.where(region_name: @page))[0].description %></p>
+  <p><%= (Page.where(region_name: @page))[0].desc %></p>
 </div>
 </div>
+

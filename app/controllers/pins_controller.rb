@@ -43,7 +43,7 @@ class PinsController < ApplicationController
       @wine = Wine.find(params[:wine_id])
 
       @errors = @pin.errors.full_messages.last
-      flash[:warning] = "#{@errors}"
+      flash.now[:warning] = "#{@errors}"
       render "wines/show.html.erb"
   
     end

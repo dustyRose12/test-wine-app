@@ -15,6 +15,14 @@ class PagesController < ApplicationController
       redirect_to '/wines?page_best_of=true&from_pages=true'
     end
 
+    regions = ["Bordeaux", "California", "Marlborough", "Mendoza", "Mosel", "Rioja", "Tuscany"]
+
+    regions.each do |region|
+      if show_page == region.downcase
+        @page = region
+      end
+    end
+   
   end
 
 end

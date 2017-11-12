@@ -1746,7 +1746,6 @@ Pin.create!([
   {id: 31, user_id: 3, wine_id: 124, created_at: "2017-11-11 02:15:22", updated_at: "2017-11-11 02:15:22"}
 ])
 PersonalCategoryPin.create!([
-  {id: 3, personal_category_id: 9, pin_id: 5, created_at: "2017-10-25 22:03:08", updated_at: "2017-10-25 22:03:08"},
   {id: 5, personal_category_id: 3, pin_id: 3, created_at: "2017-11-02 21:29:23", updated_at: "2017-11-02 21:29:23"},
   {id: 8, personal_category_id: 14, pin_id: 3, created_at: "2017-11-03 05:19:24", updated_at: "2017-11-03 05:19:24"},
   {id: 10, personal_category_id: 14, pin_id: 5, created_at: "2017-11-03 06:21:04", updated_at: "2017-11-03 06:21:04"},

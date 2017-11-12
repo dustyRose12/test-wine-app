@@ -10,6 +10,16 @@ Rails.application.routes.draw do
   get '/scan_barcode' => 'wines#scan_barcode'
   post '/wines/get_barcode' => 'wines#get_barcode'
 
+  #image scanner:
+  get '/scan_menu' => 'wines#scan_menu'
+  post '/wines/get_menu' => 'wines#get_menu'
+
+  get '/image' => 'wines#test_image'
+  post '/image' => 'wines#process_image'
+
+  #menu reader from scanned image
+  get '/menu_reader' => 'wines#menu_reader'
+
   get '/wines/new' => 'wines#new'
   post '/wines' => 'wines#create'
 

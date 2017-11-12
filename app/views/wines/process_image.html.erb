@@ -1,0 +1,40 @@
+<script src="js/canvas-to-blob.min.js"></script>
+
+<p>Scanner Result</p>
+<%= @result %>
+
+<p>Image Blob</p>
+<img src="" alt="" id="blob">
+
+
+<script>
+  function b64toBlob(b64, onsuccess, onerror) {
+      var img = new Image();
+
+      img.onerror = onerror;
+
+      img.onload = function onload() {
+          var canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          canvas.toBlob(onsuccess);
+      };
+
+      img.src = b64;
+  }
+
+  var base64Data = '<%= @image %>';
+  b64toBlob(base64Data,
+      function(blob) {
+          var url = window.URL.createObjectURL(blob);
+          console.log(url)
+          $('#blob').src = url
+          // do something with url
+      }, function(error) {
+          // handle error
+      });
+</script>

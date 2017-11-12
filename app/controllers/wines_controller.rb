@@ -2,12 +2,20 @@ class WinesController < ApplicationController
 
   before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy] 
 
+  require 'ocr_space'
+  require 'open-uri'
+
   add_breadcrumb "Home",  '/'
   # add_breadcrumb "Red Wine", '/?user_wine_type=Red&from_type=true'
 
 
   def index
     @wines = Wine.all
+
+    @resource = OcrSpace::Resource.new(apikey: "9c919eb18788957")
+    @image = params[:menu_image]
+    file = params[:menu_image]
+    # @result = @resource.clean_convert file: file
 
     sort_attribute = params[:sort].present? && params[:sort]
     order_attribute = params[:sort_order].present? && params[:sort_order]
@@ -1525,6 +1533,41 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
   def scan_barcode
   end
 
+
+  #menu image scanner 
+  def get_menu
+  end
+
+  def scan_menu
+  end
+
+  #menu image reader / parser
+  def menu_reader
+     @resource = OcrSpace::Resource.new(apikey: "9c919eb18788957")
+      # @wines = Wine.all
+
+    @result = @resource.clean_convert file: "app/assets/images/ema-menu.jpg"
+
+  end
+
+def test_image
+end
+
+def process_image
+  @image = params[:menu_image]
+  p @image
+  @resource = OcrSpace::Resource.new(apikey: "9c919eb18788957")
+  file = File.open(@image, 'w')
+
+  open(@image) do |url_file|
+    tmp_file.write(url_file.read)
+  end
+
+  tmp_file.rewind
+
+  file = tmp_file.read
+  @result = @resource.clean_convert url: file
+end
 
 
 

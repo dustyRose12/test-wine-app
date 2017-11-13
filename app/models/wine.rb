@@ -287,6 +287,16 @@ class Wine < ApplicationRecord
     end
   end
 
+  # def sort_attribute_select(sort_attribute)
+  #   if sort_attribute == "price"
+  #     self.price_for_sort_highest
+  #   elsif sort_attribute == "expert_rating"
+  #     self.expert_rating_for_sort_highest
+  #   elsif sort_attribute == "vintage"
+  #     self.vintage_for_sort_highest
+  #   end
+  # end
+
 
   def self.random
     wines = Wine.all

@@ -51,6 +51,7 @@ class WinesController < ApplicationController
     page_best_of = params[:page_best_of].present? && params[:page_best_of]
 
 
+
     
 #==============================================================
     # this is for the TOP FILTERS (WINE_TYPE start + ratings):
@@ -1315,15 +1316,27 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
       sort_attr_name = (breadcrumb || sort_attribute)
       add_breadcrumb "#{sort_attr_name.capitalize}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&from_#{sort_attribute}=true"
       return @wines
-    elsif sort_attribute && order_attribute 
-      @wines = @wines.order({sort_attribute => order_attribute})
-      @wines = @wines.paginate(:page => params[:page], :per_page => 25)
-      breadcrumb = "Expert Rating" if sort_attribute ==  "expert_rating"
-      sort_attr_name = (breadcrumb || sort_attribute)
-      add_breadcrumb "#{sort_attr_name.capitalize}", "/wines/?sort=#{sort_attribute}&sort_order=#{order_attribute}&from_#{sort_attribute}=true"
-      return @wines
+    elsif sort_attribute && order_attribute #this is the one that needs to change for N/As to go away
+      if sort_attribute == "price"
+        @wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+      elsif sort_attribute == "expert_rating"
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse
+      else
+        @wines = @wines.sort_by { |wine| wine.vintage_for_sort_highest }.reverse
+      end
+        # @wines = @wines.order({sort_attribute_select(sort_attribute) => order_attribute})
+        @wines = @wines.paginate(:page => params[:page], :per_page => 25)
+        breadcrumb = "Expert Rating" if sort_attribute ==  "expert_rating"
+        sort_attr_name = (breadcrumb || sort_attribute)
+        add_breadcrumb "#{sort_attr_name.capitalize}", "/wines/?sort=#{sort_attribute}&sort_order=#{order_attribute}&from_#{sort_attribute}=true"
+        return @wines
+
     elsif sort_attribute 
-      @wines = @wines.order(sort_attribute)
+      if sort_attribute == "vintage"
+        @wines = @wines.sort_by { |wine| wine.vintage_for_sort_lowest }
+      else
+        @wines = @wines.order(sort_attribute)
+      end
       @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       breadcrumb = "Expert Rating" if sort_attribute ==  "expert_rating"
       sort_attr_name = (breadcrumb || sort_attribute)

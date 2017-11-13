@@ -38,7 +38,7 @@
             <% if @wine.half_stars == 1 %>
                    <i class="fa fa-star-half-full"></i>
             <% end %>
-            <% (4-@wine.full_stars).times do %>
+            <% @wine.full_empty_stars.times do %>
                   <i class="fa fa-star-o"></i>
             <% end %>
                    <span class="sr-only"><%= @wine.existing_avg_user_rating%> stars</span>

@@ -98,15 +98,30 @@ class Wine < ApplicationRecord
   def half_stars
      if self.user_rating
          decimal = self.user_rating.modulo(1)
-         if decimal == 0 || decimal == 1 || decimal == 2
+         if decimal == 0 || decimal == 0.1 || decimal == 0.2
           return 0
         else
           return 1
         end
     else
       return 0
+    end 
+  end
+
+  def half_empty_stars
+    if self.half_stars > 0
+      return 1
+    else
+      return 0
     end
-  
+  end
+
+  def full_empty_stars
+    if self.user_rating
+      return (5 - self.full_stars - self.half_stars)
+    else
+      return 5
+    end
   end
 
   def region_empty?

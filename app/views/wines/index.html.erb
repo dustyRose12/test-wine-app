@@ -611,7 +611,7 @@
                   <% end %>
                 </div> <!-- (this is for controls-left) -->
 
-<!-- PAGINATION FIX LATER IF HAVE TIME -->
+<!-- PAGINATION -->
                 <div class="controls-right top-pagination-index-pg">
 
                   <ul class="pagination borderless">
@@ -675,8 +675,31 @@
             <!-- PRODUCT DISPLAY -->
           </div> <!-- this one is for col-md-10 -->
         </div>
-      </div>
-    </div>
+     <!-- </div> (this used to be div page content container) -->
+<!--     </div> -->   <!-- (this used to close div page content, but moved it down to below pagination now)  -->
+
+    <!-- PAGINATION -->
+    <div class="row">
+    <div class="col-md-12">
+                <div class="controls-right top-pagination-index-pg">
+
+                  <ul class="pagination borderless">
+                  <!--   <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i><span class="sr-only">Previous</span></a></li>
+                    <li class="active"><a href="#">1</a></li> -->
+                  <%= will_paginate @wines, inner_window: 1, outer_window: 1, renderer: BootstrapPagination::Rails, class: "pagination borderless controls-right" %>
+                   <!--  <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i><span class="sr-only">Next</span></a></li> -->
+                  </ul>
+                </div> <!-- (this is for controls-right) -->
+<!--                 END PAGINATION -->   
+</div>
+</div><!--  (this is for bottom pagination row) -->
+</div> <!-- (this is for container) -->
+</div> <!-- (this is for page content div) -->
+<br>
+<br>
 
     <!-- CAROUSEL PORTFOLIO SIMPLE -->
       <div id="carousel-portfolio-simple" class="owl-carousel carousel-portfolio-simple">

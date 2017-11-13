@@ -860,7 +860,7 @@ class WinesController < ApplicationController
             add_breadcrumb "#{sort_wine_type}", "/wines/?sort=#{sort_attribute}&sort_min=&sort_max=&sort_order=#{order_attribute}&user_wine_type=#{sort_wine_type}&from_#{sort_attribute}=true"
           return @wines
       elsif sort_attribute && sort_wine_type && from_vintage
-          sort_wines = @wines.order(sort_attribute)
+          sort_wines = @wines.sort_by { |wine| wine.vintage_for_sort_lowest }
           wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -887,7 +887,7 @@ class WinesController < ApplicationController
             add_breadcrumb "#{varietal_sort}", "/wines/?sort=#{sort_attribute}&sort_min=&sort_max=&sort_order=#{order_attribute}&user_varietal=#{varietal_sort}&from_#{sort_attribute}=true"
           return @wines
       elsif sort_attribute && varietal_sort && from_vintage
-          sort_wines = @wines.order(sort_attribute)
+          sort_wines = @wines.sort_by { |wine| wine.vintage_for_sort_lowest }
           varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -915,7 +915,7 @@ class WinesController < ApplicationController
             add_breadcrumb "#{country_sort}", "/wines/?sort=#{sort_attribute}&sort_min=&sort_max=&sort_order=#{order_attribute}&user_country=#{country_sort}&from_#{sort_attribute}=true"
           return @wines
       elsif sort_attribute && country_sort && from_vintage
-          sort_wines = @wines.order(sort_attribute)
+          sort_wines = @wines.sort_by { |wine| wine.vintage_for_sort_lowest }
           country_wines = Wine.by_country(country_sort)
           @wines =  sort_wines & country_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -936,7 +936,7 @@ class WinesController < ApplicationController
           add_breadcrumb "#{sort_wine_type}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&user_wine_type=#{sort_wine_type}&from_#{sort_attribute}=true"
           return @wines
       elsif sort_attribute && order_attribute && sort_wine_type && from_price
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+          sort_wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -964,7 +964,7 @@ class WinesController < ApplicationController
           add_breadcrumb "#{varietal_sort}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&user_varietal=#{varietal_sort}&from_#{sort_attribute}=true"
           return @wines
       elsif sort_attribute && order_attribute && varietal_sort && from_price
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+          sort_wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -991,7 +991,7 @@ class WinesController < ApplicationController
           add_breadcrumb "#{country_sort}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&user_country=#{country_sort}&from_#{sort_attribute}=true"
           return @wines
       elsif sort_attribute && order_attribute && country_sort && from_price
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+          sort_wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
           country_wines = Wine.by_country(country_sort)
           @wines = sort_wines & country_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -1020,7 +1020,7 @@ class WinesController < ApplicationController
           add_breadcrumb "#{sort_wine_type}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&user_wine_type=#{sort_wine_type}&from_exp_rating=true"
           return @wines
       elsif sort_attribute && order_attribute && sort_wine_type && from_exp_rating
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+          sort_wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse
            wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
           @wines =  sort_wines & wine_type_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -1047,7 +1047,7 @@ class WinesController < ApplicationController
           add_breadcrumb "#{varietal_sort}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&user_varietal=#{varietal_sort}&from_exp_rating=true"
           return @wines
       elsif sort_attribute && order_attribute && varietal_sort && from_exp_rating
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+          sort_wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse
            varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
           @wines =  sort_wines & varietal_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)
@@ -1073,7 +1073,7 @@ class WinesController < ApplicationController
           add_breadcrumb "#{country_sort}", "/wines/?sort=#{sort_attribute}&sort_min=#{sort_min}&sort_max=#{sort_max}&sort_order=#{order_attribute}&user_country=#{country_sort}&from_exp_rating=true"
           return @wines
       elsif sort_attribute && order_attribute && country_sort && from_exp_rating
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+          sort_wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse
           country_wines = Wine.by_country(country_sort)
           @wines = sort_wines & country_wines
           @wines = @wines.paginate(:page => params[:page], :per_page => 25)

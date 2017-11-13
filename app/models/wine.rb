@@ -67,7 +67,22 @@ class Wine < ApplicationRecord
     else
       return 0
     end
+  end
 
+  def user_rating_for_sort_highest
+    if self.user_rating
+      return self.user_rating
+    else
+      return 0 #so the N/As float to the bottom
+    end
+  end
+
+  def user_rating_for_sort_lowest
+    if self.user_rating
+      return self.user_rating
+    else
+      return 10000 #so the N/As float to the bottom
+    end
   end
 
   def user_rating_count
@@ -158,19 +173,19 @@ class Wine < ApplicationRecord
     end
   end
 
-   def overall_rating_for_sort
+   def overall_rating_for_sort_highest
     if self.overall_rating > 0
       return overall_rating
     else
-      return 0
+      return 0 #so the N/As go to the bottom
     end
   end
 
-  def overall_rating_for_sort
+  def overall_rating_for_sort_lowest
     if self.overall_rating > 0
       return overall_rating
     else
-      return 0
+      return 10000 #so the N/As go to the bottom
     end
   end
 

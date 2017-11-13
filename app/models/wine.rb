@@ -166,6 +166,14 @@ class Wine < ApplicationRecord
     end
   end
 
+  def overall_rating_for_sort
+    if self.overall_rating > 0
+      return overall_rating
+    else
+      return 0
+    end
+  end
+
   def overall_rating_for_show
     if self.overall_rating > 0
       return overall_rating
@@ -189,7 +197,22 @@ class Wine < ApplicationRecord
     else
       return 0
     end
+  end
 
+  def expert_rating_for_sort_highest
+    if expert_rating
+      expert_rating
+    else
+      return 0 #so the N/As go to the bottom of the results
+    end
+  end
+
+  def expert_rating_for_sort_lowest
+    if expert_rating
+      expert_rating
+    else
+      return 10000 #so the N/As go to the bottom of the results
+    end
   end
 
   def user_rating_for_show
@@ -225,6 +248,29 @@ class Wine < ApplicationRecord
     end
   end
 
+  def vintage_for_show
+    if vintage == 0
+      return "N/A"
+    else
+      vintage
+    end
+  end
+
+  def vintage_for_sort_lowest
+     if vintage == 0
+      return 10000 #made this really high so that the N/A prices show up at the end of the results
+    else
+      vintage
+    end
+  end
+
+   def vintage_for_sort_highest
+     if vintage == 0
+      return 0 #made this really low so that the N/A prices show up at the end of the results
+    else
+      vintage
+    end
+  end
 
 
   def self.random

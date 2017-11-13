@@ -60,7 +60,7 @@
         <p>Wine type: <b><%= @wine.varietal.wine_type %></b></p>
         <p>Varietal: <b><%= @wine.varietal.name %></b></p>
         <p>Producer: <b><%= @wine.producer.name %></b></p>
-        <p>Vintage: <b><%= @wine.vintage %></b></p>
+        <p>Vintage: <b><%= @wine.vintage_for_show %></b></p>
         <%if @wine.price %>
         <p>Price: <b><%= number_to_currency(@wine.price) %></b></p>
         <% else %>

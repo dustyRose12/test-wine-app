@@ -1307,7 +1307,7 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
   #this is for regular TOP NAV BAR simple FILTERS:
 
   #this one works for the VINTAGE oldest-newest / newest-oldest, PRICE low-high / high-low, EXPERT RATING high-low / low-high
-  
+    
     if sort_attribute && sort_min && sort_max && order_attribute
       @wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
       @wines = @wines.paginate(:page => params[:page], :per_page => 25)

@@ -133,7 +133,7 @@ class WinesController < ApplicationController
         end
 
         @wines = @wines.flatten.uniq
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse 
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse 
         @wines = @wines.paginate(:page => params[:page], :per_page => 25)
   
 
@@ -318,7 +318,7 @@ class WinesController < ApplicationController
         @wines = varietal_wines & country_wines unless region_wines.any?
         @wines = varietal_wines & region_wines unless country_wines.any?
         @wines = varietal_wines if (country_wines.empty? && region_wines.empty?)
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse
 
       elsif dropdown_filter == 'overall_rating_high'
         varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
@@ -379,7 +379,7 @@ class WinesController < ApplicationController
         @wines = country_wines & wine_type_wines unless varietal_wines.any?
         @wines = country_wines & varietal_wines unless wine_type_wines.any?
         @wines = country_wines if (wine_type_wines.empty? && varietal_wines.empty?)
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
         country_wines = Wine.includes(:region).where(regions: { country_id: country_sort } )
@@ -440,7 +440,7 @@ class WinesController < ApplicationController
         @wines = region_wines & wine_type_wines unless varietal_wines.any?
         @wines = region_wines & varietal_wines unless wine_type_wines.any?
         @wines = region_wines if (wine_type_wines.empty? && varietal_wines.empty?)
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
         region_wines = Wine.joins(:region).where(regions: { name: region_sort } )
@@ -491,9 +491,19 @@ class WinesController < ApplicationController
         if sort_attribute && sort_min && sort_max && order_attribute
           sort_wines = Wine.where({sort_attribute => sort_min..sort_max}).order({sort_attribute => order_attribute})
         elsif sort_attribute && order_attribute
-          sort_wines = @wines.order({sort_attribute => order_attribute})
+            if sort_attribute == "price"
+              sort_wines = @wines.sort_by { |wine| wine.price_for_sort_highest }.reverse
+            elsif sort_attribute == "expert_rating"
+              sort_wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse
+            else
+              sort_wines = @wines.sort_by { |wine| wine.vintage_for_sort_highest }.reverse
+            end
         elsif sort_attribute
-          sort_wines = @wines.order(sort_attribute)
+            if sort_attribute == "vintage"
+              sort_wines = @wines.sort_by { |wine| wine.vintage_for_sort_lowest }
+            else
+              sort_wines = @wines.order(sort_attribute)
+            end
         end
 
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -509,7 +519,7 @@ class WinesController < ApplicationController
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
 
       elsif dropdown_filter == 'expert_rating_high'
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
           @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
@@ -552,7 +562,7 @@ class WinesController < ApplicationController
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
 
       elsif dropdown_filter == 'expert_rating_high'
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
           @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
@@ -593,7 +603,7 @@ class WinesController < ApplicationController
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
 
       elsif dropdown_filter == 'expert_rating_high'
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
           @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
@@ -628,7 +638,7 @@ class WinesController < ApplicationController
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
 
       elsif dropdown_filter == 'expert_rating_high'
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
           @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
@@ -672,7 +682,7 @@ class WinesController < ApplicationController
         @wines = @wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
 
       elsif dropdown_filter == 'expert_rating_high'
-        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort }.reverse   
+        @wines = @wines.sort_by { |wine| wine.expert_rating_for_sort_highest }.reverse   
 
       elsif dropdown_filter == 'overall_rating_high'
           @wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse

@@ -10,12 +10,13 @@
     <br>
     <br>
     <!-- END PAGE HEADER WITH BACKGROUND IMAGE -->
-
-<div class="col-md-10">
+<div class="container">
+<div class="col-md-11">
   <h2><%=  (Page.where(region_name: @page))[0].region_name %>, <%= (Page.where(region_name: @page))[0].region_country %></h2>
   <br>
-  <p><%= (Page.where(region_name: @page))[0].description %></p>
-  <p><%= (Page.where(region_name: @page))[0].desc %></p>
+  <p align="justify" class="par-pages"><%= (Page.where(region_name: @page))[0].description %></p>
+  <p align="justify" class="par-pages"><%= (Page.where(region_name: @page))[0].desc %></p>
+</div>
 </div>
 </div>
 

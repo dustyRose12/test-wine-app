@@ -121,6 +121,7 @@
                               </div><!--  this ends the second column  -->
                             </div> <!-- this ends the col-md-9 -->
                           <% end %><!--  THIS IS FOR PINS.EACH DO LOOP AT START OF CHAPTER0 -->
+
                         </div> <!-- for the div class row starting the pins loop -->
                   </div> <!-- ENDS TAB PANE for CHAPTER0 div -->
 
@@ -259,7 +260,7 @@
                     <% end %>
                     <hr/>
                     <h4>Edit / Delete Category:</h4>
-
+                    <br>
                    <!--     list all with edit / delete buttons version:  -->
                    <div class="col-md-12">
                      <% @all_personal_categories.each do |personal_category| %>
@@ -276,6 +277,7 @@
                       </p>
                       </div>
                     <% end %>
+                    <br><br><br><br>
                     </div>
 
                   </div> <!-- (this is div chapter_last) -->
@@ -308,6 +310,7 @@
 
                 <div class="tab-pane fade in active" id="chapter0">
                   <p><strong>Add some wines to your Cellar!</p></strong>
+                   <br><br><br><br>
                 </div><!--  END CHAPTER 0 -->
 
             <% if @personal_category_count > 0 %><!--  (if the user HAS ANY personal_categories, then display them, otherwise move onto chapter_last) -->
@@ -352,6 +355,7 @@
                       </p>
                       </div><!--  (this is for row) -->
                     <% end %>
+                     <br><br><br><br>
                     </div> <!-- (this is for col 12) -->
                   </div>
               </div><!--  (this is div tab content) -->

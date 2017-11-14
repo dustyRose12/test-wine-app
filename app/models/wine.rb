@@ -103,8 +103,8 @@ class Wine < ApplicationRecord
 
   def full_stars
 
-      if self.user_rating
-        return self.user_rating.truncate(0).to_i
+    if self.user_rating
+        return self.user_rating.truncate.to_i
     else
       0
     end

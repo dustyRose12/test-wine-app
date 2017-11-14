@@ -1,5 +1,5 @@
-a.dropdown-toggle {
-  // color: red !important; //the important overrides the theme styling
+.dropdown-toggle {
+  justify-content: center !important;
 }
 
 
@@ -24,7 +24,7 @@ a.dropdown-toggle {
 
 .navbar-brand-position{
   padding-bottom: 0px !important;
-  padding-top: 5px !important;
+  padding-top: 10px !important;
   padding-left: 0px !important;
   vertical-align: middle !important;
 }
@@ -34,6 +34,85 @@ a.dropdown-toggle {
   margin-left: 0px !important;
   // vertical-align: middle !important;
 }
+.navbar-collapse.collapse, .align-center {
+  @media (min-width:  992px) {
+    height: 56px !important;
+    display: flex !important;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+}
+
+.container, .bottom-navbar-pads{
+  padding-left: 5px;
+  padding-right: 5px;
+
+}
+
+
+.main-nav-collapse {
+  @media (min-width: 992px) {
+    height: unset !important;
+  }
+}
+
+.navbar-brand {
+  @media (min-width: 992px) {
+    padding-bottom: 10px;
+  }
+}
+
+.navbar-form, .navbar-right, .search-form .form-group {
+  @media (min-width: 992px) {
+    .form-group {
+          margin-top: 3px;
+    }
+  }
+  @media (max-width: 991px) {
+    .form-group {
+      float: right !important;
+      position: relative !important;
+      .inp-control{
+        width: 100%;
+        padding-right: 45px;
+      }
+      .but-control{
+          width: 45px;
+          position: absolute;
+          top: 0;
+          right: 0;
+      }
+      }
+  }
+}
+
+.navbar-toggle, .collapsed{
+   @media (max-width: 991px) {
+   // do nothing for now, maybe fix later so it toggles back up  
+   }
+
+}
+
+.navbar-right {
+  @media (max-width: 992px) {
+  &#top-buttons {
+    display: flex;
+
+    .btn, .btn-primary, .btn-fullrounded, .btn-sm, .homepage-buttons {
+      padding: 8px;
+    }
+  }
+}
+}
+
+.nav, .navbar-nav, .main-navbar-nav {
+  @media (min-width: 992px) {
+      li {
+        margin-top:  -4px;
+      }
+    }
+}
+
 .bottom-navbar-dropdowns{
     vertical-align: middle !important;
 
@@ -48,7 +127,17 @@ a.dropdown-toggle {
 .bottom-navbar{
   background-color: #93b2b4 !important;
   border-radius: 4px;
-  height: 56px;
+  width: 100%;
+
+  &#set-height-navbar {
+    @media (min-width: 56px) {
+       height: 56px !important;
+    }
+  }
+}
+
+.full-width {
+  width: 100%;
 }
 
 .bottom-navbar-text{
@@ -329,7 +418,14 @@ img.center {
 }
 
 .home-icon-left{
-  padding-left: 75px;
+  float: left !important;
+  @media (min-width: 992px) {
+    margin-left: 50px !important;
+  }
+  @media (max-width: 991px) {
+    margin-left: 20px !important;
+  }
+
 }
 .text-from-icons{
   color: white;
@@ -341,11 +437,18 @@ img.center {
 }
 
 .home-icon-right{
-  margin-right: 75px !important;
   color: white !important;
+  float: right !important;
+   @media (min-width: 992px) {
+    margin-right: 75px !important;
+  }
+    @media (max-width: 991px) {
+    margin-right: 20px !important;
+  }
+
 }
 
-.icon-info-right.icon-info-big .title {
+.icon-info .title {
   font-size: 16px;
   font-weight: 700;
   }
@@ -368,4 +471,22 @@ img.center {
 
 .par-pages{
   text-indent: 50px;
+}
+
+// .form-group {
+//   @media (max-width: 767px) {
+//     input {
+//       max-width: 200px;
+//       margin-left: 15px;
+//     }
+//   }
+// }
+
+.cellar-heading{
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+.navbar-brand, .navbar-brand-position, .middle-navbar img {
+  padding-bottom: 8px;
 }

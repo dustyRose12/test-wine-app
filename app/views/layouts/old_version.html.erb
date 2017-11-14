@@ -1,0 +1,207 @@
+
+    <!-- APP NAVBAR -->
+    <nav class="navbar navbar-default">
+      <!-- TOP BAR -->
+      <div class="nav-topbar clearfix topbar-accent">
+        <div class="container">
+          <!-- <div class="left">
+           <a href="/" class="navbar-brand">
+          <img src="/assets/img/logo/bravana-seagreen.png" alt="Bravana Logo">
+        </a> -->
+            <!-- <ul class="list-inline social-icons social-icons-small social-icons-fullrounded">
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-rss"></i></a></li>
+              <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul> -->
+         <!--  </div> -->         
+
+          <div class="right">
+            <ul class="nav navbar-nav navbar-right">
+             <% if current_user %>
+                <li><a href="/scan_barcode" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Scan Wine Barcode</span></a></li>
+                <li><a href="/cellar" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Cellar</span></a></li>
+                <li><a href="/users/<%= current_user.id %>/edit" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Profile</span></a></li>
+                <li><a href="/logout" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Log Out</span></a></li>
+        <% else %>
+                <li><a href="/scan_barcode" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm">Scan Wine Barcode</span></a></li>
+                <li><a href="/signup" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm">Sign Up</span></a></li>
+                <li><a href="/login" class='as-button'><span class="btn btn-primary btn-fullrounded btn-sm">Log In</span></a></li>
+        <% end %>   
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- END TOP BAR -->
+
+<!--BRAVANA LOGO -->     
+    <div class="container middle-navbar">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-collapse">
+          <span class="sr-only">Toggle Navigation</span>
+          <i class="fa fa-bars"></i>
+        </button>
+        <a href="/" class="navbar-brand middle-navbar navbar-brand-position">
+          <img src="/assets/img/logo/my-logo-2.png" alt="Bravana Logo" class="my-logo navbar-brand-position">
+        </a>
+
+
+  <!-- SEARCH FORM -->
+          <%= form_tag "/wines", method: :get, class: "navbar-form navbar-right search-form" do %>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="search_term">
+                <button type="submit" class="btn btn-default">Submit</button> 
+              </div>
+            <% end %>
+
+  <!-- END SEARCH FORM -->
+
+    </div>
+
+
+
+     <div class="container bottom-navbar">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav-collapse">
+          <span class="sr-only">Toggle Navigation</span>
+          <i class="fa fa-bars"></i>
+        </button>
+     
+
+<!--         THIS IS WHERE THE FILTERS START
+ -->  <div id="main-nav-collapse" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav main-navbar-nav">
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">WINE TYPE <i class="fa fa-angle-down"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                  <li><a href="/wines/?user_wine_type=Red&from_type=true">Red</a></li> 
+                  <li><a href="/wines/?user_wine_type=White&from_type=true">White</a></li>
+                  <li><a href="/wines/?user_wine_type=Rosé&from_type=true">Rosé</a></li>
+                  <li><a href="/wines/?user_wine_type=Sparkling and Champagne&from_type=true">Sparkling & Champagne</a></li>
+                  <li><a href="/wines/?user_wine_type=Dessert&from_type=true">Dessert</a></li>
+                  <li><a href="/wines/?user_wine_type=Sherry, Port, Madeira&from_type=true">Sherry, Port, Madeira</a></li>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">VARIETAL <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    <% Varietal.all.order(:name).each do |varietal| %>
+                      <li><a href="/wines/?user_varietal=<%= varietal.name %>&from_var=<%= true %>"><%=varietal.name%></a></li>
+                    <% end%>
+                </ul>
+              </li>
+            
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">COUNTRY <i class="fa fa-angle-down"></i></a>
+              <ul class="dropdown-menu">
+                <% Country.all.order(:name).each do |country| %>
+                    <li><a href="/wines/?user_country=<%= country.id %>&from_country=<%= true %>"><%=country.name%></a></li>
+                <% end%>
+              </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">REGION <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    <% Region.all.order(:name).each do |region| %>
+                      <% if region.name.present? %>
+                       <li><a href="/wines/?user_region=<%= region.name %>&from_region=true"><%=region.name%></a></li>
+                       <% end %>
+                    <% end%>
+                </ul>
+            </li>
+
+
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">VINTAGE <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/wines/?sort=vintage&from_vintage=true">Oldest - Newest</a></li>
+                    <li><a href="/wines/?sort=vintage&sort_order=desc&from_vintage=true">Newest - Oldest</a></li>
+                    <li><a href="/wines/?sort=vintage&sort_min=2014&sort_max=2016&sort_order=desc&from_vintage=true">2014 - 2016</a></li>
+                    <li><a href="/wines/?sort=vintage&sort_min=2011&sort_max=2013&sort_order=desc&from_vintage=true">2011 - 2013</a></li>
+                    <li><a href="/wines/?sort=vintage&sort_min=2006&sort_max=2010&sort_order=desc&from_vintage=true">2006 - 2010</a></li>
+                    <li><a href="/wines/?sort=vintage&sort_min=2000&sort_max=2005&sort_order=desc&from_vintage=true">2000 - 2005</a></li>
+                    <li><a href="/wines/?sort=vintage&sort_min=0&sort_max=1999&sort_order=desc&from_vintage=true">< 2000</a></li>    
+                  </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">PRICE <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/wines/?sort=price&from_price=true">Low - High</a></li>
+                  <li><a href="/wines/?sort=price&sort_order=desc&from_price=true">High - Low</a></li>
+                  <li><a href="/wines/?sort=price&sort_min=1&sort_max=15&sort_order=asc&from_price=true">$1 - $15</a></li>
+                  <li><a href="/wines/?sort=price&sort_min=16&sort_max=30&sort_order=asc&from_price=true">$16 - $30</a></li>
+                  <li><a href="/wines/?sort=price&sort_min=31&sort_max=50&sort_order=asc&from_price=true">$31 - $50</a></li>
+                  <li><a href="/wines/?sort=price&sort_min=51&sort_max=99&sort_order=asc&from_price=true">$51 - $99</a></li>
+                  <li><a href="/wines/?sort=price&sort_min=100&sort_max=20000&sort_order=asc&from_price=true"> > $100</a></li>   
+                </ul>
+            </li>
+
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">EXPERT RATING <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                <li><a href="/wines/?sort=expert_rating&sort_order=desc&from_exp_rating=true">High - Low</a></li>
+                <li><a href="/wines/?sort=expert_rating&from_exp_rating=true">Low - High</a></li>
+                <li><a href="/wines/?sort=expert_rating&sort_min=95&sort_max=100&sort_order=desc&from_exp_rating=true">95 - 100</a></li>
+                <li><a href="/wines/?sort=expert_rating&sort_min=90&sort_max=95&sort_order=desc&from_exp_rating=true">90 - 95</a></li>
+                <li><a href="/wines/?sort=expert_rating&sort_min=80&sort_max=90&sort_order=desc&from_exp_rating=true">80 - 90</a></li>
+                <li><a href="/wines/?sort=expert_rating&sort_min=70&sort_max=80&sort_order=desc&from_exp_rating=true">70 - 80</a></li>
+                </ul>
+            </li>
+            
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">USER RATING <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/wines/?user_sort=user_rating&sort_order=desc&from_user_rating=true">High - Low</a></li>
+                  <li><a href="/wines/?user_sort=user_rating&sort_order=asc&from_user_rating=true">Low - High</a></li>
+                  <li><a href="/wines/?user_sort=user_rating&from_user_rating=true">Most Reviewed</a></li>   
+                </ul>
+            </li>
+           
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle bottom-navbar-text" data-toggle="dropdown">OVERALL RATING <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/wines/?overall_sort=overall_rating&sort_order=desc&from_overall_rating=true">High - Low</a></li>
+                  <li><a href="/wines/?overall_sort=overall_rating&sort_order=asc&from_overall_rating=true">Low - High</a></li>
+                </ul>
+            </li>
+
+          </ul>
+        </div>
+        <!-- END MAIN NAVIGATION -->
+      </div>
+    </nav>
+      <div class="container">
+      <% flash.each do |name, message| %>
+        <div class="alert alert-<%= name %> alert-dismissible" role="alert" id="flash">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= message %>
+        </div>
+      <% end %>
+    <!-- END NAVBAR -->
+
+ <!--    OLD VERSION OF BOTTOM ICONS ON HOME PAGE -->
+    <div class="cta cta-solid-brand-bg cta-2-columns margin-top-50 row">
+        <div class="container row">
+         <div class="col-sm-4"> 
+          <div class="icon-info icon-info-left icon-info-big home-icon-left">
+              <i class="icon icon_pencil-edit ico-styled-square-solid ico-styled-lg bg-primary">
+                <h2 class="title text-from-icons">Carefully Handcrafted</h2></i>
+            </div>
+            </div>
+             <div class="col-sm-4"> 
+            <div class="icon-info icon-info-center icon-info-big home-icon-center">
+              <i class="icon icon_heart ico-styled-square-solid ico-styled-lg bg-primary">
+                <h2 class="title text-from-icons">Private Cellar</h2></i>
+            </div>
+            </div>
+             <div class="col-sm-4"> 
+            <div class="icon-info icon-info-right icon-info-big home-icon-right">
+              <i class="icon icon_menu-square_alt2 ico-styled-square-solid ico-styled-lg bg-primary">
+                <h2 class="title text-from-icons">Wine Scanner</h2></i>
+            </div>   
+         </div>
+
+        </div>
+      </div>

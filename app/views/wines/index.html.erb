@@ -598,7 +598,7 @@
                            <input type="hidden" name="from_pages" value="<%= params[:from_pages] %>">
 
 
-                            <select class="form-control" name="dropdown_filter">
+                            <select class="form-control dropdown-select" name="dropdown_filter">
                               <option value="user_rating_high">User Rating (High - Low)</option>
                               <option value="expert_rating_high">Expert Rating (High - Low)</option>
                               <option value="overall_rating_high">Overall Rating (High - Low)</option>
@@ -792,6 +792,14 @@
 
 
  <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+
+ <script type="text/javascript">
+    var selectedFilter = '<%= params[:dropdown_filter] %>';
+    console.log(selectedFilter)
+   $(document).ready(function() {
+      $('.dropdown-select').val(selectedFilter);
+   });
+ </script>
 
 </body>
 </html>

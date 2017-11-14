@@ -56,9 +56,9 @@
         <div class="right">
           <ul class="nav navbar-nav navbar-right" id="top-buttons">
             <% if current_user %>
-                <li><a href="/scan_barcode" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Scan Wine Barcode</span></a></li>
-                <li><a href="/cellar" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Cellar</span></a></li>
-                <li><a href="/users/<%= current_user.id %>/edit" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Profile</span></a></li>
+                <li><a href="/scan_barcode" target="_blank" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Scan Wine Barcode</span></a></li>
+                <li><a href="/cellar" target="_blank" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Cellar</span></a></li>
+                <li><a href="/users/<%= current_user.id %>/edit" target="_blank" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">My Profile</span></a></li>
                 <li><a href="/logout" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm homepage-buttons">Log Out</span></a></li>
             <% else %>
                 <li><a href="/scan_barcode" class="as-button"><span class="btn btn-primary btn-fullrounded btn-sm">Scan Wine Barcode</span></a></li>
@@ -70,6 +70,7 @@
       </div>
     </div>
     <!-- END TOP BAR -->
+<!--     MIDDLE BAR with logo -->
     <div class="container middle-navbar">
       <a href="/" class="navbar-brand navbar-brand-position middle-navbar">
           <img src="/assets/img/logo/my-logo-2.png" alt="logo" style="max-height: 70px">

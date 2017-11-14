@@ -36,10 +36,11 @@
 }
 .navbar-collapse.collapse, .align-center {
   @media (min-width:  992px) {
-    height: 56px !important;
+    height: 55px !important;
     display: flex !important;
     justify-content: center;
     margin-bottom: 10px;
+    margin-top: 4px;
   }
 }
 
@@ -108,7 +109,7 @@
 .nav, .navbar-nav, .main-navbar-nav {
   @media (min-width: 992px) {
       li {
-        margin-top:  -4px;
+        margin-top:  -6px;
       }
     }
 }
@@ -488,5 +489,17 @@ img.center {
 }
 
 .navbar-brand, .navbar-brand-position, .middle-navbar img {
-  padding-bottom: 8px;
+
+    @media (min-width: 992px) {
+      padding-bottom: 6px;
+   
+  }
+    @media (max-width: 991px) {
+      padding-bottom: 10px;  }
+}
+
+.nav-topbar, .nav > li > a.as-button{
+  padding-top: 7px !important;
+  padding-bottom: 5px !important;
+
 }

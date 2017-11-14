@@ -7,13 +7,15 @@ class PinsController < ApplicationController
       flash[:warning] = "Please log in to see Your Cellar"
     end
 
-    @personal_category_count = PersonalCategory.where(user_id: current_user.id).count
+    # if !PersonalCategory.all.empty?
+        @personal_category_count = PersonalCategory.where(user_id: current_user.id).count
 
-    @first_personal_category = PersonalCategory.where(user_id: current_user.id).first
-    
-    @all_other_personal_categories = PersonalCategory.where(user_id: current_user.id).all[1..-1]
+        @first_personal_category = PersonalCategory.where(user_id: current_user.id).first
+        
+        @all_other_personal_categories = PersonalCategory.where(user_id: current_user.id).all[1..-1]
 
-    @all_personal_categories = PersonalCategory.where(user_id: current_user.id)
+        @all_personal_categories = PersonalCategory.where(user_id: current_user.id)
+      # end
 
    
 

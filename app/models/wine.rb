@@ -106,7 +106,7 @@ class Wine < ApplicationRecord
       if self.user_rating
         return self.user_rating.truncate(0).to_i
     else
-      false
+      0
     end
   end
 

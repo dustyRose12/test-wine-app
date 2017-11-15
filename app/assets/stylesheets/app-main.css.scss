@@ -34,10 +34,17 @@
   margin-left: 0px !important;
   // vertical-align: middle !important;
 }
-.middle-navbar img{
-  padding-right: 0px;
-  margin-right: 0px;
+.middle-navbar, .navbar-brand, .logo-max-height {
+  @media (min-width: 416px) {
+    max-height: 70px;
+  }
+  @media (max-width:  415px) {
+    max-height: 60px;
+    padding-right: 0px;
+    margin-right: 0px;
+  }
 }
+
 .navbar-collapse.collapse, .align-center {
   @media (min-width:  992px) {
     height: 55px !important;

@@ -34,6 +34,10 @@
   margin-left: 0px !important;
   // vertical-align: middle !important;
 }
+.middle-navbar img{
+  padding-right: 0px;
+  margin-right: 0px;
+}
 .navbar-collapse.collapse, .align-center {
   @media (min-width:  992px) {
     height: 55px !important;

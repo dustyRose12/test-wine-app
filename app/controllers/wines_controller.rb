@@ -662,11 +662,18 @@ class WinesController < ApplicationController
 
     if from_pages && dropdown_filter
         if page_trending
-          pages_wines =  Wine.order(:existing_avg_user_rating_count).last(9)
+          # pages_wines =  Wine.order(:existing_avg_user_rating_count).last(9)
+          #NEED TO CHANGE THIS TO:
+          wines =  @wines.order(:existing_avg_user_rating_count).last(25)
+          pages_wines =  wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
         elsif page_wine_of_day
           pages_wines =  Wine.order("RANDOM()").take(1)
         elsif page_best_of
-          pages_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(25)
+          # pages_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(25)
+            # NEED TO CHANGE IT TO THIS:
+            best_of_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
+            year_wines = @wines.where(vintage: 2016)
+            pages_wines = (best_of_wines & year_wines).first(25)
         end
 
         wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
@@ -1273,9 +1280,15 @@ class WinesController < ApplicationController
 
 if from_pages && (page_trending or page_wine_of_day or page_best_of)
 
-      page_trending_wines =  Wine.order(:existing_avg_user_rating_count).last(9)
+      # page_trending_wines =  Wine.order(:existing_avg_user_rating_count).last(9)
+      wines =  @wines.order(:existing_avg_user_rating_count).last(25)
+      page_trending_wines =  wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
       page_wine_of_day_wines =  Wine.order("RANDOM()").take(1)
-      page_best_of_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(25)
+      # page_best_of_wines =  Wine.where(vintage: 2016).order(:expert_rating).last(25)
+      # NEED TO CHANGE IT TO THIS:
+      best_of_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
+      year_wines = @wines.where(vintage: 2016)
+      page_best_of_wines = (best_of_wines & year_wines).first(25)
 
       wine_type_wines = Wine.joins(:varietal).where(varietals: { wine_type: sort_wine_type } )
       varietal_wines = Wine.joins(:varietal).where(varietals: { name: varietal_sort } ) 
@@ -1425,10 +1438,12 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
 
     # HOMEPAGE panel PAGES page_trending = params[:page_trending]
     if page_trending
-      @wines = Wine.order(:existing_avg_user_rating_count).last(9)
+      # @wines = Wine.order(:existing_avg_user_rating_count).last(9)
+       #NEED TO CHANGE THIS TO:
+      wines =  @wines.order(:existing_avg_user_rating_count).last(25)
+      @wines =  wines.sort_by { |wine| wine.user_rating_for_sort_highest }.reverse
       @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
-      #TODO: tack on this part to order the most reviewed 9 ones by order of best reviews: @wines.order(:existing_avg_user_rating). this syntax doesn't work.
     end
     if page_wine_of_day
       @wines = Wine.order("RANDOM()").take(1)
@@ -1437,7 +1452,11 @@ if from_pages && (page_trending or page_wine_of_day or page_best_of)
     end 
     #TODO check the order that the wines are displayed, should be highest ratings first
      if page_best_of
-      @wines = Wine.where(vintage: 2016).order(:expert_rating).last(25)
+      # @wines = Wine.where(vintage: 2016).order(:expert_rating).last(25)
+      # NEED TO CHANGE IT TO THIS:
+      best_of_wines = @wines.sort_by { |wine| wine.overall_rating_for_sort_highest }.reverse
+      year_wines = @wines.where(vintage: 2016)
+      @wines = (best_of_wines & year_wines).first(25)
       @wines = @wines.paginate(:page => params[:page], :per_page => 25)
       return @wines
     end 
